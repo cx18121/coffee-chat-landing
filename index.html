@@ -1439,34 +1439,7 @@
       }
 
       /* ─── SCROLL PROGRESS THREAD ────────────────────────── */
-      .scroll-progress {
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 2px;
-        height: 100%;
-        background: linear-gradient(
-          to bottom,
-          var(--periwinkle) 0%,
-          var(--sky) 100%
-        );
-        transform-origin: top center;
-        transform: scaleY(0);
-        z-index: 300;
-        pointer-events: none;
-        opacity: 0;
-      }
       @supports (animation-timeline: scroll()) {
-        .scroll-progress {
-          opacity: 1;
-          animation: scrollThread linear both;
-          animation-timeline: scroll(root block);
-        }
-        @keyframes scrollThread {
-          to {
-            transform: scaleY(1);
-          }
-        }
 
         /* Disable IntersectionObserver fade so scroll-driven can own reveals */
         .fu {
@@ -1725,10 +1698,7 @@
         .hero-wrap {
           animation: none !important;
         }
-        .scroll-progress {
-          display: none !important;
-        }
-        .fu {
+.fu {
           transition-duration: 0.01ms !important;
         }
       }
@@ -1959,7 +1929,6 @@
     </style>
   </head>
   <body>
-    <div class="scroll-progress" aria-hidden="true"></div>
 
     <!-- ═══════════════════════════════════════════════════════
      HERO
