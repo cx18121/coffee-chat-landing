@@ -234,7 +234,7 @@
     .gc-leads   { left: 3.5%; top: 24px;  width: 258px; padding: 15px; transform: rotate(-2.2deg); }
     .gc-email   { left: 50%;  top: -8px; width: 374px; padding: 20px 22px; transform: translateX(-50%) rotate(.3deg); z-index: 6; }
     .gc-pipe    { right: 3%;  top: 28px;  width: 248px; padding: 15px; transform: rotate(2.1deg); }
-    .gc-ai      { left: 58%;  top: 208px; width: 214px; padding: 13px 15px; transform: rotate(-1.2deg); z-index: 5; }
+    .gc-ai      { left: 58%;  top: 208px; width: 214px; padding: 13px 15px; transform: rotate(-1.2deg); z-index: 7; }
     .gc-lift    { left: 22%;  top: 210px; width: 214px; padding: 13px 15px; transform: rotate(-1.5deg); z-index: 5; }
 
     /* float animations — start after cards entrance (~1.4s in) */
@@ -342,7 +342,7 @@
     .s-gray   { background: #A8B0C8; }
     .pip-name { font-size: 11.5px; font-weight: 500; color: var(--dark); flex: 1; }
     .pip-status { font-size: 10px; color: var(--muted); }
-    .pip-date { font-size: 10px; color: #B0B0C0; }
+    .pip-date { font-size: 10px; color: var(--muted); opacity: .55; }
 
     /* ai tip card */
     .ai-badge {
@@ -606,7 +606,7 @@
     .mock-pill.opn { background: rgba(245,166,35,.12); color: #B07A0A; }
     .mock-pill.snt { background: rgba(var(--periwinkle-rgb),.1); color: var(--periwinkle-deep); }
     .mock-pill.dft { background: rgba(168,176,200,.15); color: #777; }
-    .mock-tdate { font-size: 11px; color: #BBB; }
+    .mock-tdate { font-size: 11px; color: var(--muted); opacity: .5; }
 
 
     /* ─── EMAILS GENERATED ──────────────────────────────── */
@@ -713,7 +713,6 @@
       display: flex; align-items: center; justify-content: space-between;
     }
     .footer-logo-text { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 400; color: #fff; }
-    .footer-tag { font-size: 12.5px; color: rgba(255,255,255,.32); margin-top: 3px; }
     .footer-cta {
       display: flex; align-items: center; gap: 6px;
       flex-shrink: 0;
@@ -972,6 +971,16 @@
     }
     .survey-submit-btn:hover { background: var(--dark2); transform: translateY(-1px); }
     .survey-submit-btn:active { transform: scale(0.97); }
+
+    /* ─── FOCUS STATES ──────────────────────────────────── */
+    :focus-visible { outline: 2px solid rgba(var(--periwinkle-rgb),.65); outline-offset: 3px; border-radius: 4px; }
+    .email-inp:focus-visible { outline: none; }
+    .email-btn:focus-visible,
+    .survey-submit-btn:focus-visible { outline: 2px solid rgba(255,255,255,.65); outline-offset: 3px; }
+    .nav-how:focus-visible { outline: 2px solid rgba(255,255,255,.55); outline-offset: 4px; border-radius: 4px; }
+    .footer-cta:focus-visible { outline: 2px solid rgba(255,255,255,.45); outline-offset: 3px; }
+    .etab:focus-visible { outline: 2px solid var(--periwinkle); outline-offset: 2px; }
+    .price-chip:focus-visible { outline: 2px solid var(--periwinkle); outline-offset: 2px; }
   </style>
 </head>
 <body>
@@ -1012,7 +1021,7 @@
       Necto automates your entire recruiting outreach.<br>
       From finding contacts to sending emails that actually get replies.
     </p>
-    <div class="email-cap hero-cta">
+    <div class="email-cap hero-cta" id="waitlist-section">
       <input type="email" class="email-inp" id="email-inp" placeholder="Enter your email" autocomplete="email" aria-label="Email address" />
       <button type="button" class="email-btn" id="email-btn">Join waitlist →</button>
     </div>
@@ -1119,7 +1128,7 @@
     <!-- Powerlifting Insight -->
     <div class="gc gc-lift">
       <div class="ai-badge">✦ AI Insight</div>
-      <p class="ai-text"><strong>Mike has been a competitive power lifter for the last 3 years</strong> — Mention your interest in weight lifting to spark a conversation.</p>
+      <p class="ai-text"><strong>Mike has been a competitive power lifter for the last 3 years</strong> — mention your interest in weight lifting to spark a conversation.</p>
     </div>
 
   </div><!-- /hero-cards -->
@@ -1322,11 +1331,8 @@
      FOOTER
 ════════════════════════════════════════════════════════ -->
 <footer>
-  <div class="footer-left">
-    <div class="footer-logo-text">Necto</div>
-    <div class="footer-tag">The outreach OS for finance students.</div>
-  </div>
-  <a href="#email-inp" class="footer-cta">Join waitlist →</a>
+  <div class="footer-logo-text">Necto</div>
+  <a href="#" class="footer-cta" onclick="event.preventDefault();window.scrollTo({top:66,behavior:'smooth'})">Join waitlist →</a>
 </footer>
 
 <script>
@@ -1650,11 +1656,11 @@
       <div class="survey-q">
         <label class="survey-label">How much would you pay per month?</label>
         <div class="price-chips">
-          <button class="price-chip" data-val="free">Free only</button>
-          <button class="price-chip" data-val="5">$5 – $10</button>
-          <button class="price-chip" data-val="15">$15 – $25</button>
-          <button class="price-chip" data-val="30">$30 – $50</button>
-          <button class="price-chip" data-val="50+">$50+</button>
+          <button type="button" class="price-chip" data-val="free">Free only</button>
+          <button type="button" class="price-chip" data-val="5">$5 – $10</button>
+          <button type="button" class="price-chip" data-val="15">$15 – $25</button>
+          <button type="button" class="price-chip" data-val="30">$30 – $50</button>
+          <button type="button" class="price-chip" data-val="50+">$50+</button>
         </div>
       </div>
       <div class="survey-q">
