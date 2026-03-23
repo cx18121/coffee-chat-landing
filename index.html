@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -147,6 +148,28 @@
       transition: color .15s;
     }
     .nav-how:hover { color: #fff; }
+    .nav-counter {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.22);
+      backdrop-filter: blur(8px);
+      padding: 5px 14px 5px 10px;
+      border-radius: 100px;
+      animation: fadeIn .4s ease forwards;
+    }
+    @keyframes fadeIn { from { opacity:0; transform: translateX(-50%) translateY(-4px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+    .nav-counter-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 0 2px rgba(74,222,128,.25);
+      flex-shrink: 0;
+    }
+    .nav-counter-text {
+      font-size: 12.5px; font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      white-space: nowrap;
+    }
 
     /* ─── HERO CONTENT ──────────────────────────────────── */
     .hero-content {
@@ -968,6 +991,10 @@
       </div>
       <span class="logo-name">Necto</span>
     </a>
+    <div class="nav-counter" id="nav-counter" style="display:none">
+      <span class="nav-counter-dot"></span>
+      <span class="nav-counter-text" id="nav-counter-text"></span>
+    </div>
     <a href="#how" class="nav-how">How it works</a>
   </nav>
 
@@ -1529,17 +1556,73 @@
     });
   });
 
+  // ─── SUPABASE CONFIG ─────────────────────────────────
+  // Setup (run once in Supabase SQL Editor):
+  //
+  //   create table waitlist (
+  //     id uuid default gen_random_uuid() primary key,
+  //     email text not null unique,
+  //     price_range text,
+  //     features text,
+  //     created_at timestamptz default now()
+  //   );
+  //   alter table waitlist enable row level security;
+  //   create policy "anon_insert" on waitlist for insert with check (true);
+  //
+  //   create or replace function get_waitlist_count()
+  //   returns integer language sql security definer as $$
+  //     select count(*)::integer from waitlist;
+  //   $$;
+  //   grant execute on function get_waitlist_count() to anon;
+
+  const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+  const SUPABASE_KEY = 'YOUR_ANON_KEY';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // ─── LIVE COUNTER ────────────────────────────────────
+  (async () => {
+    try {
+      const { data, error } = await sb.rpc('get_waitlist_count');
+      if (!error && data != null && data > 0) {
+        const counterEl = document.getElementById('nav-counter');
+        document.getElementById('nav-counter-text').textContent =
+          `${data.toLocaleString()} students waiting`;
+        counterEl.style.display = 'flex';
+      }
+    } catch {}
+  })();
+
   // ─── 6. WAITLIST CAPTURE ────────────────────────────
-  document.getElementById('email-btn').addEventListener('click', () => {
+  document.getElementById('email-btn').addEventListener('click', async () => {
     const inp = document.getElementById('email-inp');
     const btn = document.getElementById('email-btn');
-    if (inp.value && inp.value.includes('@') && inp.value.includes('.')) {
+    const email = inp.value.trim();
+
+    if (email && email.includes('@') && email.includes('.')) {
+      btn.disabled = true;
+      btn.textContent = 'Joining…';
+
+      try {
+        const { error } = await sb.from('waitlist').insert({ email });
+        // 23505 = unique violation (already on list) — treat as success
+        if (error && error.code !== '23505') throw error;
+      } catch {}
+
+      window._waitlistEmail = email;
+
       btn.classList.add('success');
       btn.textContent = "You're on the list ✓";
       inp.value = '';
       inp.placeholder = 'See you soon!';
       inp.disabled = true;
-      btn.disabled = true;
+
+      // Bump counter optimistically
+      const counterEl = document.getElementById('nav-counter');
+      const textEl = document.getElementById('nav-counter-text');
+      const current = parseInt(textEl.textContent) || 0;
+      textEl.textContent = `${(current + 1).toLocaleString()} students waiting`;
+      counterEl.style.display = 'flex';
+
       setTimeout(() => document.getElementById('survey-modal').classList.add('open'), 400);
     } else {
       inp.style.borderColor = 'rgba(255,100,100,.65)';
@@ -1590,16 +1673,35 @@
 <script>
   // ─── SURVEY MODAL ────────────────────────────────────
   const modal = document.getElementById('survey-modal');
-  document.getElementById('survey-close').addEventListener('click', () => modal.classList.remove('open'));
-  document.getElementById('survey-skip').addEventListener('click', () => modal.classList.remove('open'));
-  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+
+  async function saveSurveyAndClose() {
+    modal.classList.remove('open');
+    const email = window._waitlistEmail;
+    if (!email) return;
+    const priceChip = document.querySelector('.price-chip.selected');
+    const price_range = priceChip ? priceChip.dataset.val : null;
+    const features = document.querySelector('.survey-textarea').value.trim() || null;
+    if (price_range || features) {
+      try {
+        await sb.from('waitlist').upsert(
+          { email, price_range, features },
+          { onConflict: 'email' }
+        );
+      } catch {}
+    }
+  }
+
+  document.getElementById('survey-close').addEventListener('click', saveSurveyAndClose);
+  document.getElementById('survey-skip').addEventListener('click', saveSurveyAndClose);
+  document.getElementById('survey-submit').addEventListener('click', saveSurveyAndClose);
+  modal.addEventListener('click', e => { if (e.target === modal) saveSurveyAndClose(); });
+
   document.querySelectorAll('.price-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       document.querySelectorAll('.price-chip').forEach(c => c.classList.remove('selected'));
       chip.classList.add('selected');
     });
   });
-  document.getElementById('survey-submit').addEventListener('click', () => modal.classList.remove('open'));
 </script>
 
 </body>
