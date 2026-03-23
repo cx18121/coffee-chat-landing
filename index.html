@@ -1641,6 +1641,18 @@
           text-align: center;
         }
       }
+      @media (max-width: 700px) {
+        /* gc-leads and gc-email start overlapping below ~750px — just show the email card */
+        .gc-leads {
+          display: none;
+        }
+        .gc-email {
+          width: 280px;
+        }
+        .hero-cards {
+          height: 320px;
+        }
+      }
       @media (max-width: 640px) {
         .email-cap {
           flex-direction: column;
@@ -1659,10 +1671,10 @@
           height: 290px;
         }
         .gc-leads {
-          width: 160px;
+          display: none;
         }
         .gc-email {
-          width: 240px;
+          width: 260px;
           padding: 14px 16px;
         }
         .ecard {
@@ -1679,15 +1691,12 @@
         }
       }
       @media (max-width: 380px) {
-        /* iPhone SE / very narrow — hide second card, shrink height */
-        .gc-leads {
-          display: none;
-        }
+        /* iPhone SE / very narrow */
         .gc-email {
           width: 220px;
         }
         .hero-cards {
-          height: 260px;
+          height: 250px;
         }
       }
 
