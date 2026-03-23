@@ -2792,6 +2792,9 @@
       //     select count(*)::integer from waitlist;
       //   $$;
       //   grant execute on function get_waitlist_count() to anon;
+      //
+      //   NOTE: price_range and features are saved via REST PATCH
+      //   (no save_survey RPC needed — anon_update policy covers it)
 
       const SUPABASE_URL = "https://ylumoxylvaskzcczwmdb.supabase.co";
       const SUPABASE_KEY = "sb_publishable_2YLaqRJ32XQ0Om2CdwMRKg_iZG4-3fP";
@@ -2852,29 +2855,7 @@
 
           const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
           if (email && emailOk) {
-            btn.disabled = true;
-            btn.textContent = "Joining…";
-
-            let insertOk = false;
-            try {
-              const res = await sbInsert("waitlist", { email });
-              // 409 = unique violation (already on list) — treat as success
-              insertOk = res.ok || res.status === 409;
-            } catch {}
-
-            if (!insertOk) {
-              btn.disabled = false;
-              btn.textContent = "Try again";
-              inp.style.borderColor = "rgba(255,100,100,.65)";
-              inp.style.boxShadow = "0 0 0 3.5px rgba(255,80,80,.15)";
-              setTimeout(() => {
-                btn.textContent = "Join waitlist";
-                inp.style.borderColor = "";
-                inp.style.boxShadow = "";
-              }, 2500);
-              return;
-            }
-
+            // Store email — DB write happens when the survey modal closes
             window._waitlistEmail = email;
 
             btn.classList.add("success");
@@ -3057,13 +3038,13 @@
         const price_range = priceChip ? priceChip.dataset.val : null;
         const features =
           document.querySelector("#survey-features").value.trim() || null;
-        if (price_range || features) {
-          try {
-            const res = await sbRpc("save_survey", { p_email: email, p_price_range: price_range, p_features: features });
-            if (!res.ok) console.warn("Survey save failed:", res.status);
-          } catch (e) {
-            console.warn("Survey save error:", e);
-          }
+        try {
+          const res = await sbInsert("waitlist", { email, price_range, features });
+          // 409 = already on list — fine
+          if (!res.ok && res.status !== 409)
+            console.warn("Waitlist insert failed:", res.status);
+        } catch (e) {
+          console.warn("Waitlist insert error:", e);
         }
       }
 
