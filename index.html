@@ -1390,7 +1390,7 @@
       .footer-logo-text {
         font-family: "Fraunces", serif;
         font-size: 18px;
-        font-weight: 400;
+        font-weight: 500;
         color: rgba(255, 255, 255, 0.9);
       }
       .footer-cta {
@@ -1611,9 +1611,13 @@
         }
         footer {
           flex-direction: column;
-          gap: 18px;
+          align-items: flex-start;
+          gap: 16px;
           padding: 30px 24px;
-          text-align: center;
+        }
+        .footer-logo-text {
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.45);
         }
       }
       @media (max-width: 700px) {
@@ -2543,7 +2547,7 @@
           event.preventDefault();
           window.scrollTo({ top: 66, behavior: 'smooth' });
         "
-        >Join waitlist →</a
+        >Join waitlist <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-left:2px"><path d="M2.5 6.5h8M7 3l3.5 3.5L7 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></
       >
     </footer>
 
