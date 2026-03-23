@@ -42,6 +42,7 @@
       color: var(--body);
       background: #fff;
       overflow-x: hidden;
+      font-kerning: normal;
     }
 
     /* ─── HERO WRAPPER ──────────────────────────────────── */
@@ -159,6 +160,8 @@
       animation: fadeIn .4s ease forwards;
     }
     @keyframes fadeIn { from { opacity:0; transform: translateX(-50%) translateY(-4px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+    @keyframes countRoll { from { opacity:0; transform: translateY(7px); } to { opacity:1; transform: translateY(0); } }
+    .nav-counter-text.rolling { animation: countRoll 0.38s var(--ease-expo) forwards; }
     .nav-counter-dot {
       width: 9px; height: 9px; border-radius: 50%;
       background: #4ade80;
@@ -181,22 +184,22 @@
 
     .hero-headline {
       font-family: 'Fraunces', serif;
-      font-size: clamp(50px, 7.2vw, 90px);
+      font-size: clamp(56px, 9vw, 112px);
       font-weight: 400;
       color: #fff;
-      line-height: 1.03;
-      letter-spacing: -2.5px;
-      max-width: 820px;
-      margin: 0 auto 22px;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      max-width: 900px;
+      margin: 0 auto 26px;
     }
     .hero-headline em { font-style: italic; font-weight: 300; }
 
     .hero-sub {
-      font-size: clamp(15.5px, 1.7vw, 18.5px);
+      font-size: clamp(1.05rem, 1.9vw, 1.2rem);
       font-weight: 300;
-      color: rgba(255,255,255,0.76);
-      max-width: 510px;
-      margin: 0 auto 34px;
+      color: rgba(255,255,255,0.78);
+      max-width: 540px;
+      margin: 0 auto 36px;
       line-height: 1.62;
     }
 
@@ -219,7 +222,7 @@
     .hero-cards {
       position: relative; z-index: 10;
       width: 100%; max-width: 1080px;
-      margin: 62px auto 0;
+      margin: 76px auto 0;
       height: 440px;
       opacity: 0;
       transform: translateY(16px);
@@ -360,73 +363,97 @@
 
     /* ─── SOCIAL PROOF ──────────────────────────────────── */
     .social-proof {
-      background: #EDE9F6;
+      background: #E4DFF2;
       text-align: center;
-      padding: 20px 24px;
+      padding: 26px 24px;
     }
     .social-proof p {
-      font-size: 13px;
-      color: rgba(91,85,160,.65);
-      letter-spacing: .05em;
+      font-size: 14px;
+      color: rgba(91,85,160,.72);
+      letter-spacing: .07em;
+      font-weight: 400;
     }
     .social-proof strong { color: var(--periwinkle); font-weight: 600; }
 
     /* ─── SECTION HELPERS ───────────────────────────────── */
     .sec-label {
       text-align: center;
-      font-size: 11.5px; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase;
-      color: var(--periwinkle); margin-bottom: 10px;
+      font-size: 12.5px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--periwinkle); margin-bottom: 12px;
     }
     .sec-title {
       font-family: 'Fraunces', serif;
-      font-size: clamp(34px, 3.8vw, 50px);
+      font-size: clamp(38px, 4.8vw, 64px);
       font-weight: 400; color: var(--dark);
       text-align: center;
-      letter-spacing: -1.4px; line-height: 1.09;
-      max-width: 620px;
+      letter-spacing: -0.035em; line-height: 1.07;
+      max-width: 680px;
       margin: 0 auto 20px;
     }
     .sec-sub {
       text-align: center;
-      font-size: 16.5px; color: var(--muted);
+      font-size: 17px; color: var(--muted);
       font-weight: 300;
-      max-width: 440px;
-      margin: 0 auto 72px;
+      max-width: 460px;
+      margin: 0 auto 80px;
       line-height: 1.62;
     }
 
     /* ─── HOW IT WORKS ──────────────────────────────────── */
-    .how { background: #F2F0FB; padding: 80px 48px; }
+    .how { background: linear-gradient(158deg, #F0EDF9 0%, #E7F0FA 100%); padding: 112px 48px; }
 
-    .steps-flow {
-      display: flex;
+    .how-inner { max-width: 960px; margin: 0 auto; }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
       align-items: center;
-      justify-content: center;
+      margin-top: 60px;
       gap: 0;
-      max-width: 820px;
-      margin: 0 auto;
     }
-    .sf-step { display: flex; align-items: center; gap: 10px; padding: 10px 24px; white-space: nowrap; flex-shrink: 0; }
-    .sf-num {
+
+    .step-card {
+      background: rgba(255,255,255,0.74);
+      border: 1px solid rgba(255,255,255,0.92);
+      border-radius: 20px;
+      padding: 32px 28px 30px;
+      box-shadow: 0 4px 24px rgba(80,65,150,.08), 0 1px 4px rgba(80,65,150,.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.28s var(--ease-quart), box-shadow 0.28s var(--ease-quart);
+      cursor: default;
+    }
+    .step-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 28px 72px rgba(80,65,150,.18), 0 8px 20px rgba(80,65,150,.1);
+    }
+
+    .step-num {
       font-family: 'Fraunces', serif;
-      font-style: italic; font-weight: 300; font-size: 13px;
-      color: var(--periwinkle); flex-shrink: 0;
+      font-style: italic; font-weight: 300;
+      font-size: 72px; line-height: 1;
+      color: var(--periwinkle); opacity: .18;
+      letter-spacing: -4px; margin-bottom: 14px;
+      transition: opacity 0.28s var(--ease-quart);
     }
-    .sf-title { font-size: 15px; font-weight: 500; color: var(--dark); letter-spacing: -.15px; }
-    .sf-sep {
-      color: rgba(123,116,196,.35);
-      font-size: 10px;
-      letter-spacing: 2px;
-      flex-shrink: 0;
+    .step-card:hover .step-num { opacity: .52; }
+
+    .step-title { font-size: 16.5px; font-weight: 600; color: var(--dark); letter-spacing: -.3px; margin-bottom: 10px; }
+
+    .step-desc { font-size: 1rem; color: var(--muted); line-height: 1.68; font-weight: 300; }
+
+    .step-arrow {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 20px; color: rgba(123,116,196,.38); font-size: 26px;
     }
 
     /* ─── FEATURE BLOCKS ────────────────────────────────── */
-    .features { padding: 100px 52px 88px; max-width: 1080px; margin: 0 auto; }
+    .features { padding: 116px 52px 100px; max-width: 1080px; margin: 0 auto; }
 
     .feat-row {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 76px;
-      align-items: center; padding: 64px 0;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 88px;
+      align-items: center; padding: 76px 0;
       border-bottom: 1px solid rgba(123,116,196,.12);
     }
     .feat-row:first-child { padding-top: 0; }
@@ -435,30 +462,30 @@
     .feat-row.rev .feat-vis  { order: 1; }
 
     .feat-eye {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-      color: var(--periwinkle); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 12.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--periwinkle); margin-bottom: 18px;
     }
     .feat-eye::before {
       content: '';
       flex-shrink: 0;
-      width: 20px; height: 1.5px;
+      width: 28px; height: 2px;
       background: var(--periwinkle);
       border-radius: 2px;
-      opacity: .7;
+      opacity: .8;
     }
     .feat-title {
       font-family: 'Fraunces', serif;
-      font-size: clamp(26px, 3.3vw, 40px);
+      font-size: clamp(30px, 4vw, 52px);
       font-weight: 400; color: var(--dark);
-      letter-spacing: -1.1px; line-height: 1.09; margin-bottom: 20px;
+      letter-spacing: -0.035em; line-height: 1.07; margin-bottom: 22px;
     }
-    .feat-desc { font-size: 15.5px; color: var(--muted); line-height: 1.7; font-weight: 300; margin-bottom: 30px; }
+    .feat-desc { font-size: 1rem; color: var(--muted); line-height: 1.7; font-weight: 300; margin-bottom: 30px; }
 
     .feat-bullets { list-style: none; display: flex; flex-direction: column; gap: 9px; }
     .feat-bullets li {
       display: flex; align-items: flex-start; gap: 10px;
-      font-size: 14px; color: #4A4760; line-height: 1.5;
+      font-size: 1rem; color: #4A4760; line-height: 1.55;
     }
     .feat-bullets li::before {
       content: '';
@@ -469,10 +496,11 @@
 
     /* feature visual containers */
     .feat-vis {
-      border-radius: 20px; overflow: hidden;
-      background: linear-gradient(135deg,#EFECF9 0%,#E6EEF8 100%);
-      padding: 28px; min-height: 300px;
+      border-radius: 24px; overflow: hidden;
+      background: linear-gradient(148deg, #E8E2F8 0%, #D8E6F8 55%, #D4DFF5 100%);
+      padding: 32px; min-height: 320px;
       display: flex; align-items: center; justify-content: center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 12px rgba(80,65,150,.06);
     }
 
     /* mock: search */
@@ -592,18 +620,17 @@
       text-align: center;
     }
     .emails-label {
-      font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--periwinkle); margin-bottom: 10px;
+      font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--periwinkle); margin-bottom: 12px;
     }
     .emails-heading {
       font-family: 'Fraunces', serif;
-      font-size: clamp(34px, 4.5vw, 54px);
+      font-size: clamp(40px, 5.5vw, 70px);
       font-weight: 400; color: var(--dark);
-      letter-spacing: -1.5px; line-height: 1.08;
-      margin-bottom: 22px;
+      letter-spacing: -0.04em; line-height: 1.05;
+      margin-bottom: 44px;
     }
     .emails-heading em { font-style: italic; color: var(--periwinkle); }
-    .emails-sub { font-size: 16px; color: var(--muted); font-weight: 300; margin-bottom: 48px; }
     .email-tabs {
       display: flex; justify-content: center; gap: 8px; margin-bottom: 28px;
     }
@@ -616,17 +643,20 @@
     }
     .etab:hover { border-color: var(--periwinkle); color: var(--periwinkle); }
     .etab.active { background: var(--periwinkle); border-color: var(--periwinkle); color: #fff; }
-    .email-cards { max-width: 680px; margin: 0 auto; position: relative; }
+    .email-cards { max-width: 680px; margin: 0 auto; display: grid; }
     .ecard {
-      display: none;
+      grid-area: 1 / 1;
       background: #fff;
       border: 1px solid rgba(123,116,196,.15);
       border-radius: 18px;
       box-shadow: var(--card-shadow);
       padding: 28px 32px;
       text-align: left;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .22s ease;
     }
-    .ecard.active { display: block; }
+    .ecard.active { opacity: 1; pointer-events: auto; }
     .ecard-meta {
       display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
     }
@@ -648,7 +678,7 @@
       border-bottom: 1px solid rgba(123,116,196,.12);
     }
     .ecard-body {
-      font-size: 14px; line-height: 1.75; color: var(--body); font-weight: 300;
+      font-size: 1rem; line-height: 1.75; color: var(--body); font-weight: 300;
     }
     .ecard-body mark {
       background: rgba(123,116,196,.12); color: #5B55A0;
@@ -658,7 +688,7 @@
     /* ─── FINAL CTA ─────────────────────────────────────── */
     .final-cta {
       background: linear-gradient(160deg,#7570C0 0%,#8FA6D4 48%,#C6D8F5 100%);
-      padding: 116px 48px;
+      padding: 140px 48px;
       text-align: center; position: relative; overflow: hidden;
     }
     .final-cta::after {
@@ -669,12 +699,12 @@
     .cta-inner { position: relative; z-index: 1; }
     .cta-title {
       font-family: 'Fraunces', serif;
-      font-size: clamp(38px, 5vw, 62px);
+      font-size: clamp(46px, 6.2vw, 82px);
       font-weight: 400; color: #fff;
-      letter-spacing: -2px; line-height: 1.05;
-      margin-bottom: 18px;
+      letter-spacing: -0.04em; line-height: 1.02;
+      margin-bottom: 20px;
     }
-    .cta-sub { font-size: 17px; color: rgba(255,255,255,.72); font-weight: 300; margin-bottom: 42px; }
+    .cta-sub { font-size: 18px; color: rgba(255,255,255,.78); font-weight: 300; margin-bottom: 46px; }
     .email-cap { display: flex; justify-content: center; gap: 9px; max-width: 430px; margin: 0 auto; }
     .email-inp {
       flex: 1; padding: 12px 20px; border-radius: 100px;
@@ -838,16 +868,20 @@
     @media (max-width: 900px) {
       nav { padding: 0 24px; }
       .nav-links { display: none; }
+      .hero-content { padding-top: 44px; }
       .hero-cards { height: 360px; }
       .gc-pipe, .gc-ai { display: none; }
       .gc-leads { width: 200px; }
       .gc-email { width: 300px; padding: 16px 18px; }
-      .steps-flow { gap: 0; flex-direction: column; align-items: flex-start; }
-      .sf-sep { display: none; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .step-arrow { transform: rotate(90deg); padding: 12px 0; }
+      .step-card { padding: 24px 20px 22px; }
       .feat-row, .feat-row.rev .feat-text, .feat-row.rev .feat-vis { grid-template-columns: 1fr; order: unset; gap: 36px; }
       .feat-row { gap: 36px; }
       .how { padding: 64px 24px; }
       .features { padding: 72px 24px; }
+      .emails-section { padding: 72px 24px 80px; }
+      .email-tabs { flex-wrap: wrap; }
       .final-cta { padding: 80px 24px; }
       footer { flex-direction: column; gap: 18px; padding: 30px 24px; text-align: center; }
     }
@@ -855,7 +889,11 @@
       .hero-cards { height: 290px; }
       .gc-leads { width: 160px; }
       .gc-email { width: 240px; padding: 14px 16px; }
-      .email-cap { flex-direction: column; max-width: 300px; }
+      .email-cap { flex-direction: column; max-width: 320px; }
+      .email-inp { padding: 14px 20px; }
+      .email-btn { padding: 14px 22px; width: 100%; }
+      .ecard { padding: 22px 20px; }
+      .etab { padding: 11px 16px; font-size: 12.5px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1126,22 +1164,27 @@
 ════════════════════════════════════════════════════════ -->
 <section class="how" id="how">
   <div class="sec-label">How it works</div>
-  <h2 class="sec-title" style="margin-bottom:36px;">Three steps to a full pipeline</h2>
+  <h2 class="sec-title" style="margin-bottom:0;">Three steps to a full pipeline</h2>
 
-  <div class="steps-flow fu">
-    <div class="sf-step">
-      <span class="sf-num">01</span>
-      <span class="sf-title">Find your targets</span>
-    </div>
-    <span class="sf-sep">·····</span>
-    <div class="sf-step">
-      <span class="sf-num">02</span>
-      <span class="sf-title">Generate personalized emails</span>
-    </div>
-    <span class="sf-sep">·····</span>
-    <div class="sf-step">
-      <span class="sf-num">03</span>
-      <span class="sf-title">Track and follow up</span>
+  <div class="how-inner">
+    <div class="steps-grid fu">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-title">Find your targets</div>
+        <p class="step-desc">Search by firm, fund type, seniority, and alma mater. Necto returns a curated list of reachable contacts with verified emails.</p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-title">Generate personalized outreach</div>
+        <p class="step-desc">Each email is tailored to the contact's background, deal history, and your target role — not a copy-paste template.</p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-title">Track and follow up</div>
+        <p class="step-desc">See who opened, who replied, and who needs a nudge. Necto surfaces your pipeline and queues follow-ups automatically.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1212,7 +1255,6 @@
       <h2 class="feat-title">Emails that sound like you wrote them</h2>
       <p class="feat-desc">Each email is crafted around what that person actually did — their deals, their school, their career arc. No templates. No filler. Just the kind of email that gets a reply.</p>
       <ul class="feat-bullets">
-        <li>References real transactions and career milestones</li>
         <li>Matches your voice and tone after a single sample</li>
         <li>Send in one click or edit before hitting send</li>
       </ul>
@@ -1249,7 +1291,6 @@
       <h2 class="feat-title">Your pipeline, always current</h2>
       <p class="feat-desc">See your entire recruiting outreach at a glance. Know who opened, who replied, and who needs a follow-up — without digging through your sent folder.</p>
       <ul class="feat-bullets">
-        <li>Real-time open and reply tracking per contact</li>
         <li>Auto-suggested follow-ups at exactly the right time</li>
         <li>Notes, next steps, and meeting links in one view</li>
       </ul>
@@ -1310,7 +1351,6 @@
 <section class="emails-section fu">
   <div class="emails-label">Emails Generated</div>
   <h2 class="emails-heading">See what Necto writes<br><em>for you</em></h2>
-  <p class="emails-sub">Real examples — different firms, different roles, all personalized.</p>
   <div class="email-tabs">
     <button class="etab active" data-tab="0">Bank of America · LevFin</button>
     <button class="etab" data-tab="1">Morgan Stanley · M&A</button>
@@ -1391,6 +1431,26 @@
 
 <script>
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ─── SPARKLE BURST ───────────────────────────────────
+  function spawnSparkles(btn) {
+    const rect = btn.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top  + rect.height / 2;
+    const colors = ['#7B74C4','#9BA8D8','#C8DCF5','#B5A0D8','#7B74C4','#A8BCE4','#C8DCF5','#9BA8D8'];
+    colors.forEach((color, i) => {
+      const dot = document.createElement('span');
+      const angle = (i / colors.length) * Math.PI * 2;
+      const dist  = 36 + Math.random() * 28;
+      dot.style.cssText = `position:fixed;width:6px;height:6px;border-radius:50%;background:${color};left:${cx}px;top:${cy}px;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);`;
+      document.body.appendChild(dot);
+      dot.animate([
+        { opacity: 1, transform: `translate(-50%,-50%) translate(0,0) scale(1)` },
+        { opacity: 0, transform: `translate(-50%,-50%) translate(${Math.cos(angle)*dist}px,${Math.sin(angle)*dist}px) scale(0)` }
+      ], { duration: 580, easing: 'cubic-bezier(0.16,1,0.3,1)', fill: 'forwards' })
+      .onfinish = () => dot.remove();
+    });
+  }
 
   // ─── 1. HERO ENTRANCE ────────────────────────────────
   requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -1502,7 +1562,7 @@
 
       async function runTypewriter() {
         // Wait for hero entrance to finish before starting
-        await sleep(2800);
+        await sleep(900);
 
         const tpl = emailTemplates[0];
 
@@ -1613,9 +1673,16 @@
       inp.placeholder = 'See you soon!';
       inp.disabled = true;
 
-      // Bump counter
+      // Sparkle burst
+      if (!reducedMotion) spawnSparkles(btn);
+
+      // Bump counter with roll animation
       currentCount++;
-      document.getElementById('nav-counter-text').textContent = `${currentCount.toLocaleString()} students waiting`;
+      const counterEl = document.getElementById('nav-counter-text');
+      counterEl.classList.remove('rolling');
+      void counterEl.offsetWidth;
+      counterEl.textContent = `${currentCount.toLocaleString()} students waiting`;
+      counterEl.classList.add('rolling');
 
       setTimeout(() => document.getElementById('survey-modal').classList.add('open'), 400);
     } else {
