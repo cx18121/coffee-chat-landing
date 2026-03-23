@@ -377,7 +377,6 @@
         transform: rotate(-1.5deg);
         z-index: 5;
       }
-
       /* float animations — start after cards entrance (~1.4s in) */
       @keyframes floatEmail {
         0%,
@@ -414,6 +413,15 @@
             rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
         }
       }
+      .gc-email {
+        animation: floatEmail 5.5s ease-in-out 1.5s infinite;
+      }
+      .gc-leads {
+        animation: floatLeads 6.8s ease-in-out 2.3s infinite;
+      }
+      .gc-pipe {
+        animation: floatPipe 5.2s ease-in-out 1.9s infinite;
+      }
       @keyframes floatAI {
         0%,
         100% {
@@ -436,22 +444,12 @@
             rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
         }
       }
-      .gc-email {
-        animation: floatEmail 5.5s ease-in-out 1.5s infinite;
-      }
-      .gc-leads {
-        animation: floatLeads 6.8s ease-in-out 2.3s infinite;
-      }
-      .gc-pipe {
-        animation: floatPipe 5.2s ease-in-out 1.9s infinite;
-      }
       .gc-ai {
         animation: floatAI 7.4s ease-in-out 3s infinite;
       }
       .gc-lift {
         animation: floatLift 6.2s ease-in-out 4.2s infinite;
       }
-
       .gc-hd {
         display: flex;
         align-items: center;
@@ -710,16 +708,6 @@
         max-width: 680px;
         margin: 0 auto 20px;
       }
-      .sec-sub {
-        text-align: center;
-        font-size: 17px;
-        color: var(--muted);
-        font-weight: 300;
-        max-width: 460px;
-        margin: 0 auto 80px;
-        line-height: 1.62;
-      }
-
       /* ─── HOW IT WORKS ──────────────────────────────────── */
       .how {
         background: linear-gradient(158deg, var(--peri-tint) 0%, var(--sky-tint) 100%);
@@ -936,7 +924,7 @@
       }
       .mock-sinput {
         font-size: 13.5px;
-        color: #333;
+        color: var(--dark);
         font-family: "DM Sans", sans-serif;
       }
       .mock-frow {
@@ -997,7 +985,7 @@
       }
       .mock-rs {
         font-size: 11px;
-        color: #999;
+        color: var(--muted);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -1033,7 +1021,7 @@
       .mock-mail-ttl {
         font-size: 12.5px;
         font-weight: 600;
-        color: #333;
+        color: var(--dark);
       }
       .mock-ai-pill {
         display: inline-flex;
@@ -1060,17 +1048,17 @@
         margin-bottom: 0;
       }
       .mock-flbl {
-        color: #999;
+        color: var(--muted);
         min-width: 48px;
       }
       .mock-fval {
-        color: #333;
+        color: var(--dark);
         font-weight: 500;
       }
       .mock-mail-body {
         padding: 14px 15px;
         font-size: 12.5px;
-        color: #444;
+        color: var(--body);
         line-height: 1.72;
       }
 
@@ -1089,32 +1077,6 @@
         font-weight: 600;
         color: var(--dark);
       }
-      .mock-stats {
-        display: flex;
-        gap: 14px;
-      }
-      .mock-stat {
-        text-align: center;
-      }
-      .mock-stat-n {
-        font-family: "Fraunces", serif;
-        font-size: 21px;
-        font-weight: 400;
-        color: var(--dark);
-        line-height: 1;
-      }
-      .mock-stat-n.green {
-        color: var(--green);
-      }
-      .mock-stat-n.purple {
-        color: var(--periwinkle);
-      }
-      .mock-stat-l {
-        font-size: 9.5px;
-        color: #999;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
       .mock-tbl {
         background: #fff;
         border-radius: 12px;
@@ -1130,7 +1092,7 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.06);
         font-size: 10.5px;
         font-weight: 700;
-        color: #999;
+        color: var(--muted);
         text-transform: uppercase;
         letter-spacing: 0.06em;
       }
@@ -1189,14 +1151,6 @@
         text-align: center;
         content-visibility: auto;
         contain-intrinsic-size: auto 800px;
-      }
-      .emails-label {
-        font-size: 12.5px;
-        font-weight: 700;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--periwinkle);
-        margin-bottom: 12px;
       }
       .emails-heading {
         font-family: "Fraunces", serif;
@@ -1505,8 +1459,7 @@
         }
 
         /* Section header clusters */
-        .sec-label,
-        .emails-label {
+        .sec-label {
           opacity: 0;
           transform: translateY(10px);
           animation: sectionUp linear both;
@@ -1520,13 +1473,6 @@
           animation: sectionUp linear both;
           animation-timeline: view(block);
           animation-range: entry 5% entry 28%;
-        }
-        .sec-sub {
-          opacity: 0;
-          transform: translateY(14px);
-          animation: sectionUp linear both;
-          animation-timeline: view(block);
-          animation-range: entry 10% entry 33%;
         }
         @keyframes sectionUp {
           to {
@@ -2188,7 +2134,6 @@
      EMAILS GENERATED
 ════════════════════════════════════════════════════════ -->
     <section class="emails-section fu">
-      <p class="emails-label" aria-hidden="true">Emails Generated</p>
       <h2 class="emails-heading">
         See what Necto writes<br /><em>for you</em>
       </h2>
@@ -2497,20 +2442,6 @@
           <div class="mock-pipe">
             <div class="mock-pipe-hdr">
               <span class="mock-pipe-title">Outreach Pipeline</span>
-              <div class="mock-stats">
-                <div class="mock-stat">
-                  <div class="mock-stat-n">24</div>
-                  <div class="mock-stat-l">Sent</div>
-                </div>
-                <div class="mock-stat">
-                  <div class="mock-stat-n green">9</div>
-                  <div class="mock-stat-l">Replied</div>
-                </div>
-                <div class="mock-stat">
-                  <div class="mock-stat-n purple">5</div>
-                  <div class="mock-stat-l">Booked</div>
-                </div>
-              </div>
             </div>
             <div class="mock-tbl">
               <div class="mock-thdr">
