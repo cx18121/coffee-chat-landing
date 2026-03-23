@@ -1641,17 +1641,7 @@
           text-align: center;
         }
       }
-      @media (max-width: 560px) {
-        .hero-cards {
-          height: 290px;
-        }
-        .gc-leads {
-          width: 160px;
-        }
-        .gc-email {
-          width: 240px;
-          padding: 14px 16px;
-        }
+      @media (max-width: 640px) {
         .email-cap {
           flex-direction: column;
           max-width: 320px;
@@ -1663,12 +1653,41 @@
           padding: 14px 22px;
           width: 100%;
         }
+      }
+      @media (max-width: 560px) {
+        .hero-cards {
+          height: 290px;
+        }
+        .gc-leads {
+          width: 160px;
+        }
+        .gc-email {
+          width: 240px;
+          padding: 14px 16px;
+        }
         .ecard {
           padding: 22px 20px;
         }
+        /* touch targets — min 44px tall */
         .etab {
-          padding: 11px 16px;
+          padding: 14px 16px;
           font-size: 12.5px;
+        }
+        .footer-cta {
+          padding: 14px 22px;
+          min-height: 44px;
+        }
+      }
+      @media (max-width: 380px) {
+        /* iPhone SE / very narrow — hide second card, shrink height */
+        .gc-leads {
+          display: none;
+        }
+        .gc-email {
+          width: 220px;
+        }
+        .hero-cards {
+          height: 260px;
         }
       }
 
