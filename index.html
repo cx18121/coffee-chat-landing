@@ -2274,10 +2274,11 @@
           <div class="step-arrow">→</div>
           <div class="step-card">
             <div class="step-num">02</div>
-            <div class="step-title">Generate personalized outreach</div>
+            <div class="step-title">Write and send from one place</div>
             <p class="step-desc">
-              Each email is tailored to the contact's background, deal history,
-              and your target role — not a copy-paste template.
+              Necto drafts each email around the contact's background, deal
+              history, and your target role — then sends it directly from your
+              inbox. No copy-pasting, no switching tabs.
             </p>
           </div>
           <div class="step-arrow">→</div>
@@ -2787,6 +2788,7 @@
       //   );
       //   alter table waitlist enable row level security;
       //   create policy "anon_insert" on waitlist for insert with check (true);
+      //   create policy "anon_update" on waitlist for update using (true) with check (true);
       //
       //   create or replace function get_waitlist_count()
       //   returns integer language sql security definer as $$
@@ -2808,15 +2810,15 @@
           headers: { ..._sbHeaders, Prefer: "return=minimal" },
           body: JSON.stringify(data),
         });
-      const sbUpsert = (table, data, onConflict) =>
-        fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=${onConflict}`, {
-          method: "POST",
-          headers: {
-            ..._sbHeaders,
-            Prefer: "resolution=merge-duplicates,return=minimal",
+      const sbPatch = (table, data, eqCol, eqVal) =>
+        fetch(
+          `${SUPABASE_URL}/rest/v1/${table}?${eqCol}=eq.${encodeURIComponent(eqVal)}`,
+          {
+            method: "PATCH",
+            headers: { ..._sbHeaders, Prefer: "return=minimal" },
+            body: JSON.stringify(data),
           },
-          body: JSON.stringify(data),
-        });
+        );
 
       // ─── LIVE COUNTER ────────────────────────────────────
       const COUNT_OFFSET = 61;
@@ -3057,12 +3059,16 @@
           document.querySelector("#survey-features").value.trim() || null;
         if (price_range || features) {
           try {
-            await sbUpsert(
+            const res = await sbPatch(
               "waitlist",
-              { email, price_range, features },
+              { price_range, features },
               "email",
+              email,
             );
-          } catch {}
+            if (!res.ok) console.warn("Survey save failed:", res.status);
+          } catch (e) {
+            console.warn("Survey save error:", e);
+          }
         }
       }
 
