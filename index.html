@@ -1395,7 +1395,7 @@
       }
       .footer-tagline {
         font-size: 13px;
-        color: rgba(255, 255, 255, 0.38);
+        color: rgba(255, 255, 255, 0.55);
         margin-top: 4px;
         font-weight: 400;
         letter-spacing: 0.01em;
@@ -1947,7 +1947,7 @@
     <div class="hero-wrap">
       <!-- Nav -->
       <nav>
-        <a href="#" class="logo">
+        <a href="#" class="logo" aria-label="Necto — home">
           <div class="logo-icon">
             <svg
               viewBox="0 0 17 17"
@@ -2610,8 +2610,9 @@
       requestAnimationFrame(() =>
         requestAnimationFrame(() => {
           document.body.classList.add("hero-loaded");
-          // Release compositor layers once entrance animations are done (~1.2s)
-          setTimeout(() => document.body.classList.add("hero-settled"), 1400);
+          // Release compositor layers once entrance animations finish
+          const heroCards = document.querySelector(".hero-cards");
+          heroCards.addEventListener("transitionend", () => document.body.classList.add("hero-settled"), { once: true });
         }),
       );
 
@@ -2895,7 +2896,9 @@
             const count = await res.json();
             if (typeof count === "number") currentCount = COUNT_OFFSET + count;
           }
-        } catch {}
+        } catch (e) {
+          console.warn("Waitlist count fetch failed:", e);
+        }
         document.getElementById("nav-counter-text").textContent =
           `${currentCount.toLocaleString()} students waiting`;
         document.getElementById("nav-counter").style.display = "flex";
@@ -2914,11 +2917,25 @@
             btn.disabled = true;
             btn.textContent = "Joining…";
 
+            let insertOk = false;
             try {
               const res = await sbInsert("waitlist", { email });
               // 409 = unique violation (already on list) — treat as success
-              if (!res.ok && res.status !== 409) throw new Error(res.status);
+              insertOk = res.ok || res.status === 409;
             } catch {}
+
+            if (!insertOk) {
+              btn.disabled = false;
+              btn.textContent = "Try again";
+              inp.style.borderColor = "rgba(255,100,100,.65)";
+              inp.style.boxShadow = "0 0 0 3.5px rgba(255,80,80,.15)";
+              setTimeout(() => {
+                btn.textContent = "Join waitlist";
+                inp.style.borderColor = "";
+                inp.style.boxShadow = "";
+              }, 2500);
+              return;
+            }
 
             window._waitlistEmail = email;
 
