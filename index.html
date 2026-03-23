@@ -47,7 +47,13 @@
         --ink: #4a4760;
         --muted: #6b6880;
         --green: #34c77b;
+        --green-dark: #1a9950;
         --amber: #f5a623;
+        --amber-dark: #b07a0a;
+        --peri-tint: #f2f0fb;
+        --sky-tint: #eaf1fa;
+        --peri-light: #e4dff2;
+        --mid-muted: #a8b0c8;
         --glass: rgba(255, 255, 255, 0.68);
         --glass-border: rgba(255, 255, 255, 0.88);
         --card-shadow:
@@ -458,6 +464,12 @@
         border-radius: 50%;
         flex-shrink: 0;
       }
+      .gc-dot-peri { background: var(--periwinkle); }
+      .gc-dot-green { background: var(--green); }
+      .gc-dot-amber { background: var(--amber); }
+      .ecard-av-green { background: linear-gradient(135deg, #a8c4a2, #7bad8a); }
+      .ecard-av-blue  { background: linear-gradient(135deg, #7b9bd8, #9bc4e5); }
+      .ecard-av-purple { background: linear-gradient(135deg, #c4a8d8, #9b7bc4); }
       .gc-lbl {
         font-size: 10.5px;
         font-weight: 700;
@@ -618,7 +630,7 @@
         background: var(--amber);
       }
       .s-gray {
-        background: #a8b0c8;
+        background: var(--mid-muted);
       }
       .pip-name {
         font-size: 11.5px;
@@ -662,7 +674,7 @@
 
       /* ─── SOCIAL PROOF ──────────────────────────────────── */
       .social-proof {
-        background: #e4dff2;
+        background: var(--peri-light);
         text-align: center;
         padding: 26px 24px;
       }
@@ -710,7 +722,7 @@
 
       /* ─── HOW IT WORKS ──────────────────────────────────── */
       .how {
-        background: linear-gradient(158deg, #f2f0fb 0%, #eaf1fa 100%);
+        background: linear-gradient(158deg, var(--peri-tint) 0%, var(--sky-tint) 100%);
         padding: 100px 48px;
         content-visibility: auto;
         contain-intrinsic-size: auto 600px;
@@ -1150,11 +1162,11 @@
       }
       .mock-pill.rep {
         background: rgba(52, 199, 123, 0.12);
-        color: #1a9950;
+        color: var(--green-dark);
       }
       .mock-pill.opn {
         background: rgba(245, 166, 35, 0.12);
-        color: #b07a0a;
+        color: var(--amber-dark);
       }
       .mock-pill.snt {
         background: rgba(var(--periwinkle-rgb), 0.1);
@@ -1162,7 +1174,7 @@
       }
       .mock-pill.dft {
         background: rgba(168, 176, 200, 0.15);
-        color: #777;
+        color: var(--mid-muted);
       }
       .mock-tdate {
         font-size: 11px;
@@ -2026,7 +2038,7 @@
         <!-- Lead Discovery -->
         <div class="gc gc-leads">
           <div class="gc-hd">
-            <div class="gc-dot" style="background: #7b74c4"></div>
+            <div class="gc-dot gc-dot-peri"></div>
             <span class="gc-lbl">Lead Discovery</span>
           </div>
           <div class="lf-chips">
@@ -2081,7 +2093,7 @@
         <!-- Email Draft -->
         <div class="gc gc-email">
           <div class="gc-hd">
-            <div class="gc-dot" style="background: #34c77b"></div>
+            <div class="gc-dot gc-dot-green"></div>
             <span class="gc-lbl">AI Draft</span>
           </div>
           <div class="em-to">
@@ -2105,7 +2117,7 @@
         <!-- Reply Tracker -->
         <div class="gc gc-pipe">
           <div class="gc-hd">
-            <div class="gc-dot" style="background: #f5a623"></div>
+            <div class="gc-dot gc-dot-amber"></div>
             <span class="gc-lbl">Pipeline</span>
           </div>
           <div class="pip-list">
@@ -2176,7 +2188,7 @@
      EMAILS GENERATED
 ════════════════════════════════════════════════════════ -->
     <section class="emails-section fu">
-      <div class="emails-label">Emails Generated</div>
+      <p class="emails-label" aria-hidden="true">Emails Generated</p>
       <h2 class="emails-heading">
         See what Necto writes<br /><em>for you</em>
       </h2>
@@ -2193,7 +2205,7 @@
           <div class="ecard-meta">
             <div
               class="ecard-av"
-              style="background: linear-gradient(135deg, #a8c4a2, #7bad8a)"
+              class="ecard-av ecard-av-green"
             >
               GP
             </div>
@@ -2228,10 +2240,7 @@
         <!-- Tab 1 -->
         <div class="ecard">
           <div class="ecard-meta">
-            <div
-              class="ecard-av"
-              style="background: linear-gradient(135deg, #7b9bd8, #9bc4e5)"
-            >
+            <div class="ecard-av ecard-av-blue">
               KG
             </div>
             <div>
@@ -2265,10 +2274,7 @@
         <!-- Tab 2 -->
         <div class="ecard">
           <div class="ecard-meta">
-            <div
-              class="ecard-av"
-              style="background: linear-gradient(135deg, #c4a8d8, #9b7bc4)"
-            >
+            <div class="ecard-av ecard-av-purple">
               KC
             </div>
             <div>
@@ -2307,7 +2313,7 @@
      HOW IT WORKS
 ════════════════════════════════════════════════════════ -->
     <section class="how" id="how">
-      <div class="sec-label">How it works</div>
+      <p class="sec-label" aria-hidden="true">How it works</p>
       <h2 class="sec-title">Three steps to a full pipeline</h2>
 
       <div class="how-inner">
@@ -2995,6 +3001,7 @@
       role="dialog"
       aria-modal="true"
       aria-labelledby="survey-title"
+      aria-describedby="survey-desc"
     >
       <div class="survey-card">
         <button
@@ -3007,7 +3014,7 @@
         </button>
         <div class="survey-header">
           <h3 class="survey-title" id="survey-title">You're on the list!</h3>
-          <p class="survey-sub">
+          <p class="survey-sub" id="survey-desc">
             Two quick optional questions — helps us build exactly what you need.
           </p>
         </div>
