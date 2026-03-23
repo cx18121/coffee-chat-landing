@@ -2807,19 +2807,16 @@
           headers: { ..._sbHeaders, Prefer: "return=minimal" },
           body: JSON.stringify(data),
         });
-      const sbPatch = (table, data, eqCol, eqVal) =>
-        fetch(
-          `${SUPABASE_URL}/rest/v1/${table}?${eqCol}=eq.${encodeURIComponent(eqVal)}`,
-          {
-            method: "PATCH",
-            headers: { ..._sbHeaders, Prefer: "return=minimal" },
-            body: JSON.stringify(data),
-          },
-        );
+      const sbRpc = (fn, args) =>
+        fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+          method: "POST",
+          headers: _sbHeaders,
+          body: JSON.stringify(args),
+        });
 
       // ─── LIVE COUNTER ────────────────────────────────────
-      const COUNT_OFFSET = 61;
-      let currentCount = COUNT_OFFSET;
+      const COUNT_THRESHOLD = 30;
+      let currentCount = 0;
 
       (async () => {
         try {
@@ -2833,14 +2830,16 @@
           );
           if (res.ok) {
             const count = await res.json();
-            if (typeof count === "number") currentCount = COUNT_OFFSET + count;
+            if (typeof count === "number") currentCount = count;
           }
         } catch (e) {
           console.warn("Waitlist count fetch failed:", e);
         }
-        document.getElementById("nav-counter-text").textContent =
-          `${currentCount.toLocaleString()} students waiting`;
-        document.getElementById("nav-counter").style.display = "flex";
+        if (currentCount >= COUNT_THRESHOLD) {
+          document.getElementById("nav-counter-text").textContent =
+            `${currentCount.toLocaleString()} students waiting`;
+          document.getElementById("nav-counter").style.display = "flex";
+        }
       })();
 
       // ─── 6. WAITLIST CAPTURE ────────────────────────────
@@ -2890,10 +2889,14 @@
             // Bump counter with roll animation
             currentCount++;
             const counterEl = document.getElementById("nav-counter-text");
-            counterEl.classList.remove("rolling");
-            void counterEl.offsetWidth;
-            counterEl.textContent = `${currentCount.toLocaleString()} students waiting`;
-            counterEl.classList.add("rolling");
+            if (currentCount >= COUNT_THRESHOLD) {
+              const navCounter = document.getElementById("nav-counter");
+              counterEl.classList.remove("rolling");
+              void counterEl.offsetWidth;
+              counterEl.textContent = `${currentCount.toLocaleString()} students waiting`;
+              counterEl.classList.add("rolling");
+              if (navCounter.style.display !== "flex") navCounter.style.display = "flex";
+            }
 
             setTimeout(
               () =>
@@ -3056,12 +3059,7 @@
           document.querySelector("#survey-features").value.trim() || null;
         if (price_range || features) {
           try {
-            const res = await sbPatch(
-              "waitlist",
-              { price_range, features },
-              "email",
-              email,
-            );
+            const res = await sbRpc("save_survey", { p_email: email, p_price_range: price_range, p_features: features });
             if (!res.ok) console.warn("Survey save failed:", res.status);
           } catch (e) {
             console.warn("Survey save error:", e);
