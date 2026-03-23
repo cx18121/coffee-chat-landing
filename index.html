@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Necto — Land Every Coffee Chat. Automatically.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --periwinkle:   #7B74C4;
+      --mid-blue:     #96A8D8;
+      --sky:          #C8DCF5;
+      --dark:         #13101E;
+      --dark2:        #1E1A30;
+      --body:         #2E2B3D;
+      --muted:        #6B6880;
+      --glass:        rgba(255,255,255,0.68);
+      --glass-border: rgba(255,255,255,0.88);
+      --card-shadow:  0 8px 32px rgba(80,65,150,.12), 0 2px 8px rgba(80,65,150,.08);
+      --ease-expo:    cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-quart:   cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    @property --grad-angle { syntax: '<angle>';      inherits: false; initial-value: 162deg; }
+    @property --tilt-x     { syntax: '<angle>';      inherits: false; initial-value: 0deg;   }
+    @property --tilt-y     { syntax: '<angle>';      inherits: false; initial-value: 0deg;   }
+
+    @keyframes gradBreath {
+      from { --grad-angle: 154deg; }
+      to   { --grad-angle: 171deg; }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--body);
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ─── HERO WRAPPER ──────────────────────────────────── */
+    .hero-wrap {
+      background: linear-gradient(
+        var(--grad-angle),
+        #7570C0 0%,
+        #8A87CB 12%,
+        #97A5D5 28%,
+        #ABBDE5 46%,
+        #C4D5EF 62%,
+        #D9E7F7 78%,
+        #EBF2FB 100%
+      );
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      animation: gradBreath 14s ease-in-out infinite alternate;
+    }
+
+    /* grain */
+    .hero-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ─── NAV TOP SPACING ───────────────────────────────── */
+
+    /* ─── NAV ───────────────────────────────────────────── */
+    nav {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 52px;
+      height: 66px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 31px; height: 31px;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.38);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 17px; height: 17px; }
+    .logo-name {
+      font-family: 'Fraunces', serif;
+      font-size: 19px;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: -.2px;
+    }
+
+    .nav-links {
+      display: flex; gap: 34px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.78);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-login {
+      font-size: 14px;
+      color: rgba(255,255,255,0.78);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .nav-login:hover { color: #fff; }
+    .nav-signup {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--dark);
+      color: #fff;
+      font-size: 13.5px; font-weight: 500;
+      padding: 8px 19px;
+      border-radius: 100px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: background .15s, transform .15s;
+    }
+    .nav-signup:hover { background: var(--dark2); transform: translateY(-1px); }
+    .nav-signup:active { transform: scale(0.97) !important; transition-duration: 0.08s !important; }
+
+    /* ─── HERO CONTENT ──────────────────────────────────── */
+    .hero-content {
+      position: relative; z-index: 10;
+      text-align: center;
+      padding: 76px 24px 0;
+    }
+
+    .hero-headline {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(50px, 7.2vw, 90px);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.03;
+      letter-spacing: -2.5px;
+      max-width: 820px;
+      margin: 0 auto 22px;
+    }
+    .hero-headline em { font-style: italic; font-weight: 300; }
+
+    .hero-sub {
+      font-size: clamp(15.5px, 1.7vw, 18.5px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.76);
+      max-width: 510px;
+      margin: 0 auto 34px;
+      line-height: 1.62;
+    }
+
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--dark);
+      color: #fff;
+      font-size: 15px; font-weight: 500;
+      padding: 13px 27px;
+      border-radius: 100px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: background .2s, transform .2s, box-shadow .2s;
+    }
+    .hero-cta:hover {
+      background: var(--dark2);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(19,16,30,.38);
+    }
+    .hero-cta .arr { font-size: 13px; opacity: 0.65; }
+    .hero-cta:active { transform: scale(0.97) !important; box-shadow: none !important; transition-duration: 0.08s !important; }
+
+    /* ─── HERO ENTRANCE ──────────────────────────────────── */
+    .hero-headline, .hero-sub, .hero-cta {
+      opacity: 0;
+      transform: translateY(22px);
+      will-change: transform, opacity;
+    }
+    @keyframes heroReveal {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-loaded .hero-headline { animation: heroReveal 0.8s var(--ease-expo) 0.05s forwards; }
+    .hero-loaded .hero-sub      { animation: heroReveal 0.8s var(--ease-expo) 0.18s forwards; }
+    .hero-loaded .hero-cta      { animation: heroReveal 0.75s var(--ease-expo) 0.3s forwards; }
+
+    /* ─── FLOATING CARDS ────────────────────────────────── */
+    .hero-cards {
+      position: relative; z-index: 10;
+      width: 100%; max-width: 1080px;
+      margin: 62px auto 0;
+      height: 440px;
+      opacity: 0;
+      transform: translateY(16px);
+      will-change: transform, opacity;
+      transition: opacity 0.9s var(--ease-expo) 0.46s, transform 0.9s var(--ease-expo) 0.46s;
+    }
+    .hero-loaded .hero-cards { opacity: 1; transform: translateY(0); }
+
+    .gc {
+      position: absolute;
+      background: var(--glass);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      box-shadow: var(--card-shadow), inset 0 1px 0 rgba(255,255,255,0.9);
+      overflow: hidden;
+    }
+
+    /* card positions */
+    .gc-leads   { left: 3.5%; top: 24px;  width: 258px; padding: 15px; transform: rotate(-2.2deg); }
+    .gc-email   { left: 50%;  top: -8px; width: 374px; padding: 20px 22px; transform: translateX(-50%) rotate(.3deg); z-index: 6; }
+    .gc-pipe    { right: 3%;  top: 28px;  width: 248px; padding: 15px; transform: rotate(2.1deg); }
+    .gc-ai      { left: 58%;  top: 208px; width: 214px; padding: 13px 15px; transform: rotate(-1.2deg); z-index: 5; }
+
+    /* float animations — start after cards entrance (~1.4s in) */
+    @keyframes floatEmail {
+      0%, 100% { transform: translateX(-50%) rotate(.3deg) translateY(0)    perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); }
+      50%       { transform: translateX(-50%) rotate(.3deg) translateY(-11px) perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); }
+    }
+    @keyframes floatLeads {
+      0%, 100% { transform: rotate(-2.2deg) translateY(0)   perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); }
+      50%       { transform: rotate(-2.2deg) translateY(-8px) perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); }
+    }
+    @keyframes floatPipe {
+      0%, 100% { transform: rotate(2.1deg) translateY(0)   perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); }
+      50%       { transform: rotate(2.1deg) translateY(-7px) perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); }
+    }
+    @keyframes floatAI {
+      0%, 100% { transform: rotate(-1.2deg) translateY(0)   perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); }
+      50%       { transform: rotate(-1.2deg) translateY(-9px) perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); }
+    }
+    .gc-email { animation: floatEmail 5.5s ease-in-out 1.5s infinite; }
+    .gc-leads { animation: floatLeads 6.8s ease-in-out 2.3s infinite; }
+    .gc-pipe  { animation: floatPipe  5.2s ease-in-out 1.9s infinite; }
+    .gc-ai    { animation: floatAI   7.4s ease-in-out 3.0s infinite; }
+
+    .gc-hd {
+      display: flex; align-items: center; gap: 7px;
+      margin-bottom: 11px;
+    }
+    .gc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .gc-lbl {
+      font-size: 10.5px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* lead card */
+    .lf-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+    .lf-chip {
+      font-size: 10.5px; font-weight: 500;
+      color: #5B55A0;
+      background: rgba(91,85,160,.1);
+      border: 1px solid rgba(91,85,160,.2);
+      border-radius: 100px;
+      padding: 2px 8px;
+    }
+    .lead-list { display: flex; flex-direction: column; gap: 7px; }
+    .lead-row {
+      display: flex; align-items: center; gap: 9px;
+      padding: 7px 9px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 9px;
+    }
+    .av {
+      width: 27px; height: 27px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10.5px; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .lead-info { flex: 1; min-width: 0; }
+    .ln { font-size: 11.5px; font-weight: 600; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lt { font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ls-badge {
+      font-size: 9.5px; font-weight: 700; color: #5B55A0;
+      background: rgba(91,85,160,.1); padding: 2px 5px; border-radius: 4px; flex-shrink: 0;
+    }
+
+    /* email card */
+    .em-to { font-size: 11.5px; color: var(--muted); margin-bottom: 3px; }
+    .em-to span { font-weight: 600; color: var(--dark); }
+    .em-subj {
+      font-size: 12.5px; font-weight: 600; color: var(--dark);
+      margin-bottom: 9px; padding-bottom: 9px;
+      border-bottom: 1px solid rgba(0,0,0,.07);
+    }
+    .em-body { font-size: 11.5px; color: #4A4760; line-height: 1.65; }
+    .em-body p { margin-bottom: 7px; }
+    .em-body p:last-child { margin-bottom: 0; }
+    .em-hl {
+      background: rgba(91,85,160,.12); border-radius: 3px;
+      padding: 0 3px; color: #5B55A0;
+    }
+    .cursor {
+      display: inline-block; width: 1.5px; height: 12px;
+      background: #5B55A0; animation: blink 1s infinite; vertical-align: middle;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* pipeline card */
+    .pip-list { display: flex; flex-direction: column; gap: 6px; }
+    .pip-row {
+      display: flex; align-items: center; gap: 7px;
+      padding: 6px 8px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 8px;
+    }
+    .sdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .s-green  { background: #34C77B; }
+    .s-orange { background: #F5A623; }
+    .s-gray   { background: #A8B0C8; }
+    .pip-name { font-size: 11.5px; font-weight: 500; color: var(--dark); flex: 1; }
+    .pip-status { font-size: 10px; color: var(--muted); }
+    .pip-date { font-size: 10px; color: #B0B0C0; }
+
+    /* ai tip card */
+    .ai-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 9.5px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: #7B74C4;
+      background: rgba(123,116,196,.12); padding: 3px 8px;
+      border-radius: 100px; margin-bottom: 7px;
+    }
+    .ai-text { font-size: 12px; color: var(--dark); line-height: 1.55; }
+    .ai-text strong { color: #5B55A0; }
+
+    /* ─── SOCIAL PROOF ──────────────────────────────────── */
+    .social-proof {
+      background: #EDE9F6;
+      text-align: center;
+      padding: 20px 24px;
+    }
+    .social-proof p {
+      font-size: 13px;
+      color: rgba(91,85,160,.65);
+      letter-spacing: .05em;
+    }
+    .social-proof strong { color: var(--periwinkle); font-weight: 600; }
+
+    /* ─── SECTION HELPERS ───────────────────────────────── */
+    .sec-label {
+      text-align: center;
+      font-size: 11.5px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--periwinkle); margin-bottom: 10px;
+    }
+    .sec-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(34px, 3.8vw, 50px);
+      font-weight: 400; color: var(--dark);
+      text-align: center;
+      letter-spacing: -1.4px; line-height: 1.09;
+      max-width: 620px;
+      margin: 0 auto 20px;
+    }
+    .sec-sub {
+      text-align: center;
+      font-size: 16.5px; color: var(--muted);
+      font-weight: 300;
+      max-width: 440px;
+      margin: 0 auto 72px;
+      line-height: 1.62;
+    }
+
+    /* ─── HOW IT WORKS ──────────────────────────────────── */
+    .how { background: #F2F0FB; padding: 80px 48px; }
+
+    .steps-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .sf-step { display: flex; align-items: center; gap: 10px; padding: 10px 24px; white-space: nowrap; flex-shrink: 0; }
+    .sf-num {
+      font-family: 'Fraunces', serif;
+      font-style: italic; font-weight: 300; font-size: 13px;
+      color: var(--periwinkle); flex-shrink: 0;
+    }
+    .sf-title { font-size: 15px; font-weight: 500; color: var(--dark); letter-spacing: -.15px; }
+    .sf-sep {
+      color: rgba(123,116,196,.35);
+      font-size: 10px;
+      letter-spacing: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ─── FEATURE BLOCKS ────────────────────────────────── */
+    .features { padding: 100px 52px 88px; max-width: 1080px; margin: 0 auto; }
+
+    .feat-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 76px;
+      align-items: center; padding: 64px 0;
+      border-bottom: 1px solid rgba(123,116,196,.12);
+    }
+    .feat-row:first-child { padding-top: 0; }
+    .feat-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .feat-row.rev .feat-text { order: 2; }
+    .feat-row.rev .feat-vis  { order: 1; }
+
+    .feat-eye {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--periwinkle); margin-bottom: 16px;
+    }
+    .feat-eye::before {
+      content: '';
+      flex-shrink: 0;
+      width: 20px; height: 1.5px;
+      background: var(--periwinkle);
+      border-radius: 2px;
+      opacity: .7;
+    }
+    .feat-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(26px, 3.3vw, 40px);
+      font-weight: 400; color: var(--dark);
+      letter-spacing: -1.1px; line-height: 1.09; margin-bottom: 20px;
+    }
+    .feat-desc { font-size: 15.5px; color: var(--muted); line-height: 1.7; font-weight: 300; margin-bottom: 30px; }
+
+    .feat-bullets { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .feat-bullets li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; color: #4A4760; line-height: 1.5;
+    }
+    .feat-bullets li::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: linear-gradient(135deg,#7B74C4,#9BA8D8);
+      border-radius: 50%; margin-top: 5px; flex-shrink: 0;
+    }
+
+    /* feature visual containers */
+    .feat-vis {
+      border-radius: 20px; overflow: hidden;
+      background: linear-gradient(135deg,#EFECF9 0%,#E6EEF8 100%);
+      padding: 28px; min-height: 300px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* mock: search */
+    .mock-srch { width: 100%; }
+    .mock-sbar {
+      display: flex; align-items: center; gap: 9px;
+      background: #fff; border: 1px solid rgba(0,0,0,.1);
+      border-radius: 11px; padding: 11px 14px;
+      margin-bottom: 13px; box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
+    .mock-sico { font-size: 15px; opacity: .38; }
+    .mock-sinput { font-size: 13.5px; color: #333; font-family: 'DM Sans', sans-serif; }
+    .mock-frow { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
+    .mock-fchip {
+      font-size: 11.5px; font-weight: 500; padding: 4px 11px;
+      border-radius: 100px; border: 1.5px solid rgba(123,116,196,.28);
+      color: #5B55A0; background: rgba(123,116,196,.06);
+    }
+    .mock-rlist {
+      background: #fff; border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(0,0,0,.07); box-shadow: 0 2px 12px rgba(0,0,0,.05);
+    }
+    .mock-ritem {
+      display: flex; align-items: center; gap: 11px;
+      padding: 11px 15px; border-bottom: 1px solid rgba(0,0,0,.045);
+    }
+    .mock-ritem:last-child { border-bottom: none; }
+    .mock-rav {
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .mock-ri { flex: 1; }
+    .mock-rn { font-size: 12.5px; font-weight: 600; color: var(--dark); }
+    .mock-rs { font-size: 11px; color: #999; }
+    .mock-add {
+      font-size: 11px; font-weight: 700; color: #7B74C4;
+      background: rgba(123,116,196,.1); border: none;
+      border-radius: 6px; padding: 4px 9px; cursor: pointer;
+    }
+
+    /* mock: email composer */
+    .mock-mail {
+      width: 100%; background: #fff; border-radius: 14px; overflow: hidden;
+      border: 1px solid rgba(0,0,0,.1); box-shadow: 0 4px 20px rgba(0,0,0,.08);
+    }
+    .mock-mail-tb {
+      background: #F5F5F8; padding: 10px 15px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(0,0,0,.07);
+    }
+    .mock-mail-ttl { font-size: 12.5px; font-weight: 600; color: #333; }
+    .mock-ai-pill {
+      display: inline-flex; align-items: center; gap: 3px;
+      font-size: 10px; font-weight: 700; color: #7B74C4;
+      background: rgba(123,116,196,.12); padding: 3px 8px; border-radius: 100px;
+    }
+    .mock-mail-flds {
+      padding: 11px 15px; border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .mock-fld {
+      display: flex; gap: 7px; margin-bottom: 7px;
+      font-size: 12px;
+    }
+    .mock-fld:last-child { margin-bottom: 0; }
+    .mock-flbl { color: #999; min-width: 48px; }
+    .mock-fval { color: #333; font-weight: 500; }
+    .mock-mail-body {
+      padding: 14px 15px; font-size: 12.5px; color: #444; line-height: 1.72;
+    }
+
+    /* mock: pipeline table */
+    .mock-pipe { width: 100%; }
+    .mock-pipe-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .mock-pipe-title { font-size: 14.5px; font-weight: 600; color: var(--dark); }
+    .mock-stats { display: flex; gap: 14px; }
+    .mock-stat { text-align: center; }
+    .mock-stat-n { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 400; color: var(--dark); line-height: 1; }
+    .mock-stat-l { font-size: 9.5px; color: #999; text-transform: uppercase; letter-spacing: .05em; }
+    .mock-tbl {
+      background: #fff; border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(0,0,0,.07); box-shadow: 0 2px 10px rgba(0,0,0,.05);
+    }
+    .mock-thdr {
+      display: grid; grid-template-columns: 1fr 76px 76px;
+      padding: 9px 14px; background: #F8F8FB;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      font-size: 10.5px; font-weight: 700; color: #999;
+      text-transform: uppercase; letter-spacing: .06em;
+    }
+    .mock-trow {
+      display: grid; grid-template-columns: 1fr 76px 76px;
+      padding: 10px 14px; border-bottom: 1px solid rgba(0,0,0,.04);
+      align-items: center;
+    }
+    .mock-trow:last-child { border-bottom: none; }
+    .mock-tname { font-size: 12.5px; font-weight: 500; color: var(--dark); }
+    .mock-tfirm { font-size: 10.5px; color: #999; }
+    .mock-pill {
+      font-size: 10px; font-weight: 700; padding: 3px 8px;
+      border-radius: 100px; display: inline-block;
+    }
+    .mock-pill.rep { background: rgba(52,199,123,.12); color: #1A9950; }
+    .mock-pill.opn { background: rgba(245,166,35,.12); color: #B07A0A; }
+    .mock-pill.snt { background: rgba(123,116,196,.1); color: #5B55A0; }
+    .mock-pill.dft { background: rgba(168,176,200,.15); color: #777; }
+    .mock-tdate { font-size: 11px; color: #BBB; }
+
+
+    /* ─── EMAILS GENERATED ──────────────────────────────── */
+    .emails-section {
+      background: #F9F9FC;
+      padding: 96px 48px 104px;
+      text-align: center;
+    }
+    .emails-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--periwinkle); margin-bottom: 10px;
+    }
+    .emails-heading {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(34px, 4.5vw, 54px);
+      font-weight: 400; color: var(--dark);
+      letter-spacing: -1.5px; line-height: 1.08;
+      margin-bottom: 22px;
+    }
+    .emails-heading em { font-style: italic; color: var(--periwinkle); }
+    .emails-sub { font-size: 16px; color: var(--muted); font-weight: 300; margin-bottom: 48px; }
+    .email-tabs {
+      display: flex; justify-content: center; gap: 8px; margin-bottom: 28px;
+    }
+    .etab {
+      padding: 8px 20px; border-radius: 100px;
+      border: 1.5px solid rgba(123,116,196,.2);
+      background: #fff; color: var(--muted);
+      font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; transition: all .18s;
+    }
+    .etab:hover { border-color: var(--periwinkle); color: var(--periwinkle); }
+    .etab.active { background: var(--periwinkle); border-color: var(--periwinkle); color: #fff; }
+    .email-cards { max-width: 680px; margin: 0 auto; position: relative; }
+    .ecard {
+      display: none;
+      background: #fff;
+      border: 1px solid rgba(123,116,196,.15);
+      border-radius: 18px;
+      box-shadow: var(--card-shadow);
+      padding: 28px 32px;
+      text-align: left;
+    }
+    .ecard.active { display: block; }
+    .ecard-meta {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+    }
+    .ecard-av {
+      width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; color: #fff; flex-shrink: 0;
+    }
+    .ecard-name { font-size: 14px; font-weight: 600; color: var(--dark); }
+    .ecard-role { font-size: 12px; color: var(--muted); margin-top: 1px; }
+    .ecard-pill {
+      margin-left: auto; font-size: 11px; font-weight: 600;
+      background: rgba(123,116,196,.1); color: var(--periwinkle);
+      padding: 4px 10px; border-radius: 100px; white-space: nowrap;
+    }
+    .ecard-subject {
+      font-size: 13px; font-weight: 500; color: var(--body);
+      padding-bottom: 16px; margin-bottom: 16px;
+      border-bottom: 1px solid rgba(123,116,196,.12);
+    }
+    .ecard-body {
+      font-size: 14px; line-height: 1.75; color: var(--body); font-weight: 300;
+    }
+    .ecard-body mark {
+      background: rgba(123,116,196,.12); color: #5B55A0;
+      padding: 0 3px; border-radius: 3px;
+    }
+
+    /* ─── FINAL CTA ─────────────────────────────────────── */
+    .final-cta {
+      background: linear-gradient(160deg,#7570C0 0%,#8FA6D4 48%,#C6D8F5 100%);
+      padding: 116px 48px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .final-cta::after {
+      content: ''; position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(38px, 5vw, 62px);
+      font-weight: 400; color: #fff;
+      letter-spacing: -2px; line-height: 1.05;
+      margin-bottom: 18px;
+    }
+    .cta-sub { font-size: 17px; color: rgba(255,255,255,.72); font-weight: 300; margin-bottom: 42px; }
+    .email-cap { display: flex; justify-content: center; gap: 9px; max-width: 430px; margin: 0 auto; }
+    .email-inp {
+      flex: 1; padding: 12px 20px; border-radius: 100px;
+      border: 1.5px solid rgba(255,255,255,.32);
+      background: rgba(255,255,255,.18); backdrop-filter: blur(12px);
+      color: #fff; font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+    }
+    .email-inp::placeholder { color: rgba(255,255,255,.5); }
+    .email-inp:focus { border-color: rgba(255,255,255,.58); background: rgba(255,255,255,.23); box-shadow: 0 0 0 3.5px rgba(255,255,255,.1); }
+    .email-btn {
+      padding: 12px 22px; border-radius: 100px; border: none;
+      background: var(--dark); color: #fff;
+      font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; white-space: nowrap;
+      transition: background .15s, transform .15s;
+    }
+    .email-btn:hover { background: var(--dark2); transform: translateY(-1px); }
+    .email-btn:active { transform: scale(0.97) !important; transition-duration: 0.08s !important; }
+    @keyframes btnSuccess { 0%{transform:scale(1)} 45%{transform:scale(1.07)} 100%{transform:scale(1)} }
+    .email-btn.success { background: #2DB36A !important; animation: btnSuccess 0.45s var(--ease-quart) forwards; }
+
+    /* ─── FOOTER ────────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      padding: 38px 52px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-left { }
+    .footer-logo-text { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 400; color: #fff; }
+    .footer-tag { font-size: 12.5px; color: rgba(255,255,255,.32); margin-top: 3px; }
+    .footer-links { display: flex; gap: 26px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,.42); text-decoration: none; transition: color .15s; }
+    .footer-links a:hover { color: rgba(255,255,255,.78); }
+
+    /* ─── FADE-UP ANIMATION ─────────────────────────────── */
+    .fu {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .7s var(--ease-expo), transform .7s var(--ease-expo);
+    }
+    .fu.vis { opacity: 1; transform: translateY(0); }
+    .fu-d1 { transition-delay: .12s; }
+    .fu-d2 { transition-delay: .24s; }
+
+    /* ─── SCROLL PROGRESS THREAD ────────────────────────── */
+    .scroll-progress {
+      position: fixed; left: 0; top: 0;
+      width: 2px; height: 100%;
+      background: linear-gradient(to bottom, var(--periwinkle) 0%, var(--sky) 100%);
+      transform-origin: top center;
+      transform: scaleY(0);
+      z-index: 300; pointer-events: none; opacity: 0;
+    }
+    @supports (animation-timeline: scroll()) {
+      .scroll-progress {
+        opacity: 1;
+        animation: scrollThread linear both;
+        animation-timeline: scroll(root block);
+      }
+      @keyframes scrollThread { to { transform: scaleY(1); } }
+
+      /* Disable IntersectionObserver fade so scroll-driven can own reveals */
+      .fu { opacity: 1 !important; transform: none !important; transition: none !important; }
+
+      /* Feature rows — text and visual slide from opposite sides */
+      .feat-row .feat-text {
+        opacity: 0; transform: translateX(-30px);
+        animation: featSlideL linear both;
+        animation-timeline: view(block);
+        animation-range: entry 5% entry 42%;
+      }
+      .feat-row .feat-vis {
+        opacity: 0; transform: translateX(30px);
+        animation: featSlideR linear both;
+        animation-timeline: view(block);
+        animation-range: entry 5% entry 42%;
+      }
+      /* Reversed rows flip the directions */
+      .feat-row.rev .feat-text {
+        transform: translateX(30px);
+        animation-name: featSlideR;
+      }
+      .feat-row.rev .feat-vis {
+        transform: translateX(-30px);
+        animation-name: featSlideL;
+      }
+      @keyframes featSlideL { to { opacity: 1; transform: translateX(0); } }
+      @keyframes featSlideR { to { opacity: 1; transform: translateX(0); } }
+
+      /* Section header clusters */
+      .sec-label, .emails-label {
+        opacity: 0; transform: translateY(10px);
+        animation: sectionUp linear both;
+        animation-timeline: view(block);
+        animation-range: entry 0% entry 22%;
+      }
+      .sec-title, .emails-heading {
+        opacity: 0; transform: translateY(14px);
+        animation: sectionUp linear both;
+        animation-timeline: view(block);
+        animation-range: entry 5% entry 28%;
+      }
+      .sec-sub, .emails-sub {
+        opacity: 0; transform: translateY(14px);
+        animation: sectionUp linear both;
+        animation-timeline: view(block);
+        animation-range: entry 10% entry 33%;
+      }
+      @keyframes sectionUp { to { opacity: 1; transform: translateY(0); } }
+
+      /* Steps flow */
+      .steps-flow {
+        opacity: 0; transform: translateY(18px);
+        animation: sectionUp linear both;
+        animation-timeline: view(block);
+        animation-range: entry 12% entry 40%;
+      }
+
+      /* Emails section tabs + cards */
+      .email-tabs {
+        opacity: 0;
+        animation: sectionUp linear both;
+        animation-timeline: view(block);
+        animation-range: entry 5% entry 28%;
+      }
+      .email-cards {
+        opacity: 0; transform: translateY(22px);
+        animation: sectionUp linear both;
+        animation-timeline: view(block);
+        animation-range: entry 12% entry 38%;
+      }
+
+      /* CTA section */
+      .cta-title, .cta-sub, .email-cap {
+        opacity: 0; transform: translateY(14px);
+        animation: sectionUp linear both;
+        animation-timeline: view(block);
+      }
+      .cta-title { animation-range: entry 0% entry 25%; }
+      .cta-sub   { animation-range: entry 8% entry 30%; }
+      .email-cap { animation-range: entry 15% entry 35%; }
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero-cards { height: 360px; }
+      .gc-pipe, .gc-ai { display: none; }
+      .gc-leads { width: 200px; }
+      .gc-email { width: 300px; padding: 16px 18px; }
+      .steps-flow { gap: 0; flex-direction: column; align-items: flex-start; }
+      .sf-sep { display: none; }
+      .feat-row, .feat-row.rev .feat-text, .feat-row.rev .feat-vis { grid-template-columns: 1fr; order: unset; gap: 36px; }
+      .feat-row { gap: 36px; }
+      .how { padding: 64px 24px; }
+      .features { padding: 72px 24px; }
+      .final-cta { padding: 80px 24px; }
+      footer { flex-direction: column; gap: 18px; padding: 30px 24px; text-align: center; }
+    }
+    @media (max-width: 560px) {
+      .hero-cards { height: 290px; }
+      .gc-leads { width: 160px; }
+      .gc-email { width: 240px; padding: 14px 16px; }
+      .email-cap { flex-direction: column; max-width: 300px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-headline, .hero-sub, .hero-cta {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+      .hero-cards {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      .gc-email, .gc-leads, .gc-pipe, .gc-ai { animation: none !important; }
+      .hero-wrap { animation: none !important; }
+      .scroll-progress { display: none !important; }
+      .fu { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════ -->
+<div class="hero-wrap">
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="4.5" cy="8.5" r="2.8" fill="white" opacity=".92"/>
+          <circle cx="12.5" cy="4.5" r="1.9" fill="white" opacity=".7"/>
+          <circle cx="12.5" cy="12.5" r="1.9" fill="white" opacity=".7"/>
+          <line x1="7.2" y1="8.5" x2="10.6" y2="5.5" stroke="white" stroke-width="1.1" opacity=".5"/>
+          <line x1="7.2" y1="8.5" x2="10.6" y2="11.5" stroke="white" stroke-width="1.1" opacity=".5"/>
+        </svg>
+      </div>
+      <span class="logo-name">Necto</span>
+    </a>
+
+  </nav>
+
+  <!-- Hero text -->
+  <div class="hero-content">
+    <h1 class="hero-headline">
+      Land every coffee chat.<br><em>Automatically.</em>
+    </h1>
+    <p class="hero-sub">
+      Necto automates your entire recruiting outreach — from finding contacts to sending emails that actually get replies.
+    </p>
+    <a href="#final" class="hero-cta">Join the waitlist <span class="arr">→</span></a>
+  </div>
+
+  <!-- Floating UI cards -->
+  <div class="hero-cards">
+
+    <!-- Lead Discovery -->
+    <div class="gc gc-leads">
+      <div class="gc-hd">
+        <div class="gc-dot" style="background:#7B74C4;"></div>
+        <span class="gc-lbl">Lead Discovery</span>
+      </div>
+      <div class="lf-chips">
+        <span class="lf-chip">Goldman Sachs</span>
+        <span class="lf-chip">IBD</span>
+        <span class="lf-chip">Analyst</span>
+        <span class="lf-chip">Penn</span>
+      </div>
+      <div class="lead-list">
+        <div class="lead-row">
+          <div class="av" style="background:linear-gradient(135deg,#7B74C4,#9BA8D8);">SC</div>
+          <div class="lead-info">
+            <div class="ln">Sarah Chen</div>
+            <div class="lt">Analyst, TMT · Goldman</div>
+          </div>
+          <span class="ls-badge">Penn</span>
+        </div>
+        <div class="lead-row">
+          <div class="av" style="background:linear-gradient(135deg,#9BA8D8,#B0C2E5);">MK</div>
+          <div class="lead-info">
+            <div class="ln">Marcus Kim</div>
+            <div class="lt">Analyst, M&A · Goldman</div>
+          </div>
+          <span class="ls-badge">Stern</span>
+        </div>
+        <div class="lead-row">
+          <div class="av" style="background:linear-gradient(135deg,#B5A0D8,#7B74C4);">AJ</div>
+          <div class="lead-info">
+            <div class="ln">Aisha Johnson</div>
+            <div class="lt">Associate · Goldman</div>
+          </div>
+          <span class="ls-badge">HBS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email Draft -->
+    <div class="gc gc-email">
+      <div class="gc-hd">
+        <div class="gc-dot" style="background:#34C77B;"></div>
+        <span class="gc-lbl">AI Draft</span>
+      </div>
+      <div class="em-to">To: <span>Sarah Chen</span> · sarah.chen@gs.com</div>
+      <div class="em-subj">Coffee chat — Penn alum at Goldman IBD?</div>
+      <div class="em-body">
+        <p>Hi Sarah,</p>
+        <p>I came across your work on the <span class="em-hl">Disney+ debt financing</span> — impressive execution given the rate environment.</p>
+        <p>I'm a junior at Wharton focused on TMT. Would you be open to a 20-min call?<span class="cursor"></span></p>
+      </div>
+    </div>
+
+    <!-- Reply Tracker -->
+    <div class="gc gc-pipe">
+      <div class="gc-hd">
+        <div class="gc-dot" style="background:#F5A623;"></div>
+        <span class="gc-lbl">Pipeline</span>
+      </div>
+      <div class="pip-list">
+        <div class="pip-row">
+          <div class="sdot s-green"></div>
+          <span class="pip-name">Sarah Chen</span>
+          <span class="pip-status">Replied</span>
+          <span class="pip-date">2h</span>
+        </div>
+        <div class="pip-row">
+          <div class="sdot s-orange"></div>
+          <span class="pip-name">Marcus Kim</span>
+          <span class="pip-status">Sent</span>
+          <span class="pip-date">1d</span>
+        </div>
+        <div class="pip-row">
+          <div class="sdot s-orange"></div>
+          <span class="pip-name">Tyler Rubin</span>
+          <span class="pip-status">Opened</span>
+          <span class="pip-date">3d</span>
+        </div>
+        <div class="pip-row">
+          <div class="sdot s-gray"></div>
+          <span class="pip-name">Aisha Johnson</span>
+          <span class="pip-status">Drafting</span>
+          <span class="pip-date">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Insight Tooltip -->
+    <div class="gc gc-ai">
+      <div class="ai-badge">✦ AI Insight</div>
+      <p class="ai-text"><strong>Sarah co-led the Disney+ debt financing</strong> — mention it to stand out from generic outreach.</p>
+    </div>
+
+  </div><!-- /hero-cards -->
+</div><!-- /hero-wrap -->
+
+<!-- ═══════════════════════════════════════════════════════
+     SOCIAL PROOF
+════════════════════════════════════════════════════════ -->
+<div class="social-proof">
+  <p>Tested by students at <strong>Cornell</strong> · <strong>Columbia</strong> · <strong>UChicago</strong> · <strong>UC Berkeley</strong> · <strong>UNC</strong></p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════════════════════════ -->
+<section class="how">
+  <div class="sec-label">How it works</div>
+  <h2 class="sec-title" style="margin-bottom:36px;">Three steps to a full pipeline</h2>
+
+  <div class="steps-flow fu">
+    <div class="sf-step">
+      <span class="sf-num">01</span>
+      <span class="sf-title">Find your targets</span>
+    </div>
+    <span class="sf-sep">·····</span>
+    <div class="sf-step">
+      <span class="sf-num">02</span>
+      <span class="sf-title">Generate personalized emails</span>
+    </div>
+    <span class="sf-sep">·····</span>
+    <div class="sf-step">
+      <span class="sf-num">03</span>
+      <span class="sf-title">Track and follow up</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     FEATURE BLOCKS
+════════════════════════════════════════════════════════ -->
+<section class="features">
+
+  <!-- Feature 1: Lead Discovery -->
+  <div class="feat-row fu">
+    <div class="feat-text">
+      <div class="feat-eye">Lead Discovery</div>
+      <h2 class="feat-title">From firm name to inbox in seconds</h2>
+      <p class="feat-desc">Stop combing LinkedIn for hours. Type a firm name, set your filters, and Necto returns a curated list of reachable contacts — with school, title, and recent deal history.</p>
+      <ul class="feat-bullets">
+        <li>Filter by firm, fund type, seniority level, and alma mater</li>
+        <li>Covers IB, PE, VC, AM, and hedge funds</li>
+        <li>Contact data verified and kept current automatically</li>
+      </ul>
+    </div>
+    <div class="feat-vis">
+      <div class="mock-srch">
+        <div class="mock-sbar">
+          <span class="mock-sico">🔍</span>
+          <span class="mock-sinput">Goldman Sachs Investment Banking...</span>
+        </div>
+        <div class="mock-frow">
+          <span class="mock-fchip">Analyst</span>
+          <span class="mock-fchip">Associate</span>
+          <span class="mock-fchip">Penn</span>
+          <span class="mock-fchip">+ 2 more</span>
+        </div>
+        <div class="mock-rlist">
+          <div class="mock-ritem">
+            <div class="mock-rav" style="background:linear-gradient(135deg,#7B74C4,#9BA8D8);">SC</div>
+            <div class="mock-ri">
+              <div class="mock-rn">Sarah Chen</div>
+              <div class="mock-rs">Analyst, TMT · Goldman Sachs · Penn</div>
+            </div>
+            <button class="mock-add">+ Add</button>
+          </div>
+          <div class="mock-ritem">
+            <div class="mock-rav" style="background:linear-gradient(135deg,#9BA8D8,#B0C2E5);">MK</div>
+            <div class="mock-ri">
+              <div class="mock-rn">Marcus Kim</div>
+              <div class="mock-rs">Analyst, M&A · Goldman Sachs · Stern</div>
+            </div>
+            <button class="mock-add">+ Add</button>
+          </div>
+          <div class="mock-ritem">
+            <div class="mock-rav" style="background:linear-gradient(135deg,#B5A0D8,#7B74C4);">TR</div>
+            <div class="mock-ri">
+              <div class="mock-rn">Tyler Rubin</div>
+              <div class="mock-rs">Associate, LevFin · Goldman Sachs · Wharton</div>
+            </div>
+            <button class="mock-add">+ Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature 2: AI Email -->
+  <div class="feat-row rev fu">
+    <div class="feat-text">
+      <div class="feat-eye">AI Personalization</div>
+      <h2 class="feat-title">Emails that sound like you wrote them</h2>
+      <p class="feat-desc">Each email is crafted around what that person actually did — their deals, their school, their career arc. No templates. No filler. Just the kind of email that gets a reply.</p>
+      <ul class="feat-bullets">
+        <li>References real transactions and career milestones</li>
+        <li>Matches your voice and tone after a single sample</li>
+        <li>Send in one click or edit before hitting send</li>
+      </ul>
+    </div>
+    <div class="feat-vis">
+      <div class="mock-mail">
+        <div class="mock-mail-tb">
+          <span class="mock-mail-ttl">New Message</span>
+          <span class="mock-ai-pill">✦ AI Draft</span>
+        </div>
+        <div class="mock-mail-flds">
+          <div class="mock-fld">
+            <span class="mock-flbl">To</span>
+            <span class="mock-fval">Tyler Rubin &lt;tyler.rubin@gs.com&gt;</span>
+          </div>
+          <div class="mock-fld">
+            <span class="mock-flbl">Subject</span>
+            <span class="mock-fval">Coffee chat — Wharton student in LevFin</span>
+          </div>
+        </div>
+        <div class="mock-mail-body">
+          Hi Tyler,<br><br>
+          Your work on the <span style="background:rgba(123,116,196,.12);color:#5B55A0;padding:0 3px;border-radius:3px;">Bausch Health LBO refinancing</span> caught my attention — navigating that credit environment was impressive.<br><br>
+          I'm a junior at Wharton focused on leveraged finance. Would you be open to 20 minutes?
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature 3: Pipeline -->
+  <div class="feat-row fu">
+    <div class="feat-text">
+      <div class="feat-eye">Outreach Tracker</div>
+      <h2 class="feat-title">Your pipeline, always current</h2>
+      <p class="feat-desc">See your entire recruiting outreach at a glance. Know who opened, who replied, and who needs a follow-up — without digging through your sent folder.</p>
+      <ul class="feat-bullets">
+        <li>Real-time open and reply tracking per contact</li>
+        <li>Auto-suggested follow-ups at exactly the right time</li>
+        <li>Notes, next steps, and meeting links in one view</li>
+      </ul>
+    </div>
+    <div class="feat-vis">
+      <div class="mock-pipe">
+        <div class="mock-pipe-hdr">
+          <span class="mock-pipe-title">Outreach Pipeline</span>
+          <div class="mock-stats">
+            <div class="mock-stat">
+              <div class="mock-stat-n">24</div>
+              <div class="mock-stat-l">Sent</div>
+            </div>
+            <div class="mock-stat">
+              <div class="mock-stat-n" style="color:#34C77B;">9</div>
+              <div class="mock-stat-l">Replied</div>
+            </div>
+            <div class="mock-stat">
+              <div class="mock-stat-n" style="color:#7B74C4;">5</div>
+              <div class="mock-stat-l">Booked</div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-tbl">
+          <div class="mock-thdr">
+            <span>Contact</span><span>Status</span><span>Last Activity</span>
+          </div>
+          <div class="mock-trow">
+            <div><div class="mock-tname">Sarah Chen</div><div class="mock-tfirm">Goldman · TMT</div></div>
+            <div><span class="mock-pill rep">Replied</span></div>
+            <div class="mock-tdate">2 hrs ago</div>
+          </div>
+          <div class="mock-trow">
+            <div><div class="mock-tname">Tyler Rubin</div><div class="mock-tfirm">Goldman · LevFin</div></div>
+            <div><span class="mock-pill opn">Opened</span></div>
+            <div class="mock-tdate">1 day ago</div>
+          </div>
+          <div class="mock-trow">
+            <div><div class="mock-tname">Aisha Johnson</div><div class="mock-tfirm">KKR · PE</div></div>
+            <div><span class="mock-pill snt">Sent</span></div>
+            <div class="mock-tdate">3 days ago</div>
+          </div>
+          <div class="mock-trow">
+            <div><div class="mock-tname">James Park</div><div class="mock-tfirm">Blackstone · RE</div></div>
+            <div><span class="mock-pill dft">Draft</span></div>
+            <div class="mock-tdate">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     EMAILS GENERATED
+════════════════════════════════════════════════════════ -->
+<section class="emails-section fu">
+  <div class="emails-label">Emails Generated</div>
+  <h2 class="emails-heading">See what Necto writes<br><em>for you</em></h2>
+  <p class="emails-sub">Real examples — different firms, different roles, all personalized.</p>
+  <div class="email-tabs">
+    <button class="etab active" data-tab="0">Goldman · LevFin</button>
+    <button class="etab" data-tab="1">KKR · PE</button>
+    <button class="etab" data-tab="2">Lazard · M&A</button>
+  </div>
+  <div class="email-cards">
+
+    <!-- Tab 0 -->
+    <div class="ecard active">
+      <div class="ecard-meta">
+        <div class="ecard-av" style="background:linear-gradient(135deg,#B5A0D8,#7B74C4);">TR</div>
+        <div>
+          <div class="ecard-name">Tyler Rubin</div>
+          <div class="ecard-role">Associate · Leveraged Finance · Goldman Sachs</div>
+        </div>
+        <span class="ecard-pill">✦ AI Draft</span>
+      </div>
+      <div class="ecard-subject">Subject: Coffee chat — Wharton junior in LevFin</div>
+      <div class="ecard-body">
+        Hi Tyler,<br><br>
+        Your work on the <mark>Bausch Health LBO refinancing</mark> stood out to me — managing that credit complexity at current rates takes real conviction.<br><br>
+        I'm a junior at Wharton concentrating in finance, recruiting for leveraged finance. Would you have 20 minutes for a quick chat? Happy to work around your schedule.
+      </div>
+    </div>
+
+    <!-- Tab 1 -->
+    <div class="ecard">
+      <div class="ecard-meta">
+        <div class="ecard-av" style="background:linear-gradient(135deg,#7B74C4,#9BA8D8);">AJ</div>
+        <div>
+          <div class="ecard-name">Aisha Johnson</div>
+          <div class="ecard-role">Associate · Private Equity · KKR</div>
+        </div>
+        <span class="ecard-pill">✦ AI Draft</span>
+      </div>
+      <div class="ecard-subject">Subject: Coffee chat — Ross junior interested in PE</div>
+      <div class="ecard-body">
+        Hi Aisha,<br><br>
+        I've been following KKR's recent work on the <mark>Telecom Italia take-private</mark> — the cross-border structuring involved there was really impressive reading.<br><br>
+        I'm a junior at Ross recruiting for PE. I'd love to hear how you think about the transition from banking. Would you be open to a 20-minute call?
+      </div>
+    </div>
+
+    <!-- Tab 2 -->
+    <div class="ecard">
+      <div class="ecard-meta">
+        <div class="ecard-av" style="background:linear-gradient(135deg,#9BA8D8,#B0C2E5);">JP</div>
+        <div>
+          <div class="ecard-name">James Park</div>
+          <div class="ecard-role">Analyst · M&A Advisory · Lazard</div>
+        </div>
+        <span class="ecard-pill">✦ AI Draft</span>
+      </div>
+      <div class="ecard-subject">Subject: Coffee chat — Georgetown junior recruiting for M&A</div>
+      <div class="ecard-body">
+        Hi James,<br><br>
+        Lazard's advisory role on the <mark>Horizon Therapeutics acquisition</mark> caught my eye — navigating a contested process at that valuation is exactly the kind of work I want to be doing.<br><br>
+        I'm a junior at Georgetown focused on M&A. Would you have 20 minutes to share your experience breaking in? Really appreciate it.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     FINAL CTA
+════════════════════════════════════════════════════════ -->
+<section class="final-cta" id="final">
+  <div class="cta-inner">
+    <h2 class="cta-title">Your recruiting pipeline<br>starts here.</h2>
+    <p class="cta-sub">Join students at top programs landing coffee chats on autopilot.</p>
+    <div class="email-cap">
+      <input type="email" class="email-inp" id="email-inp" placeholder="Enter your email" />
+      <button class="email-btn" id="email-btn">Join waitlist →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-logo-text">Necto</div>
+    <div class="footer-tag">The outreach OS for finance students.</div>
+  </div>
+</footer>
+
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ─── 1. HERO ENTRANCE ────────────────────────────────
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.body.classList.add('hero-loaded');
+  }));
+
+  // ─── 2. SCROLL REVEALS ───────────────────────────────
+  // Use IntersectionObserver only when CSS scroll-driven animations aren't supported
+  if (!CSS.supports('animation-timeline', 'scroll()')) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fu').forEach(el => obs.observe(el));
+  }
+
+  // ─── 3. SPRING-PHYSICS CARD TILT ─────────────────────
+  if (!reducedMotion) {
+    const heroWrap = document.querySelector('.hero-wrap');
+    const springCards = [
+      { el: document.querySelector('.gc-leads'), k: 175, d: 21, maxT: 7  },
+      { el: document.querySelector('.gc-email'), k: 105, d: 14, maxT: 5  },
+      { el: document.querySelector('.gc-pipe'),  k: 215, d: 26, maxT: 7  },
+      { el: document.querySelector('.gc-ai'),    k: 150, d: 17, maxT: 9  },
+    ].filter(c => c.el);
+
+    springCards.forEach(c => { c.x = 0; c.y = 0; c.vx = 0; c.vy = 0; });
+
+    let mouse = { nx: 0.5, ny: 0.5 };
+    let springActive = false;
+    let lastT = 0;
+
+    heroWrap.addEventListener('mousemove', e => {
+      const r = heroWrap.getBoundingClientRect();
+      mouse.nx = (e.clientX - r.left) / r.width;
+      mouse.ny = (e.clientY - r.top)  / r.height;
+      if (!springActive) kickSpring();
+    });
+
+    heroWrap.addEventListener('mouseleave', () => {
+      mouse.nx = 0.5;
+      mouse.ny = 0.5;
+      if (!springActive) kickSpring();
+    });
+
+    function kickSpring() {
+      springActive = true;
+      lastT = performance.now();
+      requestAnimationFrame(function tick(now) {
+        const dt = Math.min((now - lastT) / 1000, 0.05);
+        lastT = now;
+        let alive = false;
+        springCards.forEach(c => {
+          const tx = (mouse.nx - 0.5) * c.maxT * 2;
+          const ty = (mouse.ny - 0.5) * -c.maxT;
+          c.vx += (-c.k * (c.x - tx) - c.d * c.vx) * dt;
+          c.vy += (-c.k * (c.y - ty) - c.d * c.vy) * dt;
+          c.x  += c.vx * dt;
+          c.y  += c.vy * dt;
+          c.el.style.setProperty('--tilt-x', `${c.y.toFixed(2)}deg`);
+          c.el.style.setProperty('--tilt-y', `${c.x.toFixed(2)}deg`);
+          if (Math.abs(c.vx) > 0.04 || Math.abs(c.vy) > 0.04 ||
+              Math.abs(c.x - tx) > 0.04 || Math.abs(c.y - ty) > 0.04) alive = true;
+        });
+        if (alive) requestAnimationFrame(tick);
+        else springActive = false;
+      });
+    }
+  }
+
+  // ─── 4. HERO EMAIL TYPEWRITER ─────────────────────────
+  if (!reducedMotion) {
+    const emailTemplates = [
+      {
+        toName: 'Sarah Chen', emailAddr: 'sarah.chen@gs.com',
+        subj: 'Coffee chat — Penn alum at Goldman IBD?',
+        parts: [
+          { t: 'text', v: 'Hi Sarah,\n\nI came across your work on the ' },
+          { t: 'hi',   v: 'Disney+ debt financing' },
+          { t: 'text', v: ' — impressive execution given the rate environment.\n\nI\'m a junior at Wharton focused on TMT. Would you be open to a 20-min call?' }
+        ]
+      },
+      {
+        toName: 'Marcus Kim', emailAddr: 'marcus.kim@gs.com',
+        subj: 'Coffee chat — Cornell student in M&A',
+        parts: [
+          { t: 'text', v: 'Hi Marcus,\n\nYour team\'s advisory work on the ' },
+          { t: 'hi',   v: 'Microsoft/Activision deal' },
+          { t: 'text', v: ' caught my attention — navigating that regulatory environment was no small thing.\n\nI\'m a junior at Cornell recruiting for M&A. Would you have 20 minutes?' }
+        ]
+      },
+      {
+        toName: 'Aisha Johnson', emailAddr: 'a.johnson@kkr.com',
+        subj: 'Coffee chat — Columbia junior interested in PE',
+        parts: [
+          { t: 'text', v: 'Hi Aisha,\n\nKKR\'s work on the ' },
+          { t: 'hi',   v: 'Telecom Italia take-private' },
+          { t: 'text', v: ' stood out — the cross-border structuring was really impressive.\n\nI\'m a junior at Columbia focused on PE. Would you be open to a quick call?' }
+        ]
+      }
+    ];
+
+    const emailCard = document.querySelector('.gc-email');
+    if (emailCard) {
+      const toEl   = emailCard.querySelector('.em-to');
+      const subjEl = emailCard.querySelector('.em-subj');
+      const bodyEl = emailCard.querySelector('.em-body');
+
+      const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+      async function runTypewriter() {
+        let i = 0;
+        // Wait for hero entrance to finish before starting
+        await sleep(2800);
+
+        while (true) {
+          const tpl = emailTemplates[i % emailTemplates.length];
+          i++;
+
+          // Update header fields
+          toEl.innerHTML  = `To: <span>${tpl.toName}</span> · ${tpl.emailAddr}`;
+          subjEl.textContent = tpl.subj;
+
+          // Clear body, place cursor
+          bodyEl.innerHTML = '';
+          const cursor = document.createElement('span');
+          cursor.className = 'cursor';
+          bodyEl.appendChild(cursor);
+
+          // Type each part
+          for (const part of tpl.parts) {
+            if (part.t === 'text') {
+              for (const ch of part.v) {
+                if (ch === '\n') {
+                  cursor.insertAdjacentElement('beforebegin', document.createElement('br'));
+                } else {
+                  const prev = cursor.previousSibling;
+                  if (prev && prev.nodeType === 3) prev.textContent += ch;
+                  else cursor.insertAdjacentText('beforebegin', ch);
+                }
+                const d = ch === '.' ? 110 : ch === ',' ? 80 : ch === ' ' ? 42 : ch === '\n' ? 8 : 20 + Math.random() * 16;
+                await sleep(d);
+              }
+            } else if (part.t === 'hi') {
+              const hl = document.createElement('span');
+              hl.className = 'em-hl';
+              cursor.insertAdjacentElement('beforebegin', hl);
+              for (const ch of part.v) {
+                hl.textContent += ch;
+                await sleep(20 + Math.random() * 14);
+              }
+            }
+          }
+
+          // Pause with cursor blinking
+          await sleep(3400);
+
+          // Fade body out, swap, fade back
+          bodyEl.style.transition = 'opacity 0.3s';
+          bodyEl.style.opacity = '0';
+          toEl.style.transition = subjEl.style.transition = 'opacity 0.3s';
+          toEl.style.opacity = subjEl.style.opacity = '0';
+          await sleep(320);
+          bodyEl.style.opacity = toEl.style.opacity = subjEl.style.opacity = '1';
+          await sleep(280);
+        }
+      }
+
+      runTypewriter();
+    }
+  }
+
+  // ─── 5. EMAIL SECTION TABS ───────────────────────────
+  document.querySelectorAll('.etab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const idx = tab.dataset.tab;
+      document.querySelectorAll('.etab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.ecard').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.ecard')[idx].classList.add('active');
+    });
+  });
+
+  // ─── 6. WAITLIST CAPTURE ────────────────────────────
+  document.getElementById('email-btn').addEventListener('click', () => {
+    const inp = document.getElementById('email-inp');
+    const btn = document.getElementById('email-btn');
+    if (inp.value && inp.value.includes('@') && inp.value.includes('.')) {
+      btn.classList.add('success');
+      btn.textContent = "You're on the list ✓";
+      inp.value = '';
+      inp.placeholder = 'See you soon!';
+      inp.disabled = true;
+      btn.disabled = true;
+    } else {
+      inp.style.borderColor = 'rgba(255,100,100,.65)';
+      inp.style.boxShadow = '0 0 0 3.5px rgba(255,80,80,.15)';
+      inp.focus();
+      setTimeout(() => {
+        inp.style.borderColor = 'rgba(255,255,255,.32)';
+        inp.style.boxShadow = '';
+      }, 1600);
+    }
+  });
+  document.getElementById('email-inp').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('email-btn').click();
+  });
+</script>
+
+</body>
+</html>
