@@ -140,6 +140,13 @@
     }
     .nav-signup:hover { background: var(--dark2); transform: translateY(-1px); }
     .nav-signup:active { transform: scale(0.97) !important; transition-duration: 0.08s !important; }
+    .nav-how {
+      font-size: 14px; font-weight: 400;
+      color: rgba(255,255,255,0.78);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .nav-how:hover { color: #fff; }
 
     /* ─── HERO CONTENT ──────────────────────────────────── */
     .hero-content {
@@ -169,27 +176,10 @@
       line-height: 1.62;
     }
 
-    .hero-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--dark);
-      color: #fff;
-      font-size: 15px; font-weight: 500;
-      padding: 13px 27px;
-      border-radius: 100px;
-      text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.07);
-      transition: background .2s, transform .2s, box-shadow .2s;
-    }
-    .hero-cta:hover {
-      background: var(--dark2);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 28px rgba(19,16,30,.38);
-    }
-    .hero-cta .arr { font-size: 13px; opacity: 0.65; }
-    .hero-cta:active { transform: scale(0.97) !important; box-shadow: none !important; transition-duration: 0.08s !important; }
+    .email-cap.hero-cta { justify-content: center; }
 
     /* ─── HERO ENTRANCE ──────────────────────────────────── */
-    .hero-headline, .hero-sub, .hero-cta {
+    .hero-headline, .hero-sub, .email-cap.hero-cta {
       opacity: 0;
       transform: translateY(22px);
       will-change: transform, opacity;
@@ -197,9 +187,9 @@
     @keyframes heroReveal {
       to { opacity: 1; transform: translateY(0); }
     }
-    .hero-loaded .hero-headline { animation: heroReveal 0.8s var(--ease-expo) 0.05s forwards; }
-    .hero-loaded .hero-sub      { animation: heroReveal 0.8s var(--ease-expo) 0.18s forwards; }
-    .hero-loaded .hero-cta      { animation: heroReveal 0.75s var(--ease-expo) 0.3s forwards; }
+    .hero-loaded .hero-headline         { animation: heroReveal 0.8s var(--ease-expo) 0.05s forwards; }
+    .hero-loaded .hero-sub              { animation: heroReveal 0.8s var(--ease-expo) 0.18s forwards; }
+    .hero-loaded .email-cap.hero-cta    { animation: heroReveal 0.75s var(--ease-expo) 0.3s forwards; }
 
     /* ─── FLOATING CARDS ────────────────────────────────── */
     .hero-cards {
@@ -695,6 +685,21 @@
     .footer-links { display: flex; gap: 26px; }
     .footer-links a { font-size: 13px; color: rgba(255,255,255,.42); text-decoration: none; transition: color .15s; }
     .footer-links a:hover { color: rgba(255,255,255,.78); }
+    .footer-cta {
+      display: flex; align-items: center; gap: 6px;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 13.5px; font-weight: 500;
+      padding: 10px 22px;
+      border-radius: 100px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.22);
+      transition: background .15s, transform .15s;
+      white-space: nowrap;
+    }
+    .footer-cta:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+    .footer-cta:active { transform: scale(0.97); }
 
     /* ─── FADE-UP ANIMATION ─────────────────────────────── */
     .fu {
@@ -845,6 +850,100 @@
       .scroll-progress { display: none !important; }
       .fu { transition-duration: 0.01ms !important; }
     }
+
+    /* ─── SURVEY MODAL ──────────────────────────────────── */
+    .survey-backdrop {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(19,16,30,0.48);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s var(--ease-quart);
+    }
+    .survey-backdrop.open {
+      opacity: 1; pointer-events: all;
+    }
+    .survey-card {
+      background: #fff;
+      border-radius: 20px;
+      width: 100%; max-width: 560px;
+      padding: 36px 32px 28px;
+      box-shadow: 0 24px 64px rgba(19,16,30,.22), 0 4px 16px rgba(80,65,150,.12);
+      position: relative;
+      transform: translateY(18px) scale(0.97);
+      transition: transform 0.3s var(--ease-expo);
+    }
+    .survey-backdrop.open .survey-card {
+      transform: translateY(0) scale(1);
+    }
+    .survey-x {
+      position: absolute; top: 16px; right: 16px;
+      background: none; border: none; cursor: pointer;
+      font-size: 13px; color: var(--muted);
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, color .15s;
+    }
+    .survey-x:hover { background: #f0f0f5; color: var(--body); }
+    .survey-header { text-align: center; margin-bottom: 28px; }
+    .survey-title {
+      font-family: 'Fraunces', serif;
+      font-size: 22px; font-weight: 400;
+      color: var(--dark); letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+    .survey-sub { font-size: 13.5px; color: var(--muted); font-weight: 300; line-height: 1.55; }
+    .survey-body { display: flex; flex-direction: column; gap: 22px; }
+    .survey-q { display: flex; flex-direction: column; gap: 10px; }
+    .survey-label { font-size: 13px; font-weight: 500; color: var(--body); }
+    .price-chips { display: flex; flex-wrap: nowrap; gap: 7px; }
+    .price-chip {
+      padding: 7px 14px; border-radius: 100px; white-space: nowrap;
+      border: 1.5px solid #e2e1ec;
+      background: #fff; color: var(--body);
+      font-size: 13px; font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: border-color .15s, background .15s, color .15s, transform .1s;
+    }
+    .price-chip:hover { border-color: var(--periwinkle); background: #f3f2fc; }
+    .price-chip.selected {
+      border-color: var(--periwinkle);
+      background: var(--periwinkle);
+      color: #fff;
+    }
+    .price-chip:active { transform: scale(0.96); }
+    .survey-textarea {
+      width: 100%; padding: 11px 14px;
+      border: 1.5px solid #e2e1ec; border-radius: 12px;
+      font-family: 'DM Sans', sans-serif; font-size: 13.5px;
+      color: var(--body); resize: none; outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      line-height: 1.55;
+    }
+    .survey-textarea::placeholder { color: #b0aec0; }
+    .survey-textarea:focus { border-color: var(--periwinkle); box-shadow: 0 0 0 3px rgba(123,116,196,.12); }
+    .survey-footer {
+      display: flex; align-items: center; justify-content: flex-end;
+      gap: 10px; margin-top: 26px;
+    }
+    .survey-skip-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 13.5px; color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      padding: 8px 12px; border-radius: 8px;
+      transition: color .15s, background .15s;
+    }
+    .survey-skip-btn:hover { color: var(--body); background: #f4f3fa; }
+    .survey-submit-btn {
+      padding: 10px 22px; border-radius: 100px; border: none;
+      background: var(--dark); color: #fff;
+      font-size: 13.5px; font-weight: 600; font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background .15s, transform .15s;
+    }
+    .survey-submit-btn:hover { background: var(--dark2); transform: translateY(-1px); }
+    .survey-submit-btn:active { transform: scale(0.97); }
   </style>
 </head>
 <body>
@@ -869,7 +968,7 @@
       </div>
       <span class="logo-name">Necto</span>
     </a>
-
+    <a href="#how" class="nav-how">How it works</a>
   </nav>
 
   <!-- Hero text -->
@@ -880,7 +979,10 @@
     <p class="hero-sub">
       Necto automates your entire recruiting outreach — from finding contacts to sending emails that actually get replies.
     </p>
-    <a href="#final" class="hero-cta">Join the waitlist <span class="arr">→</span></a>
+    <div class="email-cap hero-cta">
+      <input type="email" class="email-inp" id="email-inp" placeholder="Enter your email" />
+      <button class="email-btn" id="email-btn">Join waitlist →</button>
+    </div>
   </div>
 
   <!-- Floating UI cards -->
@@ -994,7 +1096,7 @@
 <!-- ═══════════════════════════════════════════════════════
      HOW IT WORKS
 ════════════════════════════════════════════════════════ -->
-<section class="how">
+<section class="how" id="how">
   <div class="sec-label">How it works</div>
   <h2 class="sec-title" style="margin-bottom:36px;">Three steps to a full pipeline</h2>
 
@@ -1246,20 +1348,6 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     FINAL CTA
-════════════════════════════════════════════════════════ -->
-<section class="final-cta" id="final">
-  <div class="cta-inner">
-    <h2 class="cta-title">Your recruiting pipeline<br>starts here.</h2>
-    <p class="cta-sub">Join students at top programs landing coffee chats on autopilot.</p>
-    <div class="email-cap">
-      <input type="email" class="email-inp" id="email-inp" placeholder="Enter your email" />
-      <button class="email-btn" id="email-btn">Join waitlist →</button>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════
      FOOTER
 ════════════════════════════════════════════════════════ -->
 <footer>
@@ -1267,6 +1355,7 @@
     <div class="footer-logo-text">Necto</div>
     <div class="footer-tag">The outreach OS for finance students.</div>
   </div>
+  <a href="#" class="footer-cta">Join waitlist →</a>
 </footer>
 
 <script>
@@ -1381,61 +1470,48 @@
       const sleep = ms => new Promise(r => setTimeout(r, ms));
 
       async function runTypewriter() {
-        let i = 0;
         // Wait for hero entrance to finish before starting
         await sleep(2800);
 
-        while (true) {
-          const tpl = emailTemplates[i % emailTemplates.length];
-          i++;
+        const tpl = emailTemplates[0];
 
-          // Update header fields
-          toEl.innerHTML  = `To: <span>${tpl.toName}</span> · ${tpl.emailAddr}`;
-          subjEl.textContent = tpl.subj;
+        // Update header fields
+        toEl.innerHTML  = `To: <span>${tpl.toName}</span> · ${tpl.emailAddr}`;
+        subjEl.textContent = tpl.subj;
 
-          // Clear body, place cursor
-          bodyEl.innerHTML = '';
-          const cursor = document.createElement('span');
-          cursor.className = 'cursor';
-          bodyEl.appendChild(cursor);
+        // Clear body, place cursor
+        bodyEl.innerHTML = '';
+        const cursor = document.createElement('span');
+        cursor.className = 'cursor';
+        bodyEl.appendChild(cursor);
 
-          // Type each part
-          for (const part of tpl.parts) {
-            if (part.t === 'text') {
-              for (const ch of part.v) {
-                if (ch === '\n') {
-                  cursor.insertAdjacentElement('beforebegin', document.createElement('br'));
-                } else {
-                  const prev = cursor.previousSibling;
-                  if (prev && prev.nodeType === 3) prev.textContent += ch;
-                  else cursor.insertAdjacentText('beforebegin', ch);
-                }
-                const d = ch === '.' ? 110 : ch === ',' ? 80 : ch === ' ' ? 42 : ch === '\n' ? 8 : 20 + Math.random() * 16;
-                await sleep(d);
+        // Type each part
+        for (const part of tpl.parts) {
+          if (part.t === 'text') {
+            for (const ch of part.v) {
+              if (ch === '\n') {
+                cursor.insertAdjacentElement('beforebegin', document.createElement('br'));
+              } else {
+                const prev = cursor.previousSibling;
+                if (prev && prev.nodeType === 3) prev.textContent += ch;
+                else cursor.insertAdjacentText('beforebegin', ch);
               }
-            } else if (part.t === 'hi') {
-              const hl = document.createElement('span');
-              hl.className = 'em-hl';
-              cursor.insertAdjacentElement('beforebegin', hl);
-              for (const ch of part.v) {
-                hl.textContent += ch;
-                await sleep(20 + Math.random() * 14);
-              }
+              const d = ch === '.' ? 110 : ch === ',' ? 80 : ch === ' ' ? 42 : ch === '\n' ? 8 : 20 + Math.random() * 16;
+              await sleep(d);
+            }
+          } else if (part.t === 'hi') {
+            const hl = document.createElement('span');
+            hl.className = 'em-hl';
+            cursor.insertAdjacentElement('beforebegin', hl);
+            for (const ch of part.v) {
+              hl.textContent += ch;
+              await sleep(20 + Math.random() * 14);
             }
           }
-
-          // Pause with cursor blinking
-          await sleep(3400);
-
-          // Fade body out, swap, fade back
-          bodyEl.style.transition = 'opacity 0.3s';
-          bodyEl.style.opacity = '0';
-          toEl.style.transition = subjEl.style.transition = 'opacity 0.3s';
-          toEl.style.opacity = subjEl.style.opacity = '0';
-          await sleep(320);
-          bodyEl.style.opacity = toEl.style.opacity = subjEl.style.opacity = '1';
-          await sleep(280);
         }
+
+        // Remove cursor when done
+        cursor.remove();
       }
 
       runTypewriter();
@@ -1464,6 +1540,7 @@
       inp.placeholder = 'See you soon!';
       inp.disabled = true;
       btn.disabled = true;
+      setTimeout(() => document.getElementById('survey-modal').classList.add('open'), 400);
     } else {
       inp.style.borderColor = 'rgba(255,100,100,.65)';
       inp.style.boxShadow = '0 0 0 3.5px rgba(255,80,80,.15)';
@@ -1477,6 +1554,52 @@
   document.getElementById('email-inp').addEventListener('keydown', e => {
     if (e.key === 'Enter') document.getElementById('email-btn').click();
   });
+</script>
+
+<!-- Survey Modal -->
+<div id="survey-modal" class="survey-backdrop">
+  <div class="survey-card">
+    <button class="survey-x" id="survey-close" aria-label="Close">✕</button>
+    <div class="survey-header">
+      <h3 class="survey-title">You're on the list!</h3>
+      <p class="survey-sub">Two quick optional questions — helps us build exactly what you need.</p>
+    </div>
+    <div class="survey-body">
+      <div class="survey-q">
+        <label class="survey-label">How much would you pay per month?</label>
+        <div class="price-chips">
+          <button class="price-chip" data-val="free">Free only</button>
+          <button class="price-chip" data-val="5">$5 – $10</button>
+          <button class="price-chip" data-val="15">$15 – $25</button>
+          <button class="price-chip" data-val="30">$30 – $50</button>
+          <button class="price-chip" data-val="50+">$50+</button>
+        </div>
+      </div>
+      <div class="survey-q">
+        <label class="survey-label">What features would you like to see?</label>
+        <textarea class="survey-textarea" placeholder="e.g. LinkedIn scraping, personalized subject lines, CRM sync…" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="survey-footer">
+      <button class="survey-skip-btn" id="survey-skip">Skip</button>
+      <button class="survey-submit-btn" id="survey-submit">Submit →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── SURVEY MODAL ────────────────────────────────────
+  const modal = document.getElementById('survey-modal');
+  document.getElementById('survey-close').addEventListener('click', () => modal.classList.remove('open'));
+  document.getElementById('survey-skip').addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+  document.querySelectorAll('.price-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.price-chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+    });
+  });
+  document.getElementById('survey-submit').addEventListener('click', () => modal.classList.remove('open'));
 </script>
 
 </body>
