@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Necto — Land Every Coffee Chat. Automatically.</title>
+  <meta name="description" content="Necto automates your entire recruiting outreach — from finding contacts to sending personalized cold emails that get replies. Built for finance students." />
+  <meta property="og:title" content="Necto — Land Every Coffee Chat. Automatically." />
+  <meta property="og:description" content="Automate your entire recruiting outreach. Find contacts, generate personalized emails, and track replies — built for finance students." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#7570C0" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
@@ -11,18 +16,24 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --periwinkle:   #7B74C4;
-      --mid-blue:     #96A8D8;
-      --sky:          #C8DCF5;
-      --dark:         #13101E;
-      --dark2:        #1E1A30;
-      --body:         #2E2B3D;
-      --muted:        #6B6880;
-      --glass:        rgba(255,255,255,0.68);
-      --glass-border: rgba(255,255,255,0.88);
-      --card-shadow:  0 8px 32px rgba(80,65,150,.12), 0 2px 8px rgba(80,65,150,.08);
-      --ease-expo:    cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-quart:   cubic-bezier(0.25, 1, 0.5, 1);
+      --periwinkle:     #7B74C4;
+      --periwinkle-deep:#5B55A0;
+      --periwinkle-rgb: 123, 116, 196;
+      --peri-deep-rgb:  91, 85, 160;
+      --mid-blue:       #96A8D8;
+      --sky:            #C8DCF5;
+      --dark:           #13101E;
+      --dark2:          #1E1A30;
+      --body:           #2E2B3D;
+      --ink:            #4A4760;
+      --muted:          #6B6880;
+      --green:          #34C77B;
+      --amber:          #F5A623;
+      --glass:          rgba(255,255,255,0.68);
+      --glass-border:   rgba(255,255,255,0.88);
+      --card-shadow:    0 8px 32px rgba(80,65,150,.12), 0 2px 8px rgba(80,65,150,.08);
+      --ease-expo:      cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-quart:     cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     @property --grad-angle { syntax: '<angle>';      inherits: false; initial-value: 162deg; }
@@ -108,39 +119,6 @@
       letter-spacing: -.2px;
     }
 
-    .nav-links {
-      display: flex; gap: 34px; list-style: none;
-    }
-    .nav-links a {
-      font-size: 14px;
-      font-weight: 400;
-      color: rgba(255,255,255,0.78);
-      text-decoration: none;
-      transition: color .15s;
-    }
-    .nav-links a:hover { color: #fff; }
-
-    .nav-right { display: flex; align-items: center; gap: 20px; }
-    .nav-login {
-      font-size: 14px;
-      color: rgba(255,255,255,0.78);
-      text-decoration: none;
-      transition: color .15s;
-    }
-    .nav-login:hover { color: #fff; }
-    .nav-signup {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: var(--dark);
-      color: #fff;
-      font-size: 13.5px; font-weight: 500;
-      padding: 8px 19px;
-      border-radius: 100px;
-      text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.08);
-      transition: background .15s, transform .15s;
-    }
-    .nav-signup:hover { background: var(--dark2); transform: translateY(-1px); }
-    .nav-signup:active { transform: scale(0.97) !important; transition-duration: 0.08s !important; }
     .nav-how {
       font-size: 14px; font-weight: 400;
       color: rgba(255,255,255,0.78);
@@ -257,6 +235,7 @@
     .gc-email   { left: 50%;  top: -8px; width: 374px; padding: 20px 22px; transform: translateX(-50%) rotate(.3deg); z-index: 6; }
     .gc-pipe    { right: 3%;  top: 28px;  width: 248px; padding: 15px; transform: rotate(2.1deg); }
     .gc-ai      { left: 58%;  top: 208px; width: 214px; padding: 13px 15px; transform: rotate(-1.2deg); z-index: 5; }
+    .gc-lift    { left: 22%;  top: 210px; width: 214px; padding: 13px 15px; transform: rotate(-1.5deg); z-index: 5; }
 
     /* float animations — start after cards entrance (~1.4s in) */
     @keyframes floatEmail {
@@ -275,10 +254,15 @@
       0%, 100% { transform: rotate(-1.2deg) translateY(0)   perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); }
       50%       { transform: rotate(-1.2deg) translateY(-9px) perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); }
     }
+    @keyframes floatLift {
+      0%, 100% { transform: rotate(-1.5deg) translateY(0)   perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); }
+      50%       { transform: rotate(-1.5deg) translateY(-8px) perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); }
+    }
     .gc-email { animation: floatEmail 5.5s ease-in-out 1.5s infinite; }
     .gc-leads { animation: floatLeads 6.8s ease-in-out 2.3s infinite; }
     .gc-pipe  { animation: floatPipe  5.2s ease-in-out 1.9s infinite; }
     .gc-ai    { animation: floatAI   7.4s ease-in-out 3.0s infinite; }
+    .gc-lift  { animation: floatLift  6.2s ease-in-out 4.2s infinite; }
 
     .gc-hd {
       display: flex; align-items: center; gap: 7px;
@@ -295,9 +279,9 @@
     .lf-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
     .lf-chip {
       font-size: 10.5px; font-weight: 500;
-      color: #5B55A0;
-      background: rgba(91,85,160,.1);
-      border: 1px solid rgba(91,85,160,.2);
+      color: var(--periwinkle-deep);
+      background: rgba(var(--peri-deep-rgb),.1);
+      border: 1px solid rgba(var(--peri-deep-rgb),.2);
       border-radius: 100px;
       padding: 2px 8px;
     }
@@ -318,8 +302,8 @@
     .ln { font-size: 11.5px; font-weight: 600; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .lt { font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .ls-badge {
-      font-size: 9.5px; font-weight: 700; color: #5B55A0;
-      background: rgba(91,85,160,.1); padding: 2px 5px; border-radius: 4px; flex-shrink: 0;
+      font-size: 9.5px; font-weight: 700; color: var(--periwinkle-deep);
+      background: rgba(var(--peri-deep-rgb),.1); padding: 2px 5px; border-radius: 4px; flex-shrink: 0;
     }
 
     /* email card */
@@ -330,16 +314,16 @@
       margin-bottom: 9px; padding-bottom: 9px;
       border-bottom: 1px solid rgba(0,0,0,.07);
     }
-    .em-body { font-size: 11.5px; color: #4A4760; line-height: 1.65; }
+    .em-body { font-size: 11.5px; color: var(--ink); line-height: 1.65; }
     .em-body p { margin-bottom: 7px; }
     .em-body p:last-child { margin-bottom: 0; }
     .em-hl {
-      background: rgba(91,85,160,.12); border-radius: 3px;
-      padding: 0 3px; color: #5B55A0;
+      background: rgba(var(--peri-deep-rgb),.12); border-radius: 3px;
+      padding: 0 3px; color: var(--periwinkle-deep);
     }
     .cursor {
       display: inline-block; width: 1.5px; height: 12px;
-      background: #5B55A0; animation: blink 1s infinite; vertical-align: middle;
+      background: var(--periwinkle-deep); animation: blink 1s infinite; vertical-align: middle;
     }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
@@ -353,8 +337,8 @@
       border-radius: 8px;
     }
     .sdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-    .s-green  { background: #34C77B; }
-    .s-orange { background: #F5A623; }
+    .s-green  { background: var(--green); }
+    .s-orange { background: var(--amber); }
     .s-gray   { background: #A8B0C8; }
     .pip-name { font-size: 11.5px; font-weight: 500; color: var(--dark); flex: 1; }
     .pip-status { font-size: 10px; color: var(--muted); }
@@ -364,12 +348,12 @@
     .ai-badge {
       display: inline-flex; align-items: center; gap: 4px;
       font-size: 9.5px; font-weight: 700; letter-spacing: .08em;
-      text-transform: uppercase; color: #7B74C4;
-      background: rgba(123,116,196,.12); padding: 3px 8px;
+      text-transform: uppercase; color: var(--periwinkle);
+      background: rgba(var(--periwinkle-rgb),.12); padding: 3px 8px;
       border-radius: 100px; margin-bottom: 7px;
     }
     .ai-text { font-size: 12px; color: var(--dark); line-height: 1.55; }
-    .ai-text strong { color: #5B55A0; }
+    .ai-text strong { color: var(--periwinkle-deep); }
 
     /* ─── SOCIAL PROOF ──────────────────────────────────── */
     .social-proof {
@@ -379,7 +363,7 @@
     }
     .social-proof p {
       font-size: 14px;
-      color: rgba(91,85,160,.72);
+      color: rgba(var(--peri-deep-rgb),.72);
       letter-spacing: .07em;
       font-weight: 400;
     }
@@ -411,7 +395,7 @@
     }
 
     /* ─── HOW IT WORKS ──────────────────────────────────── */
-    .how { background: linear-gradient(158deg, #F2F0FB 0%, #EAF1FA 100%); padding: 100px 48px; }
+    .how { background: linear-gradient(158deg, #F2F0FB 0%, #EAF1FA 100%); padding: 100px 48px; content-visibility: auto; contain-intrinsic-size: auto 600px; }
 
     .how-inner { max-width: 960px; margin: 0 auto; }
 
@@ -455,16 +439,16 @@
 
     .step-arrow {
       display: flex; align-items: center; justify-content: center;
-      padding: 0 20px; color: rgba(123,116,196,.32); font-size: 22px;
+      padding: 0 20px; color: rgba(var(--periwinkle-rgb),.32); font-size: 22px;
     }
 
     /* ─── FEATURE BLOCKS ────────────────────────────────── */
-    .features { padding: 104px 52px 92px; max-width: 1080px; margin: 0 auto; }
+    .features { padding: 104px 52px 92px; max-width: 1080px; margin: 0 auto; content-visibility: auto; contain-intrinsic-size: auto 1200px; }
 
     .feat-row {
       display: grid; grid-template-columns: 1fr 1fr; gap: 78px;
       align-items: center; padding: 68px 0;
-      border-bottom: 1px solid rgba(123,116,196,.12);
+      border-bottom: 1px solid rgba(var(--periwinkle-rgb),.12);
     }
     .feat-row:first-child { padding-top: 0; }
     .feat-row:last-child { border-bottom: none; padding-bottom: 0; }
@@ -495,7 +479,7 @@
     .feat-bullets { list-style: none; display: flex; flex-direction: column; gap: 9px; }
     .feat-bullets li {
       display: flex; align-items: flex-start; gap: 10px;
-      font-size: 1rem; color: #4A4760; line-height: 1.55;
+      font-size: 1rem; color: var(--ink); line-height: 1.55;
     }
     .feat-bullets li::before {
       content: '';
@@ -526,8 +510,8 @@
     .mock-frow { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
     .mock-fchip {
       font-size: 11.5px; font-weight: 500; padding: 4px 11px;
-      border-radius: 100px; border: 1.5px solid rgba(123,116,196,.28);
-      color: #5B55A0; background: rgba(123,116,196,.06);
+      border-radius: 100px; border: 1.5px solid rgba(var(--periwinkle-rgb),.28);
+      color: var(--periwinkle-deep); background: rgba(var(--periwinkle-rgb),.06);
     }
     .mock-rlist {
       background: #fff; border-radius: 12px; overflow: hidden;
@@ -543,12 +527,12 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0;
     }
-    .mock-ri { flex: 1; }
-    .mock-rn { font-size: 12.5px; font-weight: 600; color: var(--dark); }
-    .mock-rs { font-size: 11px; color: #999; }
+    .mock-ri { flex: 1; min-width: 0; }
+    .mock-rn { font-size: 12.5px; font-weight: 600; color: var(--dark); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .mock-rs { font-size: 11px; color: #999; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .mock-add {
       font-size: 11px; font-weight: 700; color: #7B74C4;
-      background: rgba(123,116,196,.1); border: none;
+      background: rgba(var(--periwinkle-rgb),.1); border: none;
       border-radius: 6px; padding: 4px 9px; cursor: pointer;
     }
 
@@ -566,7 +550,7 @@
     .mock-ai-pill {
       display: inline-flex; align-items: center; gap: 3px;
       font-size: 10px; font-weight: 700; color: #7B74C4;
-      background: rgba(123,116,196,.12); padding: 3px 8px; border-radius: 100px;
+      background: rgba(var(--periwinkle-rgb),.12); padding: 3px 8px; border-radius: 100px;
     }
     .mock-mail-flds {
       padding: 11px 15px; border-bottom: 1px solid rgba(0,0,0,.06);
@@ -592,6 +576,8 @@
     .mock-stats { display: flex; gap: 14px; }
     .mock-stat { text-align: center; }
     .mock-stat-n { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 400; color: var(--dark); line-height: 1; }
+    .mock-stat-n.green { color: var(--green); }
+    .mock-stat-n.purple { color: var(--periwinkle); }
     .mock-stat-l { font-size: 9.5px; color: #999; text-transform: uppercase; letter-spacing: .05em; }
     .mock-tbl {
       background: #fff; border-radius: 12px; overflow: hidden;
@@ -618,7 +604,7 @@
     }
     .mock-pill.rep { background: rgba(52,199,123,.12); color: #1A9950; }
     .mock-pill.opn { background: rgba(245,166,35,.12); color: #B07A0A; }
-    .mock-pill.snt { background: rgba(123,116,196,.1); color: #5B55A0; }
+    .mock-pill.snt { background: rgba(var(--periwinkle-rgb),.1); color: var(--periwinkle-deep); }
     .mock-pill.dft { background: rgba(168,176,200,.15); color: #777; }
     .mock-tdate { font-size: 11px; color: #BBB; }
 
@@ -628,6 +614,8 @@
       background: #F9F9FC;
       padding: 96px 48px 104px;
       text-align: center;
+      content-visibility: auto;
+      contain-intrinsic-size: auto 800px;
     }
     .emails-label {
       font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
@@ -646,7 +634,7 @@
     }
     .etab {
       padding: 8px 20px; border-radius: 100px;
-      border: 1.5px solid rgba(123,116,196,.2);
+      border: 1.5px solid rgba(var(--periwinkle-rgb),.2);
       background: #fff; color: var(--muted);
       font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif;
       cursor: pointer; transition: all .18s;
@@ -657,7 +645,7 @@
     .ecard {
       grid-area: 1 / 1;
       background: #fff;
-      border: 1px solid rgba(123,116,196,.15);
+      border: 1px solid rgba(var(--periwinkle-rgb),.15);
       border-radius: 18px;
       box-shadow: var(--card-shadow);
       padding: 28px 32px;
@@ -679,42 +667,23 @@
     .ecard-role { font-size: 12px; color: var(--muted); margin-top: 1px; }
     .ecard-pill {
       margin-left: auto; font-size: 11px; font-weight: 600;
-      background: rgba(123,116,196,.1); color: var(--periwinkle);
+      background: rgba(var(--periwinkle-rgb),.1); color: var(--periwinkle);
       padding: 4px 10px; border-radius: 100px; white-space: nowrap;
     }
     .ecard-subject {
       font-size: 13px; font-weight: 500; color: var(--body);
       padding-bottom: 16px; margin-bottom: 16px;
-      border-bottom: 1px solid rgba(123,116,196,.12);
+      border-bottom: 1px solid rgba(var(--periwinkle-rgb),.12);
     }
     .ecard-body {
       font-size: 1rem; line-height: 1.75; color: var(--body); font-weight: 300;
+      overflow-wrap: break-word; word-break: break-word;
     }
     .ecard-body mark {
-      background: rgba(123,116,196,.12); color: #5B55A0;
+      background: rgba(var(--periwinkle-rgb),.12); color: var(--periwinkle-deep);
       padding: 0 3px; border-radius: 3px;
     }
 
-    /* ─── FINAL CTA ─────────────────────────────────────── */
-    .final-cta {
-      background: linear-gradient(160deg,#7570C0 0%,#8FA6D4 48%,#C6D8F5 100%);
-      padding: 120px 48px;
-      text-align: center; position: relative; overflow: hidden;
-    }
-    .final-cta::after {
-      content: ''; position: absolute; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      pointer-events: none;
-    }
-    .cta-inner { position: relative; z-index: 1; }
-    .cta-title {
-      font-family: 'Fraunces', serif;
-      font-size: clamp(42px, 5.6vw, 72px);
-      font-weight: 400; color: #fff;
-      letter-spacing: -0.035em; line-height: 1.04;
-      margin-bottom: 18px;
-    }
-    .cta-sub { font-size: 17.5px; color: rgba(255,255,255,.74); font-weight: 300; margin-bottom: 42px; }
     .email-cap { display: flex; justify-content: center; gap: 9px; max-width: 430px; margin: 0 auto; }
     .email-inp {
       flex: 1; padding: 12px 20px; border-radius: 100px;
@@ -743,12 +712,8 @@
       padding: 38px 52px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .footer-left { }
     .footer-logo-text { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 400; color: #fff; }
     .footer-tag { font-size: 12.5px; color: rgba(255,255,255,.32); margin-top: 3px; }
-    .footer-links { display: flex; gap: 26px; }
-    .footer-links a { font-size: 13px; color: rgba(255,255,255,.42); text-decoration: none; transition: color .15s; }
-    .footer-links a:hover { color: rgba(255,255,255,.78); }
     .footer-cta {
       display: flex; align-items: center; gap: 6px;
       flex-shrink: 0;
@@ -833,21 +798,13 @@
         animation-timeline: view(block);
         animation-range: entry 5% entry 28%;
       }
-      .sec-sub, .emails-sub {
+      .sec-sub {
         opacity: 0; transform: translateY(14px);
         animation: sectionUp linear both;
         animation-timeline: view(block);
         animation-range: entry 10% entry 33%;
       }
       @keyframes sectionUp { to { opacity: 1; transform: translateY(0); } }
-
-      /* Steps flow */
-      .steps-flow {
-        opacity: 0; transform: translateY(18px);
-        animation: sectionUp linear both;
-        animation-timeline: view(block);
-        animation-range: entry 12% entry 40%;
-      }
 
       /* Emails section tabs + cards */
       .email-tabs {
@@ -877,10 +834,9 @@
     /* ─── RESPONSIVE ────────────────────────────────────── */
     @media (max-width: 900px) {
       nav { padding: 0 24px; }
-      .nav-links { display: none; }
       .hero-content { padding-top: 44px; }
       .hero-cards { height: 360px; }
-      .gc-pipe, .gc-ai { display: none; }
+      .gc-pipe, .gc-ai, .gc-lift { display: none; }
       .gc-leads { width: 200px; }
       .gc-email { width: 300px; padding: 16px 18px; }
       .steps-grid { grid-template-columns: 1fr; }
@@ -917,7 +873,7 @@
         transform: none !important;
         transition: none !important;
       }
-      .gc-email, .gc-leads, .gc-pipe, .gc-ai { animation: none !important; }
+      .gc-email, .gc-leads, .gc-pipe, .gc-ai, .gc-lift { animation: none !important; }
       .hero-wrap { animation: none !important; }
       .scroll-progress { display: none !important; }
       .fu { transition-duration: 0.01ms !important; }
@@ -969,7 +925,7 @@
     .survey-body { display: flex; flex-direction: column; gap: 22px; }
     .survey-q { display: flex; flex-direction: column; gap: 10px; }
     .survey-label { font-size: 13px; font-weight: 500; color: var(--body); }
-    .price-chips { display: flex; flex-wrap: nowrap; gap: 7px; }
+    .price-chips { display: flex; flex-wrap: wrap; gap: 7px; }
     .price-chip {
       padding: 7px 14px; border-radius: 100px; white-space: nowrap;
       border: 1.5px solid #e2e1ec;
@@ -994,7 +950,7 @@
       line-height: 1.55;
     }
     .survey-textarea::placeholder { color: #b0aec0; }
-    .survey-textarea:focus { border-color: var(--periwinkle); box-shadow: 0 0 0 3px rgba(123,116,196,.12); }
+    .survey-textarea:focus { border-color: var(--periwinkle); box-shadow: 0 0 0 3px rgba(var(--periwinkle-rgb),.12); }
     .survey-footer {
       display: flex; align-items: center; justify-content: flex-end;
       gap: 10px; margin-top: 26px;
@@ -1042,7 +998,7 @@
     </a>
     <div class="nav-counter" id="nav-counter" style="display:none">
       <span class="nav-counter-dot"></span>
-      <span class="nav-counter-text" id="nav-counter-text"></span>
+      <span class="nav-counter-text" id="nav-counter-text" aria-live="polite" aria-atomic="true"></span>
     </div>
     <a href="#how" class="nav-how">How it works</a>
   </nav>
@@ -1057,8 +1013,8 @@
       From finding contacts to sending emails that actually get replies.
     </p>
     <div class="email-cap hero-cta">
-      <input type="email" class="email-inp" id="email-inp" placeholder="Enter your email" />
-      <button class="email-btn" id="email-btn">Join waitlist →</button>
+      <input type="email" class="email-inp" id="email-inp" placeholder="Enter your email" autocomplete="email" aria-label="Email address" />
+      <button type="button" class="email-btn" id="email-btn">Join waitlist →</button>
     </div>
   </div>
 
@@ -1160,6 +1116,12 @@
       <p class="ai-text"><strong>Sarah co-led the Disney+ debt financing</strong> — mention it to stand out from generic outreach.</p>
     </div>
 
+    <!-- Powerlifting Insight -->
+    <div class="gc gc-lift">
+      <div class="ai-badge">✦ AI Insight</div>
+      <p class="ai-text"><strong>Mike has been a competitive power lifter for the last 3 years</strong> — Mention your interest in weight lifting to spark a conversation.</p>
+    </div>
+
   </div><!-- /hero-cards -->
 </div><!-- /hero-wrap -->
 
@@ -1176,7 +1138,7 @@
 ════════════════════════════════════════════════════════ -->
 <section class="how" id="how">
   <div class="sec-label">How it works</div>
-  <h2 class="sec-title" style="margin-bottom:0;">Three steps to a full pipeline</h2>
+  <h2 class="sec-title">Three steps to a full pipeline</h2>
 
   <div class="how-inner">
     <div class="steps-grid fu">
@@ -1289,7 +1251,7 @@
         </div>
         <div class="mock-mail-body">
           Hi Tyler,<br><br>
-          Your work on the <span style="background:rgba(123,116,196,.12);color:#5B55A0;padding:0 3px;border-radius:3px;">Bausch Health LBO refinancing</span> caught my attention! Navigating that credit environment was impressive.<br><br>
+          Your work on the <span class="em-hl">Bausch Health LBO refinancing</span> caught my attention — navigating that credit environment was impressive.<br><br>
           I'm a junior at Wharton focused on leveraged finance. Would you be open to 20 minutes?
         </div>
       </div>
@@ -1317,11 +1279,11 @@
               <div class="mock-stat-l">Sent</div>
             </div>
             <div class="mock-stat">
-              <div class="mock-stat-n" style="color:#34C77B;">9</div>
+              <div class="mock-stat-n green">9</div>
               <div class="mock-stat-l">Replied</div>
             </div>
             <div class="mock-stat">
-              <div class="mock-stat-n" style="color:#7B74C4;">5</div>
+              <div class="mock-stat-n purple">5</div>
               <div class="mock-stat-l">Booked</div>
             </div>
           </div>
@@ -1364,10 +1326,9 @@
     <div class="footer-logo-text">Necto</div>
     <div class="footer-tag">The outreach OS for finance students.</div>
   </div>
-  <a href="#" class="footer-cta">Join waitlist →</a>
+  <a href="#email-inp" class="footer-cta">Join waitlist →</a>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1415,6 +1376,7 @@
       { el: document.querySelector('.gc-email'), k: 105, d: 14, maxT: 5  },
       { el: document.querySelector('.gc-pipe'),  k: 215, d: 26, maxT: 7  },
       { el: document.querySelector('.gc-ai'),    k: 150, d: 17, maxT: 9  },
+      { el: document.querySelector('.gc-lift'),  k: 140, d: 19, maxT: 8  },
     ].filter(c => c.el);
 
     springCards.forEach(c => { c.x = 0; c.y = 0; c.vx = 0; c.vy = 0; });
@@ -1422,13 +1384,14 @@
     let mouse = { nx: 0.5, ny: 0.5 };
     let springActive = false;
     let lastT = 0;
+    let wrapRect = heroWrap.getBoundingClientRect();
+    window.addEventListener('resize', () => { wrapRect = heroWrap.getBoundingClientRect(); }, { passive: true });
 
     heroWrap.addEventListener('mousemove', e => {
-      const r = heroWrap.getBoundingClientRect();
-      mouse.nx = (e.clientX - r.left) / r.width;
-      mouse.ny = (e.clientY - r.top)  / r.height;
+      mouse.nx = (e.clientX - wrapRect.left) / wrapRect.width;
+      mouse.ny = (e.clientY - wrapRect.top)  / wrapRect.height;
       if (!springActive) kickSpring();
-    });
+    }, { passive: true });
 
     heroWrap.addEventListener('mouseleave', () => {
       mouse.nx = 0.5;
@@ -1584,13 +1547,44 @@
 
   const SUPABASE_URL = 'https://ylumoxylvaskzcczwmdb.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_2YLaqRJ32XQ0Om2CdwMRKg_iZG4-3fP';
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const _sbHeaders = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+    'Content-Type': 'application/json',
+  };
+  const sbInsert = (table, data) =>
+    fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+      method: 'POST',
+      headers: { ..._sbHeaders, 'Prefer': 'return=minimal' },
+      body: JSON.stringify(data),
+    });
+  const sbUpsert = (table, data, onConflict) =>
+    fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=${onConflict}`, {
+      method: 'POST',
+      headers: { ..._sbHeaders, 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify(data),
+    });
 
   // ─── LIVE COUNTER ────────────────────────────────────
   const COUNT_OFFSET = 61;
   let currentCount = COUNT_OFFSET;
-  document.getElementById('nav-counter-text').textContent = `${currentCount.toLocaleString()} students waiting`;
-  document.getElementById('nav-counter').style.display = 'flex';
+
+  (async () => {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_waitlist_count`, {
+        method: 'POST',
+        headers: { ..._sbHeaders, 'Content-Type': 'application/json' },
+        body: '{}',
+      });
+      if (res.ok) {
+        const count = await res.json();
+        if (typeof count === 'number') currentCount = COUNT_OFFSET + count;
+      }
+    } catch {}
+    document.getElementById('nav-counter-text').textContent = `${currentCount.toLocaleString()} students waiting`;
+    document.getElementById('nav-counter').style.display = 'flex';
+  })();
 
   // ─── 6. WAITLIST CAPTURE ────────────────────────────
   document.getElementById('email-btn').addEventListener('click', async () => {
@@ -1598,14 +1592,15 @@
     const btn = document.getElementById('email-btn');
     const email = inp.value.trim();
 
-    if (email && email.includes('@') && email.includes('.')) {
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+    if (email && emailOk) {
       btn.disabled = true;
       btn.textContent = 'Joining…';
 
       try {
-        const { error } = await sb.from('waitlist').insert({ email });
-        // 23505 = unique violation (already on list) — treat as success
-        if (error && error.code !== '23505') throw error;
+        const res = await sbInsert('waitlist', { email });
+        // 409 = unique violation (already on list) — treat as success
+        if (!res.ok && res.status !== 409) throw new Error(res.status);
       } catch {}
 
       window._waitlistEmail = email;
@@ -1627,7 +1622,7 @@
       counterEl.textContent = `${currentCount.toLocaleString()} students waiting`;
       counterEl.classList.add('rolling');
 
-      setTimeout(() => document.getElementById('survey-modal').classList.add('open'), 400);
+      setTimeout(() => (window._openSurveyModal ? window._openSurveyModal() : document.getElementById('survey-modal').classList.add('open')), 400);
     } else {
       inp.style.borderColor = 'rgba(255,100,100,.65)';
       inp.style.boxShadow = '0 0 0 3.5px rgba(255,80,80,.15)';
@@ -1644,11 +1639,11 @@
 </script>
 
 <!-- Survey Modal -->
-<div id="survey-modal" class="survey-backdrop">
+<div id="survey-modal" class="survey-backdrop" role="dialog" aria-modal="true" aria-labelledby="survey-title">
   <div class="survey-card">
-    <button class="survey-x" id="survey-close" aria-label="Close">✕</button>
+    <button type="button" class="survey-x" id="survey-close" aria-label="Close">✕</button>
     <div class="survey-header">
-      <h3 class="survey-title">You're on the list!</h3>
+      <h3 class="survey-title" id="survey-title">You're on the list!</h3>
       <p class="survey-sub">Two quick optional questions — helps us build exactly what you need.</p>
     </div>
     <div class="survey-body">
@@ -1663,13 +1658,13 @@
         </div>
       </div>
       <div class="survey-q">
-        <label class="survey-label">What features would you like to see?</label>
-        <textarea class="survey-textarea" placeholder="e.g. LinkedIn scraping, personalized subject lines, CRM sync…" rows="3"></textarea>
+        <label class="survey-label" for="survey-features">What features would you like to see?</label>
+        <textarea class="survey-textarea" id="survey-features" placeholder="e.g. LinkedIn scraping, personalized subject lines, CRM sync…" rows="3" maxlength="1000"></textarea>
       </div>
     </div>
     <div class="survey-footer">
-      <button class="survey-skip-btn" id="survey-skip">Skip</button>
-      <button class="survey-submit-btn" id="survey-submit">Submit →</button>
+      <button type="button" class="survey-skip-btn" id="survey-skip">Skip</button>
+      <button type="button" class="survey-submit-btn" id="survey-submit">Submit →</button>
     </div>
   </div>
 </div>
@@ -1677,28 +1672,62 @@
 <script>
   // ─── SURVEY MODAL ────────────────────────────────────
   const modal = document.getElementById('survey-modal');
+  let _prevFocus = null;
+
+  function openModal() {
+    _prevFocus = document.activeElement;
+    // Reset submit button in case modal was previously used
+    const submitBtn = document.getElementById('survey-submit');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit →';
+    modal.classList.add('open');
+    // Move focus to close button after transition starts
+    requestAnimationFrame(() => {
+      const firstFocusable = modal.querySelector('button, [href], input, textarea, [tabindex]:not([tabindex="-1"])');
+      if (firstFocusable) firstFocusable.focus();
+    });
+  }
+
+  // Focus trap inside modal
+  modal.addEventListener('keydown', e => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') { saveSurveyAndClose(); return; }
+    if (e.key !== 'Tab') return;
+    const focusable = [...modal.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')];
+    if (!focusable.length) return;
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey ? document.activeElement === first : document.activeElement === last) {
+      e.preventDefault();
+      (e.shiftKey ? last : first).focus();
+    }
+  });
 
   async function saveSurveyAndClose() {
     modal.classList.remove('open');
+    if (_prevFocus) { _prevFocus.focus(); _prevFocus = null; }
     const email = window._waitlistEmail;
     if (!email) return;
     const priceChip = document.querySelector('.price-chip.selected');
     const price_range = priceChip ? priceChip.dataset.val : null;
-    const features = document.querySelector('.survey-textarea').value.trim() || null;
+    const features = document.querySelector('#survey-features').value.trim() || null;
     if (price_range || features) {
       try {
-        await sb.from('waitlist').upsert(
-          { email, price_range, features },
-          { onConflict: 'email' }
-        );
+        await sbUpsert('waitlist', { email, price_range, features }, 'email');
       } catch {}
     }
   }
 
   document.getElementById('survey-close').addEventListener('click', saveSurveyAndClose);
   document.getElementById('survey-skip').addEventListener('click', saveSurveyAndClose);
-  document.getElementById('survey-submit').addEventListener('click', saveSurveyAndClose);
+  document.getElementById('survey-submit').addEventListener('click', function() {
+    this.disabled = true;
+    this.textContent = 'Saving…';
+    saveSurveyAndClose();
+  });
   modal.addEventListener('click', e => { if (e.target === modal) saveSurveyAndClose(); });
+
+  // Expose openModal so waitlist flow can call it with focus tracking
+  window._openSurveyModal = openModal;
 
   document.querySelectorAll('.price-chip').forEach(chip => {
     chip.addEventListener('click', () => {
