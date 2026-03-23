@@ -6,8 +6,7 @@
   <title>Necto — Land Every Coffee Chat. Automatically.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -184,13 +183,13 @@
 
     .hero-headline {
       font-family: 'Fraunces', serif;
-      font-size: clamp(56px, 9vw, 112px);
+      font-size: clamp(54px, 8vw, 96px);
       font-weight: 400;
       color: #fff;
-      line-height: 1.0;
-      letter-spacing: -0.04em;
-      max-width: 900px;
-      margin: 0 auto 26px;
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      max-width: 860px;
+      margin: 0 auto 24px;
     }
     .hero-headline em { font-style: italic; font-weight: 300; }
 
@@ -209,8 +208,14 @@
     .hero-headline, .hero-sub, .email-cap.hero-cta {
       opacity: 0;
       transform: translateY(22px);
-      will-change: transform, opacity;
     }
+    .hero-loaded .hero-headline,
+    .hero-loaded .hero-sub,
+    .hero-loaded .email-cap.hero-cta    { will-change: transform, opacity; }
+    .hero-settled .hero-headline,
+    .hero-settled .hero-sub,
+    .hero-settled .email-cap.hero-cta,
+    .hero-settled .hero-cards           { will-change: auto; }
     @keyframes heroReveal {
       to { opacity: 1; transform: translateY(0); }
     }
@@ -222,7 +227,7 @@
     .hero-cards {
       position: relative; z-index: 10;
       width: 100%; max-width: 1080px;
-      margin: 76px auto 0;
+      margin: 68px auto 0;
       height: 440px;
       opacity: 0;
       transform: translateY(16px);
@@ -401,7 +406,7 @@
     }
 
     /* ─── HOW IT WORKS ──────────────────────────────────── */
-    .how { background: linear-gradient(158deg, #F0EDF9 0%, #E7F0FA 100%); padding: 112px 48px; }
+    .how { background: linear-gradient(158deg, #F2F0FB 0%, #EAF1FA 100%); padding: 100px 48px; }
 
     .how-inner { max-width: 960px; margin: 0 auto; }
 
@@ -409,7 +414,7 @@
       display: grid;
       grid-template-columns: 1fr auto 1fr auto 1fr;
       align-items: center;
-      margin-top: 60px;
+      margin-top: 52px;
       gap: 0;
     }
 
@@ -425,19 +430,19 @@
       cursor: default;
     }
     .step-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 28px 72px rgba(80,65,150,.18), 0 8px 20px rgba(80,65,150,.1);
+      transform: translateY(-6px);
+      box-shadow: 0 18px 52px rgba(80,65,150,.14), 0 4px 14px rgba(80,65,150,.08);
     }
 
     .step-num {
       font-family: 'Fraunces', serif;
       font-style: italic; font-weight: 300;
-      font-size: 72px; line-height: 1;
-      color: var(--periwinkle); opacity: .18;
-      letter-spacing: -4px; margin-bottom: 14px;
+      font-size: 64px; line-height: 1;
+      color: var(--periwinkle); opacity: .22;
+      letter-spacing: -3px; margin-bottom: 16px;
       transition: opacity 0.28s var(--ease-quart);
     }
-    .step-card:hover .step-num { opacity: .52; }
+    .step-card:hover .step-num { opacity: .48; }
 
     .step-title { font-size: 16.5px; font-weight: 600; color: var(--dark); letter-spacing: -.3px; margin-bottom: 10px; }
 
@@ -445,15 +450,15 @@
 
     .step-arrow {
       display: flex; align-items: center; justify-content: center;
-      padding: 0 20px; color: rgba(123,116,196,.38); font-size: 26px;
+      padding: 0 20px; color: rgba(123,116,196,.32); font-size: 22px;
     }
 
     /* ─── FEATURE BLOCKS ────────────────────────────────── */
-    .features { padding: 116px 52px 100px; max-width: 1080px; margin: 0 auto; }
+    .features { padding: 104px 52px 92px; max-width: 1080px; margin: 0 auto; }
 
     .feat-row {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 88px;
-      align-items: center; padding: 76px 0;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 78px;
+      align-items: center; padding: 68px 0;
       border-bottom: 1px solid rgba(123,116,196,.12);
     }
     .feat-row:first-child { padding-top: 0; }
@@ -462,23 +467,23 @@
     .feat-row.rev .feat-vis  { order: 1; }
 
     .feat-eye {
-      display: flex; align-items: center; gap: 12px;
-      font-size: 12.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--periwinkle); margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 12px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase;
+      color: var(--periwinkle); margin-bottom: 16px;
     }
     .feat-eye::before {
       content: '';
       flex-shrink: 0;
-      width: 28px; height: 2px;
+      width: 22px; height: 1.5px;
       background: var(--periwinkle);
       border-radius: 2px;
-      opacity: .8;
+      opacity: .72;
     }
     .feat-title {
       font-family: 'Fraunces', serif;
-      font-size: clamp(30px, 4vw, 52px);
+      font-size: clamp(28px, 3.6vw, 46px);
       font-weight: 400; color: var(--dark);
-      letter-spacing: -0.035em; line-height: 1.07; margin-bottom: 22px;
+      letter-spacing: -0.03em; line-height: 1.09; margin-bottom: 20px;
     }
     .feat-desc { font-size: 1rem; color: var(--muted); line-height: 1.7; font-weight: 300; margin-bottom: 30px; }
 
@@ -625,10 +630,10 @@
     }
     .emails-heading {
       font-family: 'Fraunces', serif;
-      font-size: clamp(40px, 5.5vw, 70px);
+      font-size: clamp(38px, 5vw, 62px);
       font-weight: 400; color: var(--dark);
-      letter-spacing: -0.04em; line-height: 1.05;
-      margin-bottom: 44px;
+      letter-spacing: -0.035em; line-height: 1.07;
+      margin-bottom: 40px;
     }
     .emails-heading em { font-style: italic; color: var(--periwinkle); }
     .email-tabs {
@@ -688,7 +693,7 @@
     /* ─── FINAL CTA ─────────────────────────────────────── */
     .final-cta {
       background: linear-gradient(160deg,#7570C0 0%,#8FA6D4 48%,#C6D8F5 100%);
-      padding: 140px 48px;
+      padding: 120px 48px;
       text-align: center; position: relative; overflow: hidden;
     }
     .final-cta::after {
@@ -699,12 +704,12 @@
     .cta-inner { position: relative; z-index: 1; }
     .cta-title {
       font-family: 'Fraunces', serif;
-      font-size: clamp(46px, 6.2vw, 82px);
+      font-size: clamp(42px, 5.6vw, 72px);
       font-weight: 400; color: #fff;
-      letter-spacing: -0.04em; line-height: 1.02;
-      margin-bottom: 20px;
+      letter-spacing: -0.035em; line-height: 1.04;
+      margin-bottom: 18px;
     }
-    .cta-sub { font-size: 18px; color: rgba(255,255,255,.78); font-weight: 300; margin-bottom: 46px; }
+    .cta-sub { font-size: 17.5px; color: rgba(255,255,255,.74); font-weight: 300; margin-bottom: 42px; }
     .email-cap { display: flex; justify-content: center; gap: 9px; max-width: 430px; margin: 0 auto; }
     .email-inp {
       flex: 1; padding: 12px 20px; border-radius: 100px;
@@ -1160,6 +1165,79 @@
 </div>
 
 <!-- ═══════════════════════════════════════════════════════
+     EMAILS GENERATED
+════════════════════════════════════════════════════════ -->
+<section class="emails-section fu">
+  <div class="emails-label">Emails Generated</div>
+  <h2 class="emails-heading">See what Necto writes<br><em>for you</em></h2>
+  <div class="email-tabs">
+    <button class="etab active" data-tab="0">Bank of America · LevFin</button>
+    <button class="etab" data-tab="1">Morgan Stanley · M&A</button>
+    <button class="etab" data-tab="2">Goldman Sachs · Healthcare</button>
+  </div>
+  <div class="email-cards">
+
+    <!-- Tab 0 -->
+    <div class="ecard active">
+      <div class="ecard-meta">
+        <div class="ecard-av" style="background:linear-gradient(135deg,#A8C4A2,#7BAD8A);">GP</div>
+        <div>
+          <div class="ecard-name">Gauri Purohit</div>
+          <div class="ecard-role">Analyst · Leveraged Finance Origination · Bank of America</div>
+        </div>
+        <span class="ecard-pill">✦ AI Draft</span>
+      </div>
+      <div class="ecard-subject">Subject: Cornell Student — Coffee Chat Request</div>
+      <div class="ecard-body">
+        Hey Gauri,<br><br>
+        My name is Ashley and I'm a junior at Cornell University. I wanted to reach out because I'm interested in a career in <mark>leveraged finance origination</mark> and wanted to learn more about your experience at Bank of America.<br><br>
+        I also noticed that you <mark>performed in Rangeela at Yale! I'm really involved in the dance community here at Cornell and I'm curious how you balanced a serious creative passion with a demanding career in finance.</mark><br><br>
+        Would you be open to a brief coffee chat over the phone or in-person next week? Happy to accommodate your schedule.
+      </div>
+    </div>
+
+    <!-- Tab 1 -->
+    <div class="ecard">
+      <div class="ecard-meta">
+        <div class="ecard-av" style="background:linear-gradient(135deg,#7B9BD8,#9BC4E5);">KG</div>
+        <div>
+          <div class="ecard-name">Kellie Graves</div>
+          <div class="ecard-role">Analyst · M&A Investment Banking · Morgan Stanley</div>
+        </div>
+        <span class="ecard-pill">✦ AI Draft</span>
+      </div>
+      <div class="ecard-subject">Subject: Cornell Student — Coffee Chat Request</div>
+      <div class="ecard-body">
+        Hey Kellie Graves,<br><br>
+        My name is Saiakhil Chilaka and I'm a junior at Cornell University studying Applied Economics and Management. I wanted to reach out because I'm interested in a career in M&A investment banking and wanted to learn more about your experience at Morgan Stanley.<br><br>
+        <mark>I also noticed that you're a fellow Dyson/Cornell alum, and I'd love to hear how your time at Cornell shaped your path into IB and what the transition into your analyst role looked like.</mark><br><br>
+        Would you be open to a brief coffee chat over the phone or in-person next week? Happy to accommodate your schedule.
+      </div>
+    </div>
+
+    <!-- Tab 2 -->
+    <div class="ecard">
+      <div class="ecard-meta">
+        <div class="ecard-av" style="background:linear-gradient(135deg,#C4A8D8,#9B7BC4);">KC</div>
+        <div>
+          <div class="ecard-name">Kiara Casmer</div>
+          <div class="ecard-role">Analyst · Healthcare Investment Banking · Goldman Sachs</div>
+        </div>
+        <span class="ecard-pill">✦ AI Draft</span>
+      </div>
+      <div class="ecard-subject">Subject: Cornell AEM Student — Coffee Chat Request</div>
+      <div class="ecard-body">
+        Hey Kiara,<br><br>
+        My name is Eric and I'm a junior at Cornell University studying Applied Economics and Management. I wanted to reach out because I'm interested in a career in <mark>healthcare investment banking</mark> and wanted to learn more about your experience at Goldman Sachs.<br><br>
+        <mark>I also noticed that you were President of Pride@KFBS at UNC! As someone who's also part of the LGBTQ+ community navigating finance recruiting, it's really inspiring to see someone who championed that visibility while landing at a top group like GS Healthcare.</mark><br><br>
+        Would you be open to a brief coffee chat over the phone or in-person next week? Happy to accommodate your schedule.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
      HOW IT WORKS
 ════════════════════════════════════════════════════════ -->
 <section class="how" id="how">
@@ -1346,79 +1424,6 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     EMAILS GENERATED
-════════════════════════════════════════════════════════ -->
-<section class="emails-section fu">
-  <div class="emails-label">Emails Generated</div>
-  <h2 class="emails-heading">See what Necto writes<br><em>for you</em></h2>
-  <div class="email-tabs">
-    <button class="etab active" data-tab="0">Bank of America · LevFin</button>
-    <button class="etab" data-tab="1">Morgan Stanley · M&A</button>
-    <button class="etab" data-tab="2">Goldman Sachs · Healthcare</button>
-  </div>
-  <div class="email-cards">
-
-    <!-- Tab 0 -->
-    <div class="ecard active">
-      <div class="ecard-meta">
-        <div class="ecard-av" style="background:linear-gradient(135deg,#A8C4A2,#7BAD8A);">GP</div>
-        <div>
-          <div class="ecard-name">Gauri Purohit</div>
-          <div class="ecard-role">Analyst · Leveraged Finance Origination · Bank of America</div>
-        </div>
-        <span class="ecard-pill">✦ AI Draft</span>
-      </div>
-      <div class="ecard-subject">Subject: Cornell Student — Coffee Chat Request</div>
-      <div class="ecard-body">
-        Hey Gauri,<br><br>
-        My name is Ashley and I'm a junior at Cornell University. I wanted to reach out because I'm interested in a career in <mark>leveraged finance origination</mark> and wanted to learn more about your experience at Bank of America.<br><br>
-        I also noticed that you <mark>performed in Rangeela at Yale! I'm really involved in the dance community here at Cornell and I'm curious how you balanced a serious creative passion with a demanding career in finance.</mark><br><br>
-        Would you be open to a brief coffee chat over the phone or in-person next week? Happy to accommodate your schedule.
-      </div>
-    </div>
-
-    <!-- Tab 1 -->
-    <div class="ecard">
-      <div class="ecard-meta">
-        <div class="ecard-av" style="background:linear-gradient(135deg,#7B9BD8,#9BC4E5);">KG</div>
-        <div>
-          <div class="ecard-name">Kellie Graves</div>
-          <div class="ecard-role">Analyst · M&A Investment Banking · Morgan Stanley</div>
-        </div>
-        <span class="ecard-pill">✦ AI Draft</span>
-      </div>
-      <div class="ecard-subject">Subject: Cornell Student — Coffee Chat Request</div>
-      <div class="ecard-body">
-        Hey Kellie Graves,<br><br>
-        My name is Saiakhil Chilaka and I'm a junior at Cornell University studying Applied Economics and Management. I wanted to reach out because I'm interested in a career in M&A investment banking and wanted to learn more about your experience at Morgan Stanley.<br><br>
-        <mark>I also noticed that you're a fellow Dyson/Cornell alum, and I'd love to hear how your time at Cornell shaped your path into IB and what the transition into your analyst role looked like.</mark><br><br>
-        Would you be open to a brief coffee chat over the phone or in-person next week? Happy to accommodate your schedule.
-      </div>
-    </div>
-
-    <!-- Tab 2 -->
-    <div class="ecard">
-      <div class="ecard-meta">
-        <div class="ecard-av" style="background:linear-gradient(135deg,#C4A8D8,#9B7BC4);">KC</div>
-        <div>
-          <div class="ecard-name">Kiara Casmer</div>
-          <div class="ecard-role">Analyst · Healthcare Investment Banking · Goldman Sachs</div>
-        </div>
-        <span class="ecard-pill">✦ AI Draft</span>
-      </div>
-      <div class="ecard-subject">Subject: Cornell AEM Student — Coffee Chat Request</div>
-      <div class="ecard-body">
-        Hey Kiara,<br><br>
-        My name is Eric and I'm a junior at Cornell University studying Applied Economics and Management. I wanted to reach out because I'm interested in a career in <mark>healthcare investment banking</mark> and wanted to learn more about your experience at Goldman Sachs.<br><br>
-        <mark>I also noticed that you were President of Pride@KFBS at UNC! As someone who's also part of the LGBTQ+ community navigating finance recruiting, it's really inspiring to see someone who championed that visibility while landing at a top group like GS Healthcare.</mark><br><br>
-        Would you be open to a brief coffee chat over the phone or in-person next week? Happy to accommodate your schedule.
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════
      FOOTER
 ════════════════════════════════════════════════════════ -->
 <footer>
@@ -1429,6 +1434,7 @@
   <a href="#" class="footer-cta">Join waitlist →</a>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1455,6 +1461,8 @@
   // ─── 1. HERO ENTRANCE ────────────────────────────────
   requestAnimationFrame(() => requestAnimationFrame(() => {
     document.body.classList.add('hero-loaded');
+    // Release compositor layers once entrance animations are done (~1.2s)
+    setTimeout(() => document.body.classList.add('hero-settled'), 1400);
   }));
 
   // ─── 2. SCROLL REVEALS ───────────────────────────────
@@ -1610,13 +1618,15 @@
   }
 
   // ─── 5. EMAIL SECTION TABS ───────────────────────────
-  document.querySelectorAll('.etab').forEach(tab => {
+  const allTabs  = [...document.querySelectorAll('.etab')];
+  const allCards = [...document.querySelectorAll('.ecard')];
+  allTabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      const idx = tab.dataset.tab;
-      document.querySelectorAll('.etab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.ecard').forEach(c => c.classList.remove('active'));
+      const idx = +tab.dataset.tab;
+      allTabs.forEach(t => t.classList.remove('active'));
+      allCards.forEach(c => c.classList.remove('active'));
       tab.classList.add('active');
-      document.querySelectorAll('.ecard')[idx].classList.add('active');
+      allCards[idx].classList.add('active');
     });
   });
 
