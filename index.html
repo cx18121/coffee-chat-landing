@@ -169,12 +169,18 @@
         letter-spacing: -0.2px;
       }
 
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
       .nav-how {
-        font-size: 14px;
+        font-size: 13.5px;
         font-weight: 400;
-        color: rgba(255, 255, 255, 0.78);
+        color: rgba(255, 255, 255, 0.7);
         text-decoration: none;
         transition: color 0.15s;
+        white-space: nowrap;
       }
       .nav-how:hover {
         color: #fff;
@@ -710,7 +716,9 @@
       }
       /* ─── WHAT NECTO DOES (SCREEN DEMO) ──────────────── */
       .what-section {
-        background: #fff;
+        background:
+          radial-gradient(ellipse 90% 55% at 50% -5%, rgba(117,112,192,0.08) 0%, transparent 68%),
+          #F7F6FD;
         padding: 88px 48px 80px;
         text-align: center;
         border-top: 1px solid rgba(123, 116, 196, 0.1);
@@ -718,12 +726,23 @@
       }
 
       .what-eyebrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
         font-size: 12.5px;
         font-weight: 700;
         letter-spacing: 0.14em;
         text-transform: uppercase;
         color: var(--periwinkle);
         margin-bottom: 48px;
+      }
+      .what-eyebrow::before,
+      .what-eyebrow::after {
+        content: '';
+        flex: 0 1 56px;
+        height: 1px;
+        background: rgba(117,112,192,0.28);
       }
 
       .demo-wrap { max-width: 1200px; margin: 0 auto; }
@@ -736,10 +755,18 @@
         display: flex;
         flex-direction: column;
         box-shadow:
-          0 0 0 1px rgba(123, 116, 196, 0.14),
-          0 4px 16px rgba(80, 65, 150, 0.08),
-          0 24px 64px rgba(80, 65, 150, 0.15),
-          0 48px 96px rgba(0, 0, 0, 0.07);
+          0 0 0 1px rgba(123, 116, 196, 0.16),
+          0 4px 16px rgba(80, 65, 150, 0.09),
+          0 28px 72px rgba(80, 65, 150, 0.2),
+          0 64px 120px rgba(40, 20, 100, 0.12);
+        animation: demo-float 6s ease-in-out infinite;
+      }
+      @keyframes demo-float {
+        0%, 100% { transform: translateY(0);    }
+        50%       { transform: translateY(-7px); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .demo-screen { animation: none; }
       }
 
       .demo-chrome {
@@ -819,19 +846,38 @@
 
       /* Column header */
       .demo-col-hdr {
-        display: flex; align-items: center; gap: 7px; padding: 8px 14px;
-        border-bottom: 1px solid rgba(123,116,196,0.08); flex-shrink: 0;
-        background: #faf9fd;
+        display: flex; align-items: center; gap: 7px; padding: 9px 14px;
+        border-bottom: 1px solid rgba(123,116,196,0.1); flex-shrink: 0;
+        background: #f2f1f9;
       }
       .demo-col-step {
-        font-size: 8.5px; font-weight: 800; letter-spacing: 0.12em;
-        color: rgba(123,116,196,0.4); font-family: "DM Sans", sans-serif;
+        font-size: 9.5px; font-weight: 800; letter-spacing: 0.12em;
+        color: rgba(117,112,192,0.55); font-family: "DM Sans", sans-serif;
         text-transform: uppercase;
       }
       .demo-col-title { font-size: 11px; font-weight: 600; color: #13101e; flex: 1; }
       .demo-col-badge {
         font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 12px;
         background: rgba(123,116,196,0.1); color: #5b55a0;
+      }
+
+      /* Play button ring */
+      .demo-play-icon { position: relative; overflow: visible; }
+      .demo-play-icon::after {
+        content: '';
+        position: absolute;
+        inset: -10px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(255,255,255,0.22);
+        animation: ring-pulse 2.2s ease-out infinite;
+        pointer-events: none;
+      }
+      @keyframes ring-pulse {
+        0%   { transform: scale(1);   opacity: 0.7; }
+        100% { transform: scale(1.7); opacity: 0;   }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .demo-play-icon::after { animation: none; }
       }
 
       /* Fake cursor */
@@ -949,7 +995,7 @@
       /* === TRACK COLUMN === */
       .tc-stats { display: flex; border-bottom: 1px solid rgba(123,116,196,0.08); flex-shrink: 0; }
       .tc-stat { flex: 1; padding: 8px 8px; text-align: center; }
-      .tc-stat-num { display: block; font-family: "Fraunces", serif; font-size: 17px; font-weight: 700; color: #13101e; letter-spacing: -0.04em; line-height: 1.1; }
+      .tc-stat-num { display: block; font-family: "Fraunces", serif; font-size: 20px; font-weight: 700; color: #13101e; letter-spacing: -0.04em; line-height: 1.1; }
       .tc-stat-lbl { display: block; font-size: 7.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #8886a0; margin-top: 1px; }
       .tc-stat-sep { width: 1px; background: rgba(123,116,196,0.07); margin: 6px 0; }
       .tc-rows { flex: 1; overflow-y: auto; }
@@ -959,8 +1005,26 @@
         transition: opacity 0.5s;
       }
       .tc-row:last-child { border-bottom: none; }
-      .tc-row-new { background: rgba(123,116,196,0.04); }
+      .tc-row-new {
+        background: rgba(117,112,192,0.1);
+        border-left: 2.5px solid rgba(117,112,192,0.55);
+      }
       #tc-sarah { opacity: 0; }
+      .tc-row-slide-in {
+        animation: tc-slide-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+                   tc-row-flash 1.2s 0.45s ease-out forwards;
+      }
+      @keyframes tc-slide-in {
+        from { opacity: 0; transform: translateY(-6px); }
+        to   { opacity: 1; transform: translateY(0);    }
+      }
+      @keyframes tc-row-flash {
+        0%   { background: rgba(117,112,192,0.22); }
+        100% { background: rgba(117,112,192,0.1);  }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .tc-row-slide-in { animation: none; opacity: 1; }
+      }
       .tc-info { flex: 1; min-width: 0; }
       .tc-name { font-size: 10px; font-weight: 600; color: #13101e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
       .tc-firm { font-size: 8.5px; color: #8886a0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -995,7 +1059,7 @@
       .tp-rcell { font-size: 9.5px; color: #8886a0; }
 
       .tp-badge { font-size: 8.5px; font-weight: 700; padding: 2.5px 7px; border-radius: 20px; white-space: nowrap; display: inline-block; }
-      .tb-new     { background: rgba(123,116,196,0.18); color: #4a3f9a; }
+      .tb-new     { background: rgba(117,112,192,0.28); color: #3d358a; font-weight: 800; }
       .tb-replied { background: rgba(123,116,196,0.12); color: #5b55a0; }
       .tb-opened  { background: rgba(245,166,35,0.12);  color: #b5810a; }
       .tb-sent    { background: rgba(107,104,128,0.1);  color: #8886a0; }
@@ -1637,6 +1701,90 @@
         animation: btnSuccess 0.45s var(--ease-quart) forwards;
       }
 
+      /* ─── SCALE STATS ───────────────────────────────────── */
+      .scale-stats {
+        background: var(--peri-tint);
+        border-top: 1px solid var(--peri-light);
+        border-bottom: 1px solid var(--peri-light);
+        padding: clamp(56px, 8vw, 96px) clamp(24px, 6vw, 80px);
+        content-visibility: auto;
+        contain-intrinsic-size: auto 240px;
+      }
+
+      .scale-stats-grid {
+        max-width: 960px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .scale-stat {
+        padding: 0 clamp(16px, 2.5vw, 36px);
+        text-align: center;
+        position: relative;
+      }
+
+      .scale-stat + .scale-stat::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 64px;
+        width: 1px;
+        background: var(--peri-light);
+      }
+
+      .scale-qualifier {
+        display: block;
+        font-family: "Fraunces", serif;
+        font-style: italic;
+        font-weight: 300;
+        font-size: clamp(11px, 1.1vw, 13px);
+        color: var(--periwinkle);
+        margin-bottom: 8px;
+        opacity: 0.85;
+      }
+
+      .scale-number {
+        display: block;
+        font-family: "Fraunces", serif;
+        font-weight: 300;
+        font-size: clamp(44px, 5.5vw, 68px);
+        color: var(--dark);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        margin-bottom: 10px;
+      }
+
+      .scale-label {
+        display: block;
+        font-family: "DM Sans", sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      @media (max-width: 620px) {
+        .scale-stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .scale-stat + .scale-stat::before {
+          display: none;
+        }
+        .scale-stat:nth-child(odd) {
+          border-right: 1px solid var(--peri-light);
+        }
+        .scale-stat:nth-child(-n + 2) {
+          border-bottom: 1px solid var(--peri-light);
+          padding-bottom: clamp(32px, 5vw, 48px);
+          margin-bottom: clamp(32px, 5vw, 48px);
+        }
+      }
+
       /* ─── FOOTER ────────────────────────────────────────── */
       footer {
         background: linear-gradient(135deg, #1a1535 0%, #13101e 60%);
@@ -1814,6 +1962,9 @@
         nav {
           padding: 0 24px;
         }
+        .nav-links {
+          display: none;
+        }
         .hero-content {
           padding-top: 68px;
         }
@@ -1834,7 +1985,7 @@
         }
         .what-section { padding: 64px 24px 56px; }
         .demo-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .demo-screen { min-width: 600px; }
+        .demo-screen { min-width: 600px; animation: none; }
 .steps-grid {
           grid-template-columns: 1fr;
         }
@@ -1864,9 +2015,21 @@
         .emails-section {
           padding: 72px 24px 80px;
         }
-        .email-tabs {
-          flex-wrap: wrap;
+        .feat-vis {
+          padding: 24px 20px;
         }
+        .email-tabs {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          justify-content: flex-start;
+          padding-left: 24px;
+          padding-right: 24px;
+          margin-left: -24px;
+          margin-right: -24px;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+        .email-tabs::-webkit-scrollbar { display: none; }
         .final-cta {
           padding: 80px 24px;
         }
@@ -1928,6 +2091,27 @@
         .footer-cta {
           padding: 14px 22px;
           min-height: 44px;
+        }
+      }
+      @media (max-width: 640px) {
+        /* Eyebrow flanking rules don't fit narrow screens */
+        .what-eyebrow {
+          display: block;
+        }
+        .what-eyebrow::before,
+        .what-eyebrow::after {
+          display: none;
+        }
+        /* Survey card: tighter padding on phones */
+        .survey-card {
+          padding: 28px 20px 24px;
+        }
+        /* Survey close: expand touch target to 44px */
+        .survey-x {
+          width: 44px;
+          height: 44px;
+          top: 8px;
+          right: 8px;
         }
       }
       @media (max-width: 380px) {
@@ -2248,6 +2432,10 @@
             aria-atomic="true"
           ></span>
         </div>
+        <div class="nav-links">
+          <a href="#demo" class="nav-how">Watch Demo</a>
+          <a href="#emails" class="nav-how">Sample Emails</a>
+        </div>
       </nav>
 
       <!-- Hero text -->
@@ -2428,9 +2616,9 @@
     <!-- ═══════════════════════════════════════════════════════
      WHAT NECTO DOES
 ════════════════════════════════════════════════════════ -->
-    <section class="what-section">
+    <section class="what-section" id="demo">
       <p class="what-eyebrow">What Necto Does &nbsp;|&nbsp; Completely Automated</p>
-      <div class="demo-wrap fu">
+<div class="demo-wrap fu">
         <div class="demo-screen">
           <div class="demo-chrome">
             <div class="demo-dots"><span class="dd-r"></span><span class="dd-y"></span><span class="dd-g"></span></div>
@@ -2467,9 +2655,12 @@
                     <span class="fp-search-tag">IB</span>
                   </div>
                 </div>
+                <div class="fp-results-hd">
+                  <span class="fp-results-count">8 contacts found</span>
+                </div>
                 <div class="fp-results">
                   <div class="fp-row">
-                    <div class="fp-av" style="background:rgba(123,116,196,0.15)">SC</div>
+                    <div class="fp-av" style="background:rgba(117,112,192,0.22);color:#4a3f9a">SC</div>
                     <div class="fp-info"><div class="fp-name">Sarah Chen</div><div class="fp-role">VP · GS Healthcare · NYC</div></div>
                     <span class="fp-school">Harvard</span>
                     <button class="fp-add-btn" id="fab-1">+ Add</button>
@@ -2563,7 +2754,7 @@
                   <span class="demo-col-title">Track Replies</span>
                 </div>
                 <div class="tc-stats">
-                  <div class="tc-stat"><span class="tc-stat-num">19</span><span class="tc-stat-lbl">Sent</span></div>
+                  <div class="tc-stat"><span class="tc-stat-num" id="tc-sent-count">19</span><span class="tc-stat-lbl">Sent</span></div>
                   <div class="tc-stat-sep"></div>
                   <div class="tc-stat"><span class="tc-stat-num">7</span><span class="tc-stat-lbl">Opened</span></div>
                   <div class="tc-stat-sep"></div>
@@ -2571,7 +2762,7 @@
                 </div>
                 <div class="tc-rows">
                   <div class="tc-row tc-row-new" id="tc-sarah">
-                    <div class="fp-av" style="background:rgba(123,116,196,0.15)">SC</div>
+                    <div class="fp-av" style="background:rgba(117,112,192,0.22);color:#4a3f9a">SC</div>
                     <div class="tc-info"><div class="tc-name">Sarah Chen</div><div class="tc-firm">Goldman Healthcare</div></div>
                     <span class="tp-badge tb-new">Just Sent</span>
                     <span class="tc-time">now</span>
@@ -2616,9 +2807,37 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════════════
+     SCALE STATS
+════════════════════════════════════════════════════════ -->
+    <section class="scale-stats fu" id="scale">
+      <div class="scale-stats-grid">
+        <div class="scale-stat">
+          <span class="scale-qualifier">find up to</span>
+          <span class="scale-number" data-target="10000" data-display="10k+">10k+</span>
+          <span class="scale-label">contacts<br>per search</span>
+        </div>
+        <div class="scale-stat">
+          <span class="scale-qualifier">send up to</span>
+          <span class="scale-number" data-target="50">50</span>
+          <span class="scale-label">emails<br>per batch</span>
+        </div>
+        <div class="scale-stat">
+          <span class="scale-qualifier">covering</span>
+          <span class="scale-number" data-target="200" data-suffix="+">200+</span>
+          <span class="scale-label">firms across<br>IB, PE, VC &amp; AM</span>
+        </div>
+        <div class="scale-stat">
+          <span class="scale-qualifier">cut down on</span>
+          <span class="scale-number" data-target="95" data-suffix="%">95%</span>
+          <span class="scale-label">of your<br>outreach time</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
      EMAILS GENERATED
 ════════════════════════════════════════════════════════ -->
-    <section class="emails-section fu">
+    <section class="emails-section fu" id="emails">
       <h2 class="emails-heading">
         See what Necto writes<br /><em>for you</em>
       </h2>
@@ -3588,9 +3807,11 @@
           if (typeCursor) typeCursor.classList.remove('wc-hidden');
           const sendBtn = document.getElementById('wp-compose-send-btn');
           if (sendBtn) { sendBtn.classList.remove('wsb-ready'); sendBtn.style.opacity = ''; sendBtn.style.transform = ''; }
-          // Reset track: hide Sarah Chen row
+          // Reset track: hide Sarah Chen row + reset sent count
           const scRow = document.getElementById('tc-sarah');
-          if (scRow) scRow.style.opacity = '0';
+          if (scRow) { scRow.style.opacity = '0'; scRow.classList.remove('tc-row-slide-in'); }
+          const sentEl = document.getElementById('tc-sent-count');
+          if (sentEl) sentEl.textContent = '19';
           hideCur();
         }
 
@@ -3669,7 +3890,9 @@
             document.getElementById('col-write').classList.add('col-dim');
             document.getElementById('col-track').classList.remove('col-dim');
             const scRow = document.getElementById('tc-sarah');
-            if (scRow) scRow.style.opacity = '1';
+            if (scRow) { scRow.classList.add('tc-row-slide-in'); }
+            const sentEl = document.getElementById('tc-sent-count');
+            if (sentEl) sentEl.textContent = '20';
             hideCur();
             await sleep(3600);
           }
@@ -3684,6 +3907,41 @@
             setTimeout(runDemo, 420);
           });
         }
+      })();
+    </script>
+
+    <script>
+      // ─── SCALE STATS COUNT-UP ────────────────────────────
+      (function () {
+        const section = document.querySelector(".scale-stats");
+        if (!section || reducedMotion) return;
+        const targets = section.querySelectorAll(".scale-number[data-target]");
+        let fired = false;
+        new IntersectionObserver(
+          ([entry]) => {
+            if (!entry.isIntersecting || fired) return;
+            fired = true;
+            targets.forEach((el) => {
+              const end = parseInt(el.dataset.target, 10);
+              const suffix = el.dataset.suffix || "";
+              const display = el.dataset.display || null;
+              const duration = 1100;
+              const t0 = performance.now();
+              const tick = (now) => {
+                const p = Math.min((now - t0) / duration, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                if (p >= 1 && display) {
+                  el.textContent = display;
+                } else {
+                  el.textContent = Math.round(eased * end).toLocaleString() + suffix;
+                }
+                if (p < 1) requestAnimationFrame(tick);
+              };
+              requestAnimationFrame(tick);
+            });
+          },
+          { threshold: 0.35 },
+        ).observe(section);
       })();
     </script>
   </body>
