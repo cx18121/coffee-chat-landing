@@ -588,7 +588,7 @@
         padding: 0 3px;
         color: var(--periwinkle-deep);
       }
-      .cursor {
+      .cursor, .ecard-cursor {
         display: inline-block;
         width: 1.5px;
         height: 12px;
@@ -1958,6 +1958,32 @@
         }
       }
 
+      /* ── Mobile demo tabs ── */
+      .demo-mobile-tabs {
+        display: none;
+        flex-shrink: 0;
+        background: #eae9f3;
+        border-bottom: 1px solid rgba(123,116,196,0.12);
+        padding: 0 12px;
+      }
+      .dmt-tab {
+        flex: 1;
+        padding: 8px 0;
+        font-family: "DM Sans", sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        color: rgba(117,112,192,0.5);
+        background: none;
+        border: none;
+        border-bottom: 2px solid transparent;
+        cursor: default;
+        transition: color 0.2s, border-color 0.2s;
+      }
+      .dmt-tab.dmt-active {
+        color: #5b55a0;
+        border-bottom-color: #7570C0;
+      }
+
       /* ─── RESPONSIVE ────────────────────────────────────── */
       @media (max-width: 900px) {
         nav {
@@ -1985,8 +2011,11 @@
           padding: 16px 18px;
         }
         .what-section { padding: 64px 24px 56px; }
-        .demo-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .demo-screen { min-width: 600px; animation: none; }
+        .demo-wrap { overflow-x: unset; }
+        .demo-screen { min-width: unset; aspect-ratio: unset; height: 440px; animation: none; }
+        .demo-mobile-tabs { display: flex; }
+        .demo-col-sep { display: none; }
+        .demo-col.col-dim { display: none; }
 .steps-grid {
           grid-template-columns: 1fr;
         }
@@ -2638,6 +2667,12 @@
             <!-- Fake cursor -->
             <div class="fake-cursor" id="fake-cursor">
               <svg width="16" height="20" viewBox="0 0 16 20" fill="none"><path d="M2 1.5l12 8-5.5 1.6-2 5.9z" fill="white" stroke="#555" stroke-width="1.1" stroke-linejoin="round"/></svg>
+            </div>
+            <!-- Mobile step tabs -->
+            <div class="demo-mobile-tabs" id="demo-mobile-tabs">
+              <button class="dmt-tab dmt-active" data-col="col-find">Find</button>
+              <button class="dmt-tab" data-col="col-write">Write</button>
+              <button class="dmt-tab" data-col="col-track">Track</button>
             </div>
             <!-- 3-column layout -->
             <div class="demo-3col">
@@ -3432,7 +3467,8 @@
       // ─── 5. EMAIL SECTION TABS ───────────────────────────
       const allTabs = [...document.querySelectorAll(".etab")];
       const allCards = [...document.querySelectorAll(".ecard")];
-      allTabs.forEach((tab) => {
+
+allTabs.forEach((tab) => {
         tab.addEventListener("click", () => {
           const idx = +tab.dataset.tab;
           allTabs.forEach((t) => t.classList.remove("active"));
@@ -3898,6 +3934,23 @@
             await sleep(3600);
           }
         }
+
+        // Mobile tab sync
+        (function() {
+          const tabs = document.querySelectorAll('.dmt-tab');
+          if (!tabs.length) return;
+          const colIds = ['col-find', 'col-write', 'col-track'];
+          function syncTabs() {
+            colIds.forEach((id, i) => {
+              const col = document.getElementById(id);
+              if (col && tabs[i]) tabs[i].classList.toggle('dmt-active', !col.classList.contains('col-dim'));
+            });
+          }
+          colIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) new MutationObserver(syncTabs).observe(el, { attributes: true, attributeFilter: ['class'] });
+          });
+        })();
 
         // Play button
         const playBtn = document.getElementById('demo-play-btn');
