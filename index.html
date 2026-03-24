@@ -2065,12 +2065,14 @@
         }
         .what-section { padding: 64px 24px 56px; }
         .demo-wrap { overflow-x: unset; }
-        .demo-screen { min-width: unset; aspect-ratio: unset; height: auto; animation: none; overflow-y: auto; }
-        .demo-mobile-tabs { display: none; }
+        .demo-screen { min-width: unset; aspect-ratio: unset; height: 500px; animation: none; overflow: hidden; }
+        .demo-app { flex-direction: column; }
+        .demo-mobile-tabs { display: flex; }
         .demo-col-sep { display: none; }
-        .demo-col.col-dim { display: flex; opacity: 1; }
-        .demo-3col { flex-direction: column; }
-        .demo-col + .demo-col { border-top: 1px solid rgba(123,116,196,0.1); }
+        .demo-col.col-dim { opacity: 0; pointer-events: none; }
+        .demo-3col { position: relative; }
+        .demo-col { position: absolute; inset: 0; overflow-y: auto; }
+        .demo-col + .demo-col { border-top: none; }
 .steps-grid {
           grid-template-columns: 1fr;
         }
@@ -2797,7 +2799,6 @@
                 <div class="demo-col-hdr">
                   <span class="demo-col-step">01</span>
                   <span class="demo-col-title">Find Contacts</span>
-                  <span class="demo-col-badge">8 results</span>
                 </div>
                 <div class="fp-search-wrap">
                   <div class="fp-search">
