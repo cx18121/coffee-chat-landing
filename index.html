@@ -1,6 +1,14 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-686N0ZQ0E7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-686N0ZQ0E7');
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Necto - Automatic outreach for finance recruiting</title>
@@ -2012,10 +2020,12 @@
         }
         .what-section { padding: 64px 24px 56px; }
         .demo-wrap { overflow-x: unset; }
-        .demo-screen { min-width: unset; aspect-ratio: unset; height: 440px; animation: none; }
-        .demo-mobile-tabs { display: flex; }
+        .demo-screen { min-width: unset; aspect-ratio: unset; height: auto; animation: none; overflow-y: auto; }
+        .demo-mobile-tabs { display: none; }
         .demo-col-sep { display: none; }
-        .demo-col.col-dim { display: none; }
+        .demo-col.col-dim { display: flex; opacity: 1; }
+        .demo-3col { flex-direction: column; }
+        .demo-col + .demo-col { border-top: 1px solid rgba(123,116,196,0.1); }
 .steps-grid {
           grid-template-columns: 1fr;
         }
@@ -2759,23 +2769,6 @@
                   </div>
                   <div class="wp-compose-footer">
                     <button class="wp-compose-send-btn" id="wp-compose-send-btn">↑ Send</button>
-                  </div>
-                  <div class="wp-sent-list">
-                    <div class="wp-sent-item">
-                      <div class="fp-av" style="background:rgba(185,180,220,0.15)">JP</div>
-                      <div class="wp-sent-info"><div class="wp-sent-name">Jamie Park</div><div class="wp-sent-subj">Coffee chat — MS M&amp;A</div></div>
-                      <span class="wp-sent-badge">Sent</span>
-                    </div>
-                    <div class="wp-sent-item">
-                      <div class="fp-av" style="background:rgba(185,180,220,0.12)">AT</div>
-                      <div class="wp-sent-info"><div class="wp-sent-name">Alex Torres</div><div class="wp-sent-subj">Coffee chat — Centerview</div></div>
-                      <span class="wp-sent-badge">Sent</span>
-                    </div>
-                    <div class="wp-sent-item">
-                      <div class="fp-av" style="background:rgba(185,180,220,0.12)">PS</div>
-                      <div class="wp-sent-info"><div class="wp-sent-name">Priya Shah</div><div class="wp-sent-subj">Coffee chat — Lazard RX</div></div>
-                      <span class="wp-sent-badge">Sent</span>
-                    </div>
                   </div>
                 </div>
               </div>
