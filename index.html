@@ -23,6 +23,9 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:url" content="https://usenecto.com/" />
     <meta property="og:site_name" content="Necto" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image:alt" content="Necto — automated coffee chat outreach for finance recruiting" />
+    <meta name="twitter:image:alt" content="Necto — automated coffee chat outreach for finance recruiting" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Necto — Land Every Coffee Chat. Automatically." />
     <meta name="twitter:description" content="Automate your entire recruiting outreach. Find contacts, generate personalized emails, and track replies — built for finance students." />
@@ -1863,6 +1866,11 @@
       .footer-cta:active {
         transform: scale(0.97);
       }
+      .footer-attribution {
+        font-size: 12px;
+        color: #9990b8;
+        margin-top: 4px;
+      }
       .footer-legal {
         display: flex;
         gap: 8px;
@@ -2467,22 +2475,46 @@
           "@type": "Organization",
           "@id": "https://usenecto.com/#organization",
           "name": "Necto",
-          "url": "https://usenecto.com"
-        },
-        {
-          "@type": "SoftwareApplication",
-          "@id": "https://usenecto.com/#product",
-          "name": "Necto",
-          "applicationCategory": "BusinessApplication",
-          "operatingSystem": "Web",
-          "description": "Automate your entire recruiting outreach. Find contacts, generate personalized emails, and track replies — built for finance students.",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          "url": "https://usenecto.com",
+          "description": "Necto automates recruiting outreach for finance students — from finding contacts to sending personalized cold emails that get replies.",
+          "email": "hello@usenecto.com",
+          "sameAs": []
         },
         {
           "@type": "WebSite",
           "@id": "https://usenecto.com/#website",
           "name": "Necto",
-          "url": "https://usenecto.com"
+          "url": "https://usenecto.com",
+          "description": "Necto automates recruiting outreach for finance students — from finding contacts to sending personalized cold emails that get replies.",
+          "publisher": { "@id": "https://usenecto.com/#organization" }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://usenecto.com/#webpage",
+          "url": "https://usenecto.com/",
+          "name": "Necto — Coffee Chat Automation for Finance Recruiting",
+          "description": "Necto automates your entire recruiting outreach — from finding contacts to sending personalized cold emails that get replies. Built for finance students.",
+          "isPartOf": { "@id": "https://usenecto.com/#website" },
+          "about": { "@id": "https://usenecto.com/#product" },
+          "publisher": { "@id": "https://usenecto.com/#organization" }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://usenecto.com/#product",
+          "name": "Necto",
+          "url": "https://usenecto.com",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "description": "Automate your entire recruiting outreach. Find contacts, generate personalized emails, and track replies — built for finance students.",
+          "image": "https://usenecto.com/og-image.png",
+          "publisher": { "@id": "https://usenecto.com/#organization" },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/PreOrder",
+            "priceValidUntil": "2027-12-31"
+          }
         }
       ]
     }
@@ -2754,9 +2786,9 @@
             </div>
             <!-- Mobile step tabs -->
             <div class="demo-mobile-tabs" id="demo-mobile-tabs">
-              <button class="dmt-tab dmt-active" data-col="col-find">Find</button>
-              <button class="dmt-tab" data-col="col-write">Write</button>
-              <button class="dmt-tab" data-col="col-track">Track</button>
+              <button class="dmt-tab dmt-active" data-col="col-find" aria-label="Find leads">Find</button>
+              <button class="dmt-tab" data-col="col-write" aria-label="Write emails">Write</button>
+              <button class="dmt-tab" data-col="col-track" aria-label="Track pipeline">Track</button>
             </div>
             <!-- 3-column layout -->
             <div class="demo-3col">
@@ -3261,6 +3293,7 @@
       <div>
         <div class="footer-logo-text">Necto</div>
         <div class="footer-tagline">Every coffee chat. Automatically.</div>
+        <div class="footer-attribution">Built to make finance recruiting less painful.</div>
         <div class="footer-legal">
           <a href="/privacy">Privacy</a>
           <span>·</span>
