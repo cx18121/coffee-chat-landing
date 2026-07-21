@@ -218,6 +218,27 @@
       .nav-how:hover {
         color: #fff;
       }
+      .nav-cta {
+        font-size: 13.5px;
+        font-weight: 500;
+        color: #fff;
+        text-decoration: none;
+        padding: 8px 18px;
+        border-radius: 100px;
+        background: rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        transition: background 0.15s;
+        white-space: nowrap;
+      }
+      .nav-cta:hover {
+        background: rgba(255, 255, 255, 0.24);
+      }
+      a.email-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        text-decoration: none;
+      }
       .nav-counter {
         position: absolute;
         left: 50%;
@@ -2602,18 +2623,11 @@
           </div>
           <span class="logo-name">Necto</span>
         </a>
-        <div class="nav-counter" id="nav-counter" style="display: none">
-          <span class="nav-counter-dot"></span>
-          <span
-            class="nav-counter-text"
-            id="nav-counter-text"
-            aria-live="polite"
-            aria-atomic="true"
-          ></span>
-        </div>
         <div class="nav-links">
           <a href="#demo" class="nav-how">Watch Demo</a>
           <a href="#emails" class="nav-how">Sample Emails</a>
+          <a href="https://app.usenecto.com/sign-in" class="nav-how">Log in</a>
+          <a href="https://app.usenecto.com/sign-up" class="nav-cta">Get started</a>
         </div>
       </nav>
 
@@ -2626,18 +2640,10 @@
           Necto automates your entire recruiting outreach.<br />
           From finding contacts to sending emails that actually get replies.
         </p>
-        <div class="email-cap hero-cta" id="waitlist-section">
-          <input
-            type="email"
-            class="email-inp"
-            id="email-inp"
-            placeholder="Enter your email"
-            autocomplete="email"
-            aria-label="Email address"
-          />
-          <button type="button" class="email-btn" id="email-btn">
-            Join waitlist <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-left:2px"><path d="M2.5 6.5h8M7 3l3.5 3.5L7 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
+        <div class="hero-cta">
+          <a class="email-btn" href="https://app.usenecto.com/sign-up">
+            Get started <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-left:2px"><path d="M2.5 6.5h8M7 3l3.5 3.5L7 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </div>
 
@@ -3329,10 +3335,9 @@
         </div>
       </div>
       <a
-        href="#"
+        href="https://app.usenecto.com/sign-up"
         class="footer-cta"
-        id="footer-cta"
-        >Join waitlist <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-left:2px"><path d="M2.5 6.5h8M7 3l3.5 3.5L7 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        >Get started <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-left:2px"><path d="M2.5 6.5h8M7 3l3.5 3.5L7 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </footer>
 
     <script>
@@ -3655,95 +3660,6 @@ allTabs.forEach((tab) => {
           body: JSON.stringify(args),
         });
 
-      // ─── LIVE COUNTER ────────────────────────────────────
-      const COUNT_THRESHOLD = 30;
-      let currentCount = 0;
-
-      (async () => {
-        try {
-          const res = await fetch(
-            `${SUPABASE_URL}/rest/v1/rpc/get_waitlist_count`,
-            {
-              method: "POST",
-              headers: { ..._sbHeaders, "Content-Type": "application/json" },
-              body: "{}",
-            },
-          );
-          if (res.ok) {
-            const count = await res.json();
-            if (typeof count === "number") currentCount = count;
-          }
-        } catch (e) {
-          console.warn("Waitlist count fetch failed:", e);
-        }
-        if (currentCount >= COUNT_THRESHOLD) {
-          document.getElementById("nav-counter-text").textContent =
-            `${currentCount.toLocaleString()} students waiting`;
-          document.getElementById("nav-counter").style.display = "flex";
-        }
-      })();
-
-      // ─── 6. WAITLIST CAPTURE ────────────────────────────
-      document
-        .getElementById("email-btn")
-        .addEventListener("click", async () => {
-          const inp = document.getElementById("email-inp");
-          const btn = document.getElementById("email-btn");
-          const email = inp.value.trim();
-
-          const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-          if (email && emailOk) {
-            // Store email - DB write happens when the survey modal closes
-            window._waitlistEmail = email;
-
-            btn.classList.add("success");
-            btn.textContent = "You're on the list ✓";
-            inp.value = "";
-            inp.placeholder = "See you soon!";
-            inp.disabled = true;
-
-            // Sparkle burst
-            if (!reducedMotion) spawnSparkles(btn);
-
-            // Bump counter with roll animation
-            currentCount++;
-            const counterEl = document.getElementById("nav-counter-text");
-            if (currentCount >= COUNT_THRESHOLD) {
-              const navCounter = document.getElementById("nav-counter");
-              counterEl.classList.remove("rolling");
-              void counterEl.offsetWidth;
-              counterEl.textContent = `${currentCount.toLocaleString()} students waiting`;
-              counterEl.classList.add("rolling");
-              if (navCounter.style.display !== "flex") navCounter.style.display = "flex";
-            }
-
-            setTimeout(
-              () =>
-                window._openSurveyModal
-                  ? window._openSurveyModal()
-                  : document
-                      .getElementById("survey-modal")
-                      .classList.add("open"),
-              400,
-            );
-          } else {
-            inp.style.borderColor = "rgba(255,100,100,.65)";
-            inp.style.boxShadow = "0 0 0 3.5px rgba(255,80,80,.15)";
-            inp.focus();
-            setTimeout(() => {
-              inp.style.borderColor = "rgba(255,255,255,.32)";
-              inp.style.boxShadow = "";
-            }, 1600);
-          }
-        });
-      document.getElementById("email-inp").addEventListener("keydown", (e) => {
-        if (e.key === "Enter") document.getElementById("email-btn").click();
-      });
-
-      document.getElementById("footer-cta").addEventListener("click", (e) => {
-        e.preventDefault();
-        window.scrollTo({ top: 66, behavior: "smooth" });
-      });
     </script>
 
     <!-- Survey Modal -->
