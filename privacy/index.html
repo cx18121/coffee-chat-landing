@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy — Necto</title>
+    <meta name="description" content="How Necto collects, uses, and protects your data, including Google user data accessed via the Gmail API." />
+    <link rel="canonical" href="https://usenecto.com/privacy" />
+    <meta name="theme-color" content="#7570C0" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237570C0'/%3E%3Ccircle cx='9' cy='16' r='4.5' fill='white' opacity='.92'/%3E%3Ccircle cx='23' cy='9' r='3' fill='white' opacity='.85'/%3E%3Ccircle cx='23' cy='23' r='3' fill='white' opacity='.85'/%3E%3Cline x1='13.4' y1='16' x2='20' y2='10.5' stroke='white' stroke-width='1.6' opacity='.7'/%3E%3Cline x1='13.4' y1='16' x2='20' y2='21.5' stroke='white' stroke-width='1.6' opacity='.7'/%3E%3C/svg%3E" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      :root {
+        --periwinkle: #7570c0;
+        --periwinkle-deep: #5b55a0;
+        --dark: #13101e;
+        --body: #3a3750;
+        --muted: #8b889c;
+        --line: #ece9f4;
+      }
+      html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+      body { font-family: "DM Sans", sans-serif; color: var(--body); background: #fff; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+      a { color: var(--periwinkle); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      code { background: #f2f0fb; color: #4a4760; border-radius: 5px; padding: 2px 6px; font-size: 0.85em; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+      header.site { display: flex; align-items: center; gap: 10px; padding: 22px 32px; border-bottom: 1px solid var(--line); }
+      header.site a { display: flex; align-items: center; gap: 10px; color: var(--dark); font-weight: 600; font-size: 18px; letter-spacing: -0.3px; }
+      header.site svg { display: block; }
+      main { max-width: 720px; margin: 0 auto; padding: 72px 32px 88px; }
+      h1 { font-family: "Fraunces", serif; font-style: italic; font-weight: 500; font-size: 42px; letter-spacing: -0.02em; color: var(--dark); margin-bottom: 8px; }
+      .updated { font-size: 14px; color: var(--muted); margin-bottom: 48px; }
+      section { margin-bottom: 40px; }
+      h2 { font-size: 17px; font-weight: 600; color: var(--dark); margin-bottom: 12px; letter-spacing: -0.01em; }
+      p { font-size: 15.5px; margin-bottom: 12px; }
+      p:last-child { margin-bottom: 0; }
+      ul { list-style: disc; padding-left: 22px; }
+      li { font-size: 15.5px; margin-bottom: 6px; }
+      strong { color: var(--dark); font-weight: 600; }
+      footer { background: linear-gradient(135deg, #1a1535 0%, #13101e 60%); padding: 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+      footer a { font-size: 13px; color: #9990b8; }
+      footer a:hover { color: #b8b0dc; text-decoration: none; }
+      @media (max-width: 560px) { h1 { font-size: 34px; } main { padding: 48px 24px 64px; } }
+    </style>
+  </head>
+  <body>
+    <header class="site">
+      <a href="/">
+        <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#7570C0"/><circle cx="9" cy="16" r="4.5" fill="white" opacity=".92"/><circle cx="23" cy="9" r="3" fill="white" opacity=".85"/><circle cx="23" cy="23" r="3" fill="white" opacity=".85"/><line x1="13.4" y1="16" x2="20" y2="10.5" stroke="white" stroke-width="1.6" opacity=".7"/><line x1="13.4" y1="16" x2="20" y2="21.5" stroke="white" stroke-width="1.6" opacity=".7"/></svg>
+        Necto
+      </a>
+    </header>
+
+    <main>
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: April 5, 2026</p>
+
+      <section>
+        <h2>Overview</h2>
+        <p>Necto ("the app", "we", "us") helps finance students find contacts at target firms and send personalized coffee chat emails from their own Gmail account. This policy explains what data we collect, how we use it, and your rights.</p>
+      </section>
+
+      <section>
+        <h2>Information we collect</h2>
+        <ul>
+          <li><strong>Account information</strong> — your name and email address, collected via Clerk when you sign up.</li>
+          <li><strong>Search results</strong> — names, titles, and company information returned from the Apollo.io API when you search for contacts. This data is stored in your account so you can manage leads.</li>
+          <li><strong>Email drafts</strong> — the subject lines and body text of AI-generated emails. These are stored in your account so you can review and edit them before sending.</li>
+          <li><strong>Gmail send confirmation</strong> — after you send an email, we store the Gmail thread ID (a string like "17abc…") so we can link you to the sent thread and keep any follow-up you send in the same conversation. We do not store the email content after it is sent.</li>
+          <li><strong>Gmail account email address</strong> — stored when you connect Gmail, so the app can display which account is connected.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>How we use Google user data</h2>
+        <p>Necto uses one Google OAuth scope: <code>https://www.googleapis.com/auth/gmail.send</code></p>
+        <p><strong>gmail.send — what it allows:</strong> sending emails on your behalf via the Gmail API. Used only when you explicitly click "Send" or "Send All." The app sends only the emails you have reviewed and chosen to send. We never send emails automatically without your action.</p>
+        <p><strong>What we do not do:</strong> we do not read your inbox content, access draft emails, modify labels, or use any Gmail data beyond sending the message you triggered.</p>
+        <p><strong>Data retention:</strong> the Gmail access token is managed by Clerk (our authentication provider) and is never stored in our own database. The thread ID returned after a send is stored so we can link to the thread and keep follow-ups in the same conversation, and can be deleted by deleting your account.</p>
+      </section>
+
+      <section>
+        <h2>Limited Use disclosure</h2>
+        <p>Necto's use and transfer of information received from Google APIs to any other app will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+      </section>
+
+      <section>
+        <h2>Third-party services</h2>
+        <ul>
+          <li><strong>Clerk</strong> — handles user authentication and manages OAuth tokens on our behalf. Clerk's privacy policy is at <a href="https://clerk.com/privacy" target="_blank" rel="noopener noreferrer">clerk.com/privacy</a>.</li>
+          <li><strong>Apollo.io</strong> — used to search for professional contacts. We send search queries (company names, role filters) and receive publicly available professional profile data. Apollo's privacy policy is at <a href="https://www.apollo.io/privacy-policy" target="_blank" rel="noopener noreferrer">apollo.io/privacy-policy</a>.</li>
+          <li><strong>Anthropic Claude</strong> — used to generate personalized email drafts. We send contact name, title, company, and a research-derived interest hook. No personal data from your Gmail account is shared with Anthropic.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Data sharing</h2>
+        <p>We do not sell, rent, or share your personal data with third parties for advertising purposes. Data is shared with the service providers listed above only as necessary to operate the app.</p>
+      </section>
+
+      <section>
+        <h2>Data security</h2>
+        <p>Your data is stored in a PostgreSQL database hosted on Neon. Access tokens for Google OAuth are managed by Clerk and are not stored in our database. We use HTTPS for all data transmission.</p>
+      </section>
+
+      <section>
+        <h2>Your rights and choices</h2>
+        <ul>
+          <li><strong>Revoke Gmail access:</strong> visit <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer">myaccount.google.com/permissions</a> and remove Necto from the list of connected apps.</li>
+          <li><strong>Delete your account:</strong> contact us at the email below and we will delete all data associated with your account within 30 days.</li>
+          <li><strong>Data access:</strong> you can request a copy of your stored data by contacting us.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Children's privacy</h2>
+        <p>This app is not directed at children under 13. We do not knowingly collect data from children under 13.</p>
+      </section>
+
+      <section>
+        <h2>Changes to this policy</h2>
+        <p>We may update this policy from time to time. We will update the "Last updated" date at the top of this page. Continued use of the app after changes constitutes acceptance of the revised policy.</p>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>If you have questions about this privacy policy or your data, contact us at <a href="mailto:privacy@usenecto.com">privacy@usenecto.com</a>.</p>
+      </section>
+    </main>
+
+    <footer>
+      <a href="/">← Home</a>
+      <a href="/terms">Terms of Service</a>
+    </footer>
+  </body>
+</html>
