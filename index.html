@@ -218,58 +218,19 @@
       .nav-how:hover {
         color: #fff;
       }
-      .nav-counter {
-        position: absolute;
-        left: 50%;
-        top: 80px;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
-        gap: 9px;
-        background: rgba(255, 255, 255, 0.18);
-        border: 1px solid rgba(255, 255, 255, 0.28);
-        backdrop-filter: blur(10px);
-        padding: 8px 20px 8px 14px;
+      .nav-cta {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.3);
         border-radius: 100px;
-        animation: fadeIn 0.4s ease forwards;
+        padding: 7px 18px;
+        font-weight: 500;
+        color: #fff !important;
+        backdrop-filter: blur(6px);
+        transition: background 0.15s, border-color 0.15s;
       }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateX(-50%) translateY(-4px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(-50%) translateY(0);
-        }
-      }
-      @keyframes countRoll {
-        from {
-          opacity: 0;
-          transform: translateY(7px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .nav-counter-text.rolling {
-        animation: countRoll 0.38s var(--ease-expo) forwards;
-      }
-      .nav-counter-dot {
-        width: 9px;
-        height: 9px;
-        border-radius: 50%;
-        background: #4ade80;
-        box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.28);
-        flex-shrink: 0;
-      }
-      .nav-counter-text {
-        font-size: 15px;
-        font-weight: 600;
-        color: #fff;
-        white-space: nowrap;
-        letter-spacing: -0.2px;
+      .nav-cta:hover {
+        background: rgba(255, 255, 255, 0.22);
+        border-color: rgba(255, 255, 255, 0.5);
       }
 
       /* ─── HERO CONTENT ──────────────────────────────────── */
@@ -1671,31 +1632,10 @@
         max-width: 430px;
         margin: 0 auto;
       }
-      .email-inp {
-        flex: 1;
-        padding: 12px 20px;
-        border-radius: 100px;
-        border: 1.5px solid rgba(255, 255, 255, 0.32);
-        background: rgba(255, 255, 255, 0.18);
-        backdrop-filter: blur(12px);
-        color: #fff;
-        font-size: 14px;
-        font-family: "DM Sans", sans-serif;
-        outline: none;
-        transition:
-          border-color 0.2s,
-          background 0.2s,
-          box-shadow 0.2s;
-      }
-      .email-inp::placeholder {
-        color: rgba(255, 255, 255, 0.65);
-      }
-      .email-inp:focus {
-        border-color: rgba(255, 255, 255, 0.58);
-        background: rgba(255, 255, 255, 0.23);
-        box-shadow: 0 0 0 3.5px rgba(255, 255, 255, 0.1);
-      }
       .email-btn {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
         padding: 12px 22px;
         border-radius: 100px;
         border: none;
@@ -1717,21 +1657,6 @@
       .email-btn:active {
         transform: scale(0.97) !important;
         transition-duration: 0.08s !important;
-      }
-      @keyframes btnSuccess {
-        0% {
-          transform: scale(1);
-        }
-        45% {
-          transform: scale(1.07);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-      .email-btn.success {
-        background: #2db36a !important;
-        animation: btnSuccess 0.45s var(--ease-quart) forwards;
       }
 
       /* ─── SCALE STATS ───────────────────────────────────── */
@@ -2197,12 +2122,10 @@
           flex-direction: column;
           max-width: 320px;
         }
-        .email-inp {
-          padding: 14px 20px;
-        }
         .email-btn {
           padding: 14px 22px;
           width: 100%;
+          justify-content: center;
         }
       }
       @media (max-width: 560px) {
@@ -2237,17 +2160,6 @@
         .what-eyebrow::before,
         .what-eyebrow::after {
           display: none;
-        }
-        /* Survey card: tighter padding on phones */
-        .survey-card {
-          padding: 28px 20px 24px;
-        }
-        /* Survey close: expand touch target to 44px */
-        .survey-x {
-          width: 44px;
-          height: 44px;
-          top: 8px;
-          right: 8px;
         }
       }
       @media (max-width: 380px) {
@@ -2294,209 +2206,13 @@
         }
       }
 
-      /* ─── SURVEY MODAL ──────────────────────────────────── */
-      .survey-backdrop {
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        background: rgba(19, 16, 30, 0.48);
-        backdrop-filter: blur(6px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.25s var(--ease-quart);
-      }
-      .survey-backdrop.open {
-        opacity: 1;
-        pointer-events: all;
-      }
-      .survey-card {
-        background: #fff;
-        border-radius: 20px;
-        width: 100%;
-        max-width: 560px;
-        padding: 36px 32px 28px;
-        box-shadow:
-          0 24px 64px rgba(19, 16, 30, 0.22),
-          0 4px 16px rgba(80, 65, 150, 0.12);
-        position: relative;
-        transform: translateY(18px) scale(0.97);
-        transition: transform 0.3s var(--ease-expo);
-      }
-      .survey-backdrop.open .survey-card {
-        transform: translateY(0) scale(1);
-      }
-      .survey-x {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 13px;
-        color: var(--muted);
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition:
-          background 0.15s,
-          color 0.15s;
-      }
-      .survey-x:hover {
-        background: #f0f0f5;
-        color: var(--body);
-      }
-      .survey-header {
-        text-align: center;
-        margin-bottom: 28px;
-      }
-      .survey-title {
-        font-family: "Fraunces", serif;
-        font-size: 22px;
-        font-weight: 400;
-        color: var(--dark);
-        letter-spacing: -0.5px;
-        margin-bottom: 6px;
-      }
-      .survey-sub {
-        font-size: 13.5px;
-        color: var(--muted);
-        font-weight: 300;
-        line-height: 1.55;
-      }
-      .survey-body {
-        display: flex;
-        flex-direction: column;
-        gap: 22px;
-      }
-      .survey-q {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-      .survey-label {
-        font-size: 13px;
-        font-weight: 500;
-        color: var(--body);
-      }
-      .price-chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 7px;
-      }
-      .price-chip {
-        padding: 7px 14px;
-        border-radius: 100px;
-        white-space: nowrap;
-        border: 1.5px solid #e2e1ec;
-        background: #fff;
-        color: var(--body);
-        font-size: 13px;
-        font-family: "DM Sans", sans-serif;
-        cursor: pointer;
-        transition:
-          border-color 0.15s,
-          background 0.15s,
-          color 0.15s,
-          transform 0.1s;
-      }
-      .price-chip:hover {
-        border-color: var(--periwinkle);
-        background: #f3f2fc;
-      }
-      .price-chip.selected {
-        border-color: var(--periwinkle);
-        background: var(--periwinkle);
-        color: #fff;
-      }
-      .price-chip:active {
-        transform: scale(0.96);
-      }
-      .survey-textarea {
-        width: 100%;
-        padding: 11px 14px;
-        border: 1.5px solid #e2e1ec;
-        border-radius: 12px;
-        font-family: "DM Sans", sans-serif;
-        font-size: 13.5px;
-        color: var(--body);
-        resize: none;
-        outline: none;
-        transition:
-          border-color 0.2s,
-          box-shadow 0.2s;
-        line-height: 1.55;
-      }
-      .survey-textarea::placeholder {
-        color: #b0aec0;
-      }
-      .survey-textarea:focus {
-        border-color: var(--periwinkle);
-        box-shadow: 0 0 0 3px rgba(var(--periwinkle-rgb), 0.12);
-      }
-      .survey-footer {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 10px;
-        margin-top: 26px;
-      }
-      .survey-skip-btn {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 13.5px;
-        color: var(--muted);
-        font-family: "DM Sans", sans-serif;
-        padding: 8px 12px;
-        border-radius: 8px;
-        transition:
-          color 0.15s,
-          background 0.15s;
-      }
-      .survey-skip-btn:hover {
-        color: var(--body);
-        background: #f4f3fa;
-      }
-      .survey-submit-btn {
-        padding: 10px 22px;
-        border-radius: 100px;
-        border: none;
-        background: var(--dark);
-        color: #fff;
-        font-size: 13.5px;
-        font-weight: 600;
-        font-family: "DM Sans", sans-serif;
-        cursor: pointer;
-        transition:
-          background 0.15s,
-          transform 0.15s;
-      }
-      .survey-submit-btn:hover {
-        background: var(--dark2);
-        transform: translateY(-1px);
-      }
-      .survey-submit-btn:active {
-        transform: scale(0.97);
-      }
-
       /* ─── FOCUS STATES ──────────────────────────────────── */
       :focus-visible {
         outline: 2px solid rgba(var(--periwinkle-rgb), 0.65);
         outline-offset: 3px;
         border-radius: 4px;
       }
-      .email-inp:focus-visible {
-        outline: none;
-      }
-      .email-btn:focus-visible,
-      .survey-submit-btn:focus-visible {
+      .email-btn:focus-visible {
         outline: 2px solid rgba(255, 255, 255, 0.65);
         outline-offset: 3px;
       }
@@ -2510,10 +2226,6 @@
         outline-offset: 3px;
       }
       .etab:focus-visible {
-        outline: 2px solid var(--periwinkle);
-        outline-offset: 2px;
-      }
-      .price-chip:focus-visible {
         outline: 2px solid var(--periwinkle);
         outline-offset: 2px;
       }
@@ -2619,18 +2331,9 @@
           </div>
           <span class="logo-name">Necto</span>
         </a>
-        <div class="nav-counter" id="nav-counter" style="display: none">
-          <span class="nav-counter-dot"></span>
-          <span
-            class="nav-counter-text"
-            id="nav-counter-text"
-            aria-live="polite"
-            aria-atomic="true"
-          ></span>
-        </div>
         <div class="nav-links">
-          <a href="#demo" class="nav-how">Watch Demo</a>
-          <a href="#emails" class="nav-how">Sample Emails</a>
+          <a href="https://app.usenecto.com/sign-in" class="nav-how">Login</a>
+          <a href="https://app.usenecto.com/sign-up" class="nav-how nav-cta">Get Started</a>
         </div>
       </nav>
 
@@ -2643,18 +2346,10 @@
           Necto automates your entire recruiting outreach.<br />
           From finding contacts to sending emails that actually get replies.
         </p>
-        <div class="email-cap hero-cta" id="waitlist-section">
-          <input
-            type="email"
-            class="email-inp"
-            id="email-inp"
-            placeholder="Enter your email"
-            autocomplete="email"
-            aria-label="Email address"
-          />
-          <button type="button" class="email-btn" id="email-btn">
-            Join waitlist <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-left:2px"><path d="M2.5 6.5h8M7 3l3.5 3.5L7 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
+        <div class="email-cap hero-cta">
+          <a href="https://app.usenecto.com/sign-up" class="email-btn" id="email-btn">
+            Get started <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-left:2px"><path d="M2.5 6.5h8M7 3l3.5 3.5L7 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </div>
 
@@ -3342,10 +3037,10 @@
           <div class="footer-attribution">Built to make finance recruiting less painful.</div>
         </div>
         <a
-          href="#"
+          href="https://app.usenecto.com/sign-up"
           class="footer-cta"
           id="footer-cta"
-          >Join waitlist <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-left:2px"><path d="M2.5 6.5h8M7 3l3.5 3.5L7 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          >Get started <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-left:2px"><path d="M2.5 6.5h8M7 3l3.5 3.5L7 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
       <div class="footer-bottom">
         <span>© 2026 Necto</span>
@@ -3360,47 +3055,6 @@
       const reducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
-
-      // ─── SPARKLE BURST ───────────────────────────────────
-      function spawnSparkles(btn) {
-        const rect = btn.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        const colors = [
-          "#7B74C4",
-          "#9BA8D8",
-          "#C8DCF5",
-          "#B5A0D8",
-          "#7B74C4",
-          "#A8BCE4",
-          "#C8DCF5",
-          "#9BA8D8",
-        ];
-        colors.forEach((color, i) => {
-          const dot = document.createElement("span");
-          const angle = (i / colors.length) * Math.PI * 2;
-          const dist = 36 + Math.random() * 28;
-          dot.style.cssText = `position:fixed;width:6px;height:6px;border-radius:50%;background:${color};left:${cx}px;top:${cy}px;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);`;
-          document.body.appendChild(dot);
-          dot.animate(
-            [
-              {
-                opacity: 1,
-                transform: `translate(-50%,-50%) translate(0,0) scale(1)`,
-              },
-              {
-                opacity: 0,
-                transform: `translate(-50%,-50%) translate(${Math.cos(angle) * dist}px,${Math.sin(angle) * dist}px) scale(0)`,
-              },
-            ],
-            {
-              duration: 580,
-              easing: "cubic-bezier(0.16,1,0.3,1)",
-              fill: "forwards",
-            },
-          ).onfinish = () => dot.remove();
-        });
-      }
 
       // ─── 1. HERO ENTRANCE ────────────────────────────────
       requestAnimationFrame(() =>
@@ -3632,310 +3286,8 @@ allTabs.forEach((tab) => {
         });
       });
 
-      // ─── SUPABASE CONFIG ─────────────────────────────────
-      // Setup (run once in Supabase SQL Editor):
-      //
-      //   create table waitlist (
-      //     id uuid default gen_random_uuid() primary key,
-      //     email text not null unique,
-      //     price_range text,
-      //     features text,
-      //     created_at timestamptz default now()
-      //   );
-      //   alter table waitlist enable row level security;
-      //   create policy "anon_insert" on waitlist for insert with check (true);
-      //   create policy "anon_update" on waitlist for update using (true) with check (true);
-      //
-      //   create or replace function get_waitlist_count()
-      //   returns integer language sql security definer as $$
-      //     select count(*)::integer from waitlist;
-      //   $$;
-      //   grant execute on function get_waitlist_count() to anon;
-      //
-      //   NOTE: price_range and features are saved via REST PATCH
-      //   (no save_survey RPC needed - anon_update policy covers it)
-
-      const SUPABASE_URL = "https://ylumoxylvaskzcczwmdb.supabase.co";
-      const SUPABASE_KEY = "sb_publishable_2YLaqRJ32XQ0Om2CdwMRKg_iZG4-3fP";
-
-      const _sbHeaders = {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`,
-        "Content-Type": "application/json",
-      };
-      const sbInsert = (table, data) =>
-        fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-          method: "POST",
-          headers: { ..._sbHeaders, Prefer: "return=minimal" },
-          body: JSON.stringify(data),
-        });
-      const sbRpc = (fn, args) =>
-        fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
-          method: "POST",
-          headers: _sbHeaders,
-          body: JSON.stringify(args),
-        });
-
-      // ─── LIVE COUNTER ────────────────────────────────────
-      const COUNT_THRESHOLD = 30;
-      let currentCount = 0;
-
-      (async () => {
-        try {
-          const res = await fetch(
-            `${SUPABASE_URL}/rest/v1/rpc/get_waitlist_count`,
-            {
-              method: "POST",
-              headers: { ..._sbHeaders, "Content-Type": "application/json" },
-              body: "{}",
-            },
-          );
-          if (res.ok) {
-            const count = await res.json();
-            if (typeof count === "number") currentCount = count;
-          }
-        } catch (e) {
-          console.warn("Waitlist count fetch failed:", e);
-        }
-        if (currentCount >= COUNT_THRESHOLD) {
-          document.getElementById("nav-counter-text").textContent =
-            `${currentCount.toLocaleString()} students waiting`;
-          document.getElementById("nav-counter").style.display = "flex";
-        }
-      })();
-
-      // ─── 6. WAITLIST CAPTURE ────────────────────────────
-      document
-        .getElementById("email-btn")
-        .addEventListener("click", async () => {
-          const inp = document.getElementById("email-inp");
-          const btn = document.getElementById("email-btn");
-          const email = inp.value.trim();
-
-          const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-          if (email && emailOk) {
-            // Store email - DB write happens when the survey modal closes
-            window._waitlistEmail = email;
-
-            btn.classList.add("success");
-            btn.textContent = "You're on the list ✓";
-            inp.value = "";
-            inp.placeholder = "See you soon!";
-            inp.disabled = true;
-
-            // Sparkle burst
-            if (!reducedMotion) spawnSparkles(btn);
-
-            // Bump counter with roll animation
-            currentCount++;
-            const counterEl = document.getElementById("nav-counter-text");
-            if (currentCount >= COUNT_THRESHOLD) {
-              const navCounter = document.getElementById("nav-counter");
-              counterEl.classList.remove("rolling");
-              void counterEl.offsetWidth;
-              counterEl.textContent = `${currentCount.toLocaleString()} students waiting`;
-              counterEl.classList.add("rolling");
-              if (navCounter.style.display !== "flex") navCounter.style.display = "flex";
-            }
-
-            setTimeout(
-              () =>
-                window._openSurveyModal
-                  ? window._openSurveyModal()
-                  : document
-                      .getElementById("survey-modal")
-                      .classList.add("open"),
-              400,
-            );
-          } else {
-            inp.style.borderColor = "rgba(255,100,100,.65)";
-            inp.style.boxShadow = "0 0 0 3.5px rgba(255,80,80,.15)";
-            inp.focus();
-            setTimeout(() => {
-              inp.style.borderColor = "rgba(255,255,255,.32)";
-              inp.style.boxShadow = "";
-            }, 1600);
-          }
-        });
-      document.getElementById("email-inp").addEventListener("keydown", (e) => {
-        if (e.key === "Enter") document.getElementById("email-btn").click();
-      });
-
-      document.getElementById("footer-cta").addEventListener("click", (e) => {
-        e.preventDefault();
-        window.scrollTo({ top: 66, behavior: "smooth" });
-      });
     </script>
 
-    <!-- Survey Modal -->
-    <div
-      id="survey-modal"
-      class="survey-backdrop"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="survey-title"
-      aria-describedby="survey-desc"
-    >
-      <div class="survey-card">
-        <button
-          type="button"
-          class="survey-x"
-          id="survey-close"
-          aria-label="Close"
-        >
-          ✕
-        </button>
-        <div class="survey-header">
-          <h3 class="survey-title" id="survey-title">You're on the list!</h3>
-          <p class="survey-sub" id="survey-desc">
-            Two quick optional questions to help us build exactly what you need.
-          </p>
-        </div>
-        <div class="survey-body">
-          <div class="survey-q">
-            <label class="survey-label"
-              >How much would you pay per month?</label
-            >
-            <div class="price-chips">
-              <button type="button" class="price-chip" data-val="free">
-                Free only
-              </button>
-              <button type="button" class="price-chip" data-val="5">
-                $5 – $10
-              </button>
-              <button type="button" class="price-chip" data-val="15">
-                $15 – $25
-              </button>
-              <button type="button" class="price-chip" data-val="30">
-                $30 – $50
-              </button>
-              <button type="button" class="price-chip" data-val="50+">
-                $50+
-              </button>
-            </div>
-          </div>
-          <div class="survey-q">
-            <label class="survey-label" for="survey-features"
-              >What features would you like to see?</label
-            >
-            <textarea
-              class="survey-textarea"
-              id="survey-features"
-              placeholder="e.g. Professional vs. personal information, personalized subject lines, CRM sync…"
-              rows="3"
-              maxlength="1000"
-            ></textarea>
-          </div>
-        </div>
-        <div class="survey-footer">
-          <button type="button" class="survey-skip-btn" id="survey-skip">
-            Skip
-          </button>
-          <button type="button" class="survey-submit-btn" id="survey-submit">
-            Submit →
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      // ─── SURVEY MODAL ────────────────────────────────────
-      const modal = document.getElementById("survey-modal");
-      let _prevFocus = null;
-
-      function openModal() {
-        _prevFocus = document.activeElement;
-        // Reset submit button in case modal was previously used
-        const submitBtn = document.getElementById("survey-submit");
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Submit →";
-        modal.classList.add("open");
-        // Move focus to close button after transition starts
-        requestAnimationFrame(() => {
-          const firstFocusable = modal.querySelector(
-            'button, [href], input, textarea, [tabindex]:not([tabindex="-1"])',
-          );
-          if (firstFocusable) firstFocusable.focus();
-        });
-      }
-
-      // Focus trap inside modal
-      modal.addEventListener("keydown", (e) => {
-        if (!modal.classList.contains("open")) return;
-        if (e.key === "Escape") {
-          saveSurveyAndClose();
-          return;
-        }
-        if (e.key !== "Tab") return;
-        const focusable = [
-          ...modal.querySelectorAll(
-            'button:not([disabled]), [href], input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-          ),
-        ];
-        if (!focusable.length) return;
-        const first = focusable[0],
-          last = focusable[focusable.length - 1];
-        if (
-          e.shiftKey
-            ? document.activeElement === first
-            : document.activeElement === last
-        ) {
-          e.preventDefault();
-          (e.shiftKey ? last : first).focus();
-        }
-      });
-
-      async function saveSurveyAndClose() {
-        modal.classList.remove("open");
-        if (_prevFocus) {
-          _prevFocus.focus();
-          _prevFocus = null;
-        }
-        const email = window._waitlistEmail;
-        if (!email) return;
-        const priceChip = document.querySelector(".price-chip.selected");
-        const price_range = priceChip ? priceChip.dataset.val : null;
-        const features =
-          document.querySelector("#survey-features").value.trim() || null;
-        try {
-          const res = await sbInsert("waitlist", { email, price_range, features });
-          // 409 = already on list - fine
-          if (!res.ok && res.status !== 409)
-            console.warn("Waitlist insert failed:", res.status);
-        } catch (e) {
-          console.warn("Waitlist insert error:", e);
-        }
-      }
-
-      document
-        .getElementById("survey-close")
-        .addEventListener("click", saveSurveyAndClose);
-      document
-        .getElementById("survey-skip")
-        .addEventListener("click", saveSurveyAndClose);
-      document
-        .getElementById("survey-submit")
-        .addEventListener("click", function () {
-          this.disabled = true;
-          this.textContent = "Saving…";
-          saveSurveyAndClose();
-        });
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) saveSurveyAndClose();
-      });
-
-      // Expose openModal so waitlist flow can call it with focus tracking
-      window._openSurveyModal = openModal;
-
-      document.querySelectorAll(".price-chip").forEach((chip) => {
-        chip.addEventListener("click", () => {
-          document
-            .querySelectorAll(".price-chip")
-            .forEach((c) => c.classList.remove("selected"));
-          chip.classList.add("selected");
-        });
-      });
-    </script>
     <script>
       // ─── SCREEN DEMO ────────────────────────────────────
       (function () {
