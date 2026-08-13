@@ -1,9 +1,9 @@
 # Necto
 
-> Necto automates finance recruiting outreach for students. It finds contacts at investment banks, private equity firms, and venture capital firms, then generates personalized cold emails and tracks replies.
+> Necto helps finance students land coffee chats. It finds investment banking analysts with verified email addresses, researches each person before writing, generates a personalized cold email, and tracks which emails still need a follow-up.
 
 ## Product
-- [Home](https://usenecto.com): Main landing page and waitlist signup
+- [Home](https://usenecto.com): Main landing page and signup
 
 ## About
-Necto is a waitlist-stage SaaS tool for finance students at target schools (Wharton, Stern, Ross, Georgetown, Notre Dame) recruiting for investment banking, private equity, venture capital, and asset management roles. Covers 200+ firms. Built to reduce recruiting outreach time by 95%.
+Necto is a live SaaS tool for finance students at target schools (Wharton, Stern, Ross, Georgetown, Notre Dame) recruiting for investment banking roles. Coverage is investment banking only: every bulge bracket and elite boutique bank, with 2,600+ contacts that have a verified email address. Search filters are firm, city, seniority, and Cornell alumni. Free plan includes 10 emails per month.
